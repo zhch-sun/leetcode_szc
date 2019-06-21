@@ -39,8 +39,10 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    just normal calculation
-    can also use a recursive solution
+    can also be a recursive
+    future problems: 
+    1. 链表倒过来, 怎么办. 1.先把两个链表都倒过来. 2. 算出链表长度差, 先相加再管进位
+    2. 任意多个数相加: 最好还是两个两个分别加起来
     """
     def list_init(l):
         if len(l) > 0:
