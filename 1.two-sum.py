@@ -20,6 +20,12 @@ class Solution(object):
 
 
 if __name__ == '__main__':
+    """
+    solutions:
+    1. for i for j and compare
+    2. build hash for each word, then loop
+    3. build hash and compare in the loop at the same time
+    """
     s = Solution()        
     out = s.twoSum([2,7,11,15], 22)
     print(out)
