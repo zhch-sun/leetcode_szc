@@ -36,7 +36,7 @@ if __name__ == '__main__':
     """
     use sort to only check the 1st and last str.
     sort is the original solution is about. 
-    need to understand that. like binary search..
+    TODO need to understand that. like binary search..
     sort itself might not be a good way because it scans all the strings.
     """
     s = Solution()
