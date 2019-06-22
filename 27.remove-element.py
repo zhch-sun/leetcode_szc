@@ -21,7 +21,7 @@ class Solution(object):
 if __name__ == '__main__':
     """
     用start是最简单的做法?
-    pop的做法应该是更慢的, 但是实际跑出来还是比循环快... 应该是因为while循环次数更少?
+    pop的做法应该是更慢的, 但是实际跑出来还是比循环快... 应该是因为while循环次数更少
     """
     s = Solution()
     nums = [2,3,5,3,4,4,7]
