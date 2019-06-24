@@ -32,7 +32,7 @@ class Solution(object):
 if __name__ == '__main__':
     """
     dynamic programming
-    binary search  TODO better solution
+    nlogn solution  TODO better solution
     """
     s = Solution()
     array = [10,9,2,5,3,7,101,18]
