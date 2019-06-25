@@ -46,7 +46,7 @@ if __name__ == '__main__':
     还是比较优雅 dp[i, j] 意味着 i到j之间是回文. 然后用dp[i-1, j+1]作为子任务. 
     这样做问题是要保证循环时dp[i-1, j+1]存在, 所以i循环时递减, j递增...
     注意: geeksforgeeks的题目不一样! 1.子串内的字符不需要紧挨着.. 2.只需要返回最大值, 不需要前后位置.
-    Manacher algorithm https://www.hackerearth.com/zh/practice/algorithms/string-algorithm/manachars-algorithm/tutorial/
+    TODO Manacher algorithm https://www.hackerearth.com/zh/practice/algorithms/string-algorithm/manachars-algorithm/tutorial/
     https://leetcode.com/problems/longest-palindromic-substring/discuss/3337/Manacher-algorithm-in-Python-O(n)
     leetcode答案里还有个链接...
     """
