@@ -52,7 +52,7 @@ class Solution(object):
         if not nums:
             return 0
 
-        global_max = nums[0]
+        global_max = nums[0]  # Note this should be long 
         cur_max = cur_min = nums[0]
         for cur in nums[1:]:
             tmp = cur_max  # Note 需要这个tmp来防止max被改写..

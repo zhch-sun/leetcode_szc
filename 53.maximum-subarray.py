@@ -14,7 +14,7 @@ class Solution(object):
         if not nums:
             return 0
         
-        local_max = nums[0]
+        local_max = nums[0]  # note this should be long 
         global_max = nums[0]  # TODO python's number float('-inf') float('inf')
         for cur in nums[1:]:
             # critical part! either just cur pos or prev + cur; 
