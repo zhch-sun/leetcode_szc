@@ -23,8 +23,8 @@ class Solution(object):
         # 实际上是转换成为一个差值序列, 求最大连续子序列.
         n = len(prices)
         local_max = global_max = 0
-        if n < 2:
-            return 0
+        # if n < 2:
+        #     return 0
         for i in xrange(1, len(prices)) :
             local_max = max(local_max + prices[i] - prices[i-1], 0)
             global_max = max(local_max, global_max)
