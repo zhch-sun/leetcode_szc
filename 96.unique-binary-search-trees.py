@@ -33,6 +33,7 @@ class Solution(object):
 if __name__ == '__main__':
     """
     关键在于以某个数为中心的个数等于左右两遍的个数的乘积. 
+    也有个公式可以搞.
     """
     s = Solution()
     print(s.numTrees(5))
