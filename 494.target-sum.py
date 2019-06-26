@@ -20,7 +20,7 @@ class Solution(object):
         # Note that leads to memory error...has to check before
         dp = [1] + [0] * target  
         for num in nums:
-            for i in range(target, num - 1, -1):
+            for i in xrange(target, num - 1, -1):  # Note the xrange
                 if dp[i - num]:
                     dp[i] += dp[i - num]   # Note not + 1!
         
@@ -28,6 +28,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    必须是正数?
     TODO DFS
     """
     s = Solution()
