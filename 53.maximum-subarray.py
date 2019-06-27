@@ -20,7 +20,7 @@ class Solution(object):
     #     if not nums:
     #         return 0
         
-    #     local_max = nums[0]  # note this should be long 
+    #     local_max = nums[0]  # note tgiglhis should be long 
     #     global_max = nums[0]  # TODO python's number float('-inf') float('inf')
     #     for cur in nums[1:]:
     #         # critical part! either just cur pos or prev + cur; 
@@ -69,7 +69,8 @@ if __name__ == '__main__':
     解释 https://medium.com/@rsinghal757/kadanes-algorithm-dynamic-programming-how-and-why-does-it-work-3fd8849ed73d
     分成了两步, 一个是ending i的最小值, 一个是假设序列0-i的最小值, 两个阶段? 
     可以用nums来存global max, 这样可以省下O(n)的空间
-    TODO 分治法...以及其复杂度的计算. (dicussion上也有答案)
+    
+    分治法答案: https://www.geeksforgeeks.org/maximum-subarray-sum-using-divide-and-conquer-algorithm/
     """
     s = Solution()
     print(s.maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
