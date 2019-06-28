@@ -26,12 +26,14 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    
-    """
+    注意python 答案中的 tupleify 做法中的 and的使用:
+    https://stackoverflow.com/questions/47007680/strange-use-of-and-or-operator
+    and: Return the first Falsy value if there are any, else return the last value in the expression.
+    """ 
     s = Solution()
     
     def t(n):
-        # print(n and (n.val, t(n.left), t(n.right)))
+        # return n and (n.val, t(n.left), t(n.right))
         return n and (n.val, t(n.left), t(n.right))
     
     tree = TreeNode(5)
