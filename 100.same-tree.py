@@ -24,3 +24,18 @@ class Solution(object):
         # return p is q  # check if all None
         return True if p is None and q is None else False
 
+if __name__ == '__main__':
+    """
+    
+    """
+    s = Solution()
+    
+    def t(n):
+        # print(n and (n.val, t(n.left), t(n.right)))
+        return n and (n.val, t(n.left), t(n.right))
+    
+    tree = TreeNode(5)
+    tree.left = TreeNode(3)
+    tree.right = TreeNode(2)
+
+    print(t(tree))
