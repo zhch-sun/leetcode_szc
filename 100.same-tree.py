@@ -33,8 +33,10 @@ if __name__ == '__main__':
     s = Solution()
     
     def t(n):
-        # return n and (n.val, t(n.left), t(n.right))
+        # 这个不是level traversal
         return n and (n.val, t(n.left), t(n.right))
+        # 这个也不是level traversal
+        # return n and (n.val, t(n.left), t(n.right))
     
     tree = TreeNode(5)
     tree.left = TreeNode(3)
