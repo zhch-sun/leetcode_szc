@@ -81,16 +81,18 @@ def treeToList(input):
     res = []
     front = 0
     while True:
-        res.append(cur.val)
-        if cur.left is not None:
+        val = cur.val if cur is not None else None
+        res.append(val)
+        if cur is not None:  #及时该位置是空的，也要None?
             nodeQueue.append(cur.left)
-        if cur.right is not None:
             nodeQueue.append(cur.right)
         front += 1
         if front < len(nodeQueue):
             cur = nodeQueue[front]
         else:
             break
+    while res[-1] is None:  # 符合定义?
+        res.pop()
     return res
     
 
