@@ -24,10 +24,13 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    same with 240th, 在一张有序2d矩阵上找点. 有帮助吗?
-    这道题是个对称矩阵.
-    貌似可以用循环不变量来解释two pointers法. 
-    binary search貌似是nlogn,一个for循环接着binary search..太丑了. 
+    解法1: 
+    理解1: 可以用循环不变量来解释two pointers法. 
+    解一定在两头中间. 如果两头的和不够大, 就增加l到1, (0点和其他任何值的和都小于0)
+    理解2: same with 240th, 在一张有序2d矩阵上找点. 
+    这个可以把矩阵旋转, 就变成了一个二叉搜索树!! 所有节点左边的leaf 小于右边的leaf
+    
+    解法2: binary search貌似是nlogn,一个for循环接着binary search..太丑了. 
     """
     s = Solution()
     print(s.twoSum([2,7,11,15], 9))
