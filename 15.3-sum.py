@@ -36,7 +36,7 @@ class Solution(object):
         # 97 %
         nums.sort()
         res = []
-        for idx, item in enumerate(nums):
+        for idx, item in enumerate(nums):  # 这里循环位置也可以调, 不想写了. 
             if nums[idx] > 0:  # pruning
                 break
             if idx > 0 and nums[idx] == nums[idx - 1]:
