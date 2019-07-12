@@ -4,10 +4,9 @@
 # [15] 3Sum
 #
 class Solution(object):
-    def sortedTwoSum(self, nums, left, target):
+    def sortedTwoSum(self, nums, left, target, res):
         l = left
         r = len(nums) -1
-        res = []
         while l < r:
             cur = nums[l] + nums[r]
             if cur < target:
@@ -19,30 +18,29 @@ class Solution(object):
                 # while l < r and nums[r] == nums[r + 1]:  # not fast
                 #     r -= 1                
             else:
-                res.append([target * -1, nums[l], nums[r]])
+                res.append([0 - target, nums[l], nums[r]])
                 l += 1
                 r -= 1
                 while l < r and nums[l] == nums[l - 1]:  # Note this sign!
                     l += 1
                 while l < r and nums[r] == nums[r + 1]:  # Note sign!
                     r -= 1                
-        return res
 
     def threeSum(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        # 97 %
+        # 98 %
         nums.sort()
         res = []
-        for idx, item in enumerate(nums):  # 这里循环位置也可以调, 不想写了. 
-            if nums[idx] > 0:  # pruning
+        for idx in xrange(len(nums)-1):
+            item = nums[idx]
+            if nums[idx] > 0:  # pruning: 这是res里面的最小值. 
                 break
             if idx > 0 and nums[idx] == nums[idx - 1]:
                 continue
-            target = -1 * item
-            res += self.sortedTwoSum(nums, idx + 1, target)
+            self.sortedTwoSum(nums, idx + 1, 0 - item, res)
         return res
 
 
