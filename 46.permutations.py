@@ -25,31 +25,31 @@ class Solution(object):
     #     dfs(res, tmp, nums)
     #     return res
 
-    # def permute(self, nums):
-    #     def helper(nums, begin, res):
-    #         # permute begin: end
-    #         # [0: begin-1] has been permuted
-    #         if begin >= len(nums):
-    #             res.append(nums[:])  # Note nums[:]...
-    #         for i in range(begin, len(nums)):
-    #             nums[begin] , nums[i] = nums[i], nums[begin]
-    #             helper(nums, begin + 1, res)  # Note! begin + 1 not i
-    #             nums[begin] , nums[i] = nums[i], nums[begin]
-
-    #     res = []
-    #     helper(nums, 0, res)
-    #     return res
-
     def permute(self, nums):
-        # 这个会倒序...
-        res = [[]]
-        for num in nums:
-            new_res = []
-            for l in res:
-                for i in range(len(l) + 1):
-                    new_res.append(l[:i] + [num] + l[i:])
-            res = new_res
+        def helper(nums, begin, res):
+            # permute begin: end
+            # [0: begin-1] has been permuted
+            if begin >= len(nums):
+                res.append(nums[:])  # Note nums[:]...
+            for i in range(begin, len(nums)):
+                nums[begin] , nums[i] = nums[i], nums[begin]
+                helper(nums, begin + 1, res)  # Note! begin + 1 not i
+                nums[begin] , nums[i] = nums[i], nums[begin]
+
+        res = []
+        helper(nums, 0, res)
         return res
+
+    # def permute(self, nums):
+    #     # 这个顺序很奇怪....
+    #     res = [[]]
+    #     for num in nums:
+    #         new_res = []
+    #         for l in res:
+    #             for i in range(len(l) + 1):
+    #                 new_res.append(l[:i] + [num] + l[i:])
+    #         res = new_res
+    #     return res
 
 if __name__ == '__main__':
     """
