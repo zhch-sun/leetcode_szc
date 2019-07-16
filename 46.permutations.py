@@ -20,7 +20,7 @@ class Solution(object):
             res.append(tmp[:])  # have to copy here
         else:
             for item in nums:
-                if item in tmp:  # 这里不是很优雅?
+                if item in tmp:  # 这里又是o(n)的复杂度...
                     continue
                 tmp.append(item)
                 self.backtrack(res, tmp, nums)
@@ -29,7 +29,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    TODO backtrack一般是nary tree. for循环里面1.添加item, 2.recursion, 3.去掉item.
+    backtrack一般是nary tree. for循环里面1.添加item, 2.recursion, 3.去掉item.
 
     确实是个dfs，只不过这里不是binary而是n-ary tree。
     dfs可以用swap，好处是省掉了memcopy的时间。python的答案都有很多memcopy

@@ -9,6 +9,25 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
+        cur = len(nums) - 1
+        while cur >= 1 and nums[cur] <= nums[cur-1]:  # Note <=
+            cur -= 1
+        if cur == 0:
+            nums.reverse()  # in place reverse
+            return  # return nums
+        prev = cur - 1
+        next = cur
+        while next + 1 < len(nums) and nums[next+1] > nums[prev]:
+            next += 1
+        nums[prev], nums[next] = nums[next], nums[prev]
+        self.reverse(nums, prev+1, len(nums) - 1)
+        return  # return nums
+
+    def reverse(self, nums, left, right):
+        while left < right:
+            nums[left], nums[right] = nums[right], nums[left]
+            left += 1
+            right -= 1
         
 if __name__ == '__main__':
     """
@@ -27,4 +46,6 @@ if __name__ == '__main__':
     python 没有inplace的reverse。。
     """
     s = Solution()
-    
+    print(s.nextPermutation([1,2,3,4]))
+    print(s.nextPermutation([1,2,4,3]))
+    print(s.nextPermutation([4,3,2,1]))

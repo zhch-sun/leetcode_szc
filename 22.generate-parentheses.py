@@ -9,7 +9,24 @@ class Solution(object):
         :type n: int
         :rtype: List[str]
         """
-        
+        res = []
+        tmp = ''
+        self.dfs(res, tmp, n, n, n)
+        return res
+
+    def dfs(self, res, tmp, n, left, right):
+        if left == 0 and right == 0:
+            res.append(tmp[:])
+            return # forget that...
+        if left > 0:
+            # tmp += '('  # This is wrong!!
+            # left -= 1
+            self.dfs(res, tmp+'(', n, left-1, right)
+        if right > 0 and left < right:
+            # tmp += ')'
+            # right -= 1
+            self.dfs(res, tmp+')', n, left, right-1)
+
 if __name__ == '__main__':
     """
     答案总体来说两种，一种backtracking，一种dp。（python答案第三种不管）
@@ -22,5 +39,5 @@ if __name__ == '__main__':
     另外还需要想如果只需要output种类个数时，该怎么办。
     """
     s = Solution()
-    
+    print(s.generateParenthesis(3))
 
