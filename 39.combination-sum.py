@@ -10,26 +10,29 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
+        def dfs(candidates, target, res, tmp, left):
+            # 把dfs放进来提速效果显著..
+            if target == 0:
+                res.append(tmp[:])
+            elif target > 0:
+                for i in range(left, len(candidates)):
+                    item = candidates[i]
+                    if item > target:  # 加速效果显著
+                        break
+                    tmp.append(item)
+                    dfs(candidates, target-item, res, tmp, i)
+                    tmp.pop()
         res = []
         tmp = []
-        left = 0
         candidates.sort()
-        self.backtrack(candidates, target, res, tmp, left)
+        dfs(candidates, target, res, tmp, 0)
         return res
 
-    def backtrack(self, candidates, target, res, tmp, left):
-        if target == 0:
-            res.append(tmp[:])
-        elif target > 0:
-            for i in range(left, len(candidates)):
-                item = candidates[i]
-                tmp.append(item)
-                self.backtrack(candidates, target-item, res, tmp, i)
-                tmp.pop()
 
 if __name__ == '__main__':
     """
     backtracking: 算sum不如target-item快.
+    TODO: 还有dp的做法? 应该就不记了. 
     """
     s = Solution()
     print(s.combinationSum([2,3,5], 8))

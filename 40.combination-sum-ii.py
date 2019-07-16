@@ -10,24 +10,27 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
+        def dfs(candidates, target, res, left, tmp):
+            if target == 0:
+                res.append(tmp[:])
+            elif target > 0:
+                for i in range(left, len(candidates)):
+                    item = candidates[i]
+                    if item > target:  # 加速显著
+                        break
+                    # 仍然需要过滤1123这种. 注意是i-left不是i!!!
+                    if i - left > 0 and item == candidates[i-1]:
+                        continue
+                    tmp.append(item)
+                    dfs(candidates, target-item, res, i+1, tmp)
+                    tmp.pop()
         res = []
         tmp = []
-        left = 0
         candidates.sort()
-        self.backtrack(candidates, target, res, left, tmp)
+        dfs(candidates, target, res, 0, tmp)
         return res
 
-    def backtrack(self, candidates, target, res, left, tmp):
-        if target == 0:
-            res.append(tmp[:])
-        elif target > 0:
-            for i in range(left, len(candidates)):
-                # 仍然需要过滤1123这种. 注意是i-left不是i!!!
-                if i - left > 0 and candidates[i] == candidates[i-1]:
-                    continue
-                tmp.append(candidates[i])
-                self.backtrack(candidates, target-candidates[i], res, i+1, tmp)
-                tmp.pop()
+
 
 if __name__ == '__main__':
     """
