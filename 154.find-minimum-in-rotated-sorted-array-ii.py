@@ -29,10 +29,13 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    TODO 写find max
     所有做法最坏情况的复杂读都是O(n)
+    还是没有办法用nums[0]做pivot. 可能因为min一定在后面所以必须用nums[-1]做pivot吧. 
     """
     s = Solution()
     print(s.findMin([1,3,5]))
     print(s.findMin([2,2,2,0,1]))
     print(s.findMin([1,1,1,2,0,1,1,1,1]))
     print(s.findMin([1,1]))
+    print(s.findMin([1,2]))

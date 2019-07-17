@@ -29,8 +29,9 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    这种解法最好理解, 只用nums[0]当做pivot. 还有的用left当pivot, 不是那么好分析. 
     必须有在最上面判断符为<=的时候 必须有+1和-1, 
-    还是这种最好理解..
+    问题是当只有右半边的时候, 为什么也对? 只有右半边的时候, 这俩必处于同一边. 按照条件也处于同一边. 
 
     还有一个答案(相对于我的答案没有优势):
     https://leetcode.com/problems/search-in-rotated-sorted-array/discuss/14436/Revised-Binary-Search
