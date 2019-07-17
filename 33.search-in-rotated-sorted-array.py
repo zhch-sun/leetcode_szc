@@ -31,6 +31,9 @@ if __name__ == '__main__':
     """
     必须有在最上面判断符为<=的时候 必须有+1和-1, 
     还是这种最好理解..
+
+    还有一个答案(相对于我的答案没有优势):
+    https://leetcode.com/problems/search-in-rotated-sorted-array/discuss/14436/Revised-Binary-Search
     """
     s = Solution()
     # print(s.search([4,5,6,7,0,1,2], 4))
