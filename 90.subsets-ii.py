@@ -17,7 +17,7 @@ class Solution(object):
 
     def backtrack(self, nums, res, tmp, pos):
         res.append(tmp[:])
-        for i in range(pos, len(nums)):
+        for i in xrange(pos, len(nums)):
             if i > pos and nums[i] == nums[i-1]:
                 continue
             tmp.append(nums[i])
@@ -27,7 +27,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    
+    TODO iterative solution
     """
     s = Solution()
     print(s.subsetsWithDup([1,2,2]))

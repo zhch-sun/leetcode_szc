@@ -3,6 +3,13 @@
 #
 # [216] Combination Sum III
 #
+
+from itertools import combinations
+
+# class Solution:
+#     def combinationSum3(self, k, n):
+#         return [c for c in combinations(range(1, 10), k) if sum(c) == n]
+
 class Solution(object):
     def combinationSum3(self, k, n):
         """
@@ -10,7 +17,7 @@ class Solution(object):
         :type n: int
         :rtype: List[List[int]]
         """
-        candi = list(xrange(1, 10))    
+        candi = list(range(1, 10))    
         res = []
         tmp = []
         self.backtrack(candi, n, tmp, 0, res, k)
@@ -22,9 +29,8 @@ class Solution(object):
                 res.append(tmp[:])
             elif target > 0:
                 for i in range(left, len(candi)):
-                    item = candi[i]
-                    tmp.append(item)
-                    self.backtrack(candi, target-item, tmp, i + 1, res, k)
+                    tmp.append(candi[i])
+                    self.backtrack(candi, target-candi[i], tmp, i + 1, res, k)
                     tmp.pop()
 
 if __name__ == '__main__':

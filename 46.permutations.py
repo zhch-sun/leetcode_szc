@@ -42,6 +42,7 @@ class Solution(object):
 
     # def permute(self, nums):
     #     # 这个顺序很奇怪....
+    #     # 其实就是BFS
     #     res = [[]]
     #     for num in nums:
     #         new_res = []
@@ -57,7 +58,8 @@ if __name__ == '__main__':
     backtrack里面需要if item in tmp来判断...有点慢呀这里. 
     dfs可以用swap(第二个答案)，好处是省掉了memcopy的时间。python的答案都有很多memcopy
     但是swap的结果不够好, 是123 132 213 231 321 312. 注意321和312是反着的... 算法就是这样..
-    TODO iterative，基础是插入法, 一个一个数字插入. 1只有一个位置, 2有两个, 3有 2*3=6个 4有6*4=64个
+    iterative，基础是插入法, 一个一个数字插入. 1只有一个位置, 2有两个, 3有 2*3=6个 4有6*4=64个
+    其实就是BFS!!!!
     https://leetcode.com/problems/permutations/discuss/18237/My-AC-simple-iterative-javapython-solution
     上面的做法要求copy array, 很慢. 下面用swap解决了这个问题. 生长过程是9*8*7*6*5... 不知道怎么证明, 不搞. 
     https://leetcode.com/problems/permutations/discuss/18378/Simple-python-code-without-recursion

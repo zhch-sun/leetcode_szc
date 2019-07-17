@@ -11,20 +11,22 @@ class Solution(object):
         """
         res = []
         tmp = []
-        self.backtrack(nums, res, tmp, 0)
+        self.dfs(nums, res, tmp, 0)
         return res
 
-    def backtrack(self, nums, res, tmp, pos):
+    def dfs(self, nums, res, tmp, pos):
+        # 单独拿出来更快?!
         res.append(tmp[:])
-        for i in range(pos, len(nums)):
+        for i in xrange(pos, len(nums)):
             tmp.append(nums[i])
-            self.backtrack(nums, res, tmp, i + 1)
+            self.dfs(nums, res, tmp, i + 1)
             tmp.pop()
 
 
 if __name__ == '__main__':
     """
-    
+    TODO iterative: 和permutation差不错. 一个一个元素添加上去. 其实就是BFS. 
+    bit操作就不管了. 
     """
     s = Solution()
     print(s.subsets([1,2,3]))
