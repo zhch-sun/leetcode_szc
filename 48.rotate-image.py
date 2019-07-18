@@ -36,11 +36,12 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
+    TODO 非方阵?
     1.我的思路是: 每个边上对应位置的四个元素一起rotate. 注意对称元素的取法：通过取反～！！！
     另外我的i,j的range和python答案不一样. 
     python的~是补码, 即-(x+1)
     2. 另一个标准答案是: filp image两次. python还可以直接reverse. 
-    3. 用zip竟然可以transpose....震惊了.
+    3. 用zip竟然可以transpose....震惊了.  注意zip就是transpose. [::-1]的位置不同变成顺时针转还是逆时针转
     """
     s = Solution()
     # matrix = \
