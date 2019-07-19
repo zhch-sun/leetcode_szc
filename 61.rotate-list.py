@@ -43,6 +43,7 @@ if __name__ == '__main__':
     """
     注意要在中间先把尾巴和头连起来... 用来解决1个input时候的问题.
     slow fast貌似并没有变快? 还不如count
+    TODO slow fast
     """
     s = Solution()
     # print(s.rotateRight())
