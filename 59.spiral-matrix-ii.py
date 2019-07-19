@@ -15,7 +15,7 @@ class Solution(object):
         dc, dr = 1, 0
         for item in range(1, n * n + 1):
             res[ir][ic] = item
-            if res[(ir + dr)%n][(ic + dc)%n] > 0:
+            if res[(ir + dr) % n][(ic + dc) % n] > 0:
                 dc, dr = -dr, dc
             ic += dc
             ir += dr

@@ -71,6 +71,7 @@ class Solution(object):
     #     while True:
     #         if dc != 0:
     #             # 不能这样写... 不能把正负时候的情况合并, 需要调换:前后的顺序
+    #             # 可以找到两个数中间的大小, swap一下. 但是还是很麻烦. 
     #             res += matrix[ir][ic+dc:ic+dc*(nc+1):dc]
     #             ic += dc * nc
     #             nc -= abs(dc)
