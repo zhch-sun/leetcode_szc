@@ -19,7 +19,7 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        dummy = ListNode(0)
+        dummy = ListNode(None)
         dummy.next = head
         pre = dummy
         while head and head.next:
