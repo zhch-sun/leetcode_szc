@@ -21,7 +21,7 @@ class Solution(object):
     #             return  # i forget that
     #         mid = left + (right - left) // 2
     #         cur = TreeNode(nums[mid])
-    #         cur.left = convert(left, mid - 1)
+    #         cur.left = convert(left, mid - 1)  # TODO 这里顺序和前面调换呢?
     #         cur.right = convert(mid + 1, right)
     #         return cur
 
@@ -48,7 +48,9 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    TODO 非iterative: 用一个栈模仿函数调用
+    TODO: 怎么证明是height-balance? 
+    解法1:需要理解这个递归. 有点类似与二分查找. 
+    解法2: 非iterative: 用一个栈模仿函数调用
     """
     s = Solution()
     print(s.sortedArrayToBST([-10, -3, 0, 5, 9]))

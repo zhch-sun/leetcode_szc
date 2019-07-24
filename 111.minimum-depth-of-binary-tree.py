@@ -77,10 +77,10 @@ def listToTree(input):
 
 if __name__ == '__main__':
     """
+    mini-depth的定义是从root到叶子节点的最短距离. leaf的定义是一个没有children的node. 
     BFS更快
-    Note - can not directly use min(left, right) + 1  ....
-    Note - 必须是root 到 leaf的距离, 当root有一个分支是none的时候, depth不是1 !
-    leaf的定义是一个没有children的node. 
+    Note - can not directly use min(left, right) + 1 因为
+        当root有一个分支是none的时候, depth不是1 ! 所以还需要额外的条件判断
     当只有一个root的时候, root本身也是一个leaf
     """
     s = Solution()

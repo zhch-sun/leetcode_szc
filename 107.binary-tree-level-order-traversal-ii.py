@@ -38,6 +38,7 @@ class Solution(object):
         return 1 + max(self.treeDepth(root.left), self.treeDepth(root.right)) if root else 0
 
     def levelOrderBottom(self, root):
+        # 依旧是bfs. 预先求出depth, 这样就可以直接根据height放元素了.
         if not root:
             return []
         # res = [[]] * self.treeDepth(root)  # Note same pointers!!!!
@@ -109,11 +110,12 @@ def treeToList(input):
 
 if __name__ == '__main__':
     """
-    这个题应该就是102 + reverse了...
-    不用reverse一个普遍的做法是在list最开始插入, 但这个操作是O(n)呀..
-    注意如果用list的concat的化,也是O(n)的复杂度, 会生成一个新的list
-    我的做法中bfs可以用deque实现. 但是最后还是要转成list, 这还是要O(n), 和reverse没啥区别..
-    dfs似乎没有什么放啊. 
+    解法0(推荐):这个题最合理的解法应该就是102 + 最后list.reverse()了...
+    不用reverse:
+    解法1(没写): 在list最前面插入, 这个操作o(n)
+    解法2(我的第一种): res修改成一个deque, 最后还是要转成list, 这还是要O(n) 
+    解法3: 先求出tree的最大高度, 这种解法不推荐.
+    dfs似乎没有什么做法啊. 
     """
     s = Solution()
     tree = listToTree([3,9,20,None,None,15,7])

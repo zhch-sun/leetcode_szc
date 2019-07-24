@@ -35,10 +35,12 @@ class Solution(object):
 if __name__ == '__main__':
     """
     定义是每一个节点的两个子树的高度差小于1
-    这题并不能通过最大和最小高度来判断. 比如1左边是2, 2左边是三, height都是3, 但是不平衡.
+    这题并不能通过最大和最小高度来判断:
+        比如1左边是2, 2左边是三, height都是3, 但是不平衡: 
+        因为height是指从某个node出发的最大高度!
     答案是通过dfs过程中返回高度来实现的.
-    全局变量不能用来跳出recursion. 
-    如果想跳出, 只能搞try Exception了...
+    无法直接跳出recursion. 如果想跳出, 只能搞try Exception了...
+    TODO: 要写iterative的post-order traversal吗?
     """
     s = Solution()
         

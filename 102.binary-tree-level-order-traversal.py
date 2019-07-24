@@ -30,14 +30,15 @@ class Solution(object):
     #         level = [leaf for node in level for leaf in (node.left, node.right) if leaf]
     #     return res
     
-    # def levelOrder(self, root):
-    #     # 为了节省list comprehension的内存, 搞了一个可以在前面删除的deque. 
-    #     # deque接口: append() appendleft(), pop(), popleft()
-    #     # 依旧是dfs
-    #     if not root:
-    #         return []
-    #     res = []
-    #     level = deque([root])
+    # def levelOrdeneicunr(self, root):
+    #     # listcomneicunprehension的内存占用是上下两侧node之和. 
+    #     # 这里用neicun可以在前面删除的deque可以在循环中把上层node pop出来
+    #     # deque接neicun口: append() appendleft(), pop(), popleft()
+    #     # 依旧是bneicunfs
+    #     if not roneicunot:
+    #         returneicunn []
+    #     res = []neicun
+    #     level = dneicuneque([root])
     #     while level:
     #         res.append([node.val for node in level])
     #         size = len(level)
@@ -70,7 +71,8 @@ class Solution(object):
 if __name__ == '__main__':
     """
     BFS和DFS分别在不同情况下可以节省内存. BFS适合与瘦高(lean), DFS适合于胖的.
-    TODO DFS的内存是call stack? BFS是个queue?
+    DFS的内存是call stack: 所有的recursion必须要靠call stack的占用. 
+    BFS的内存是个queue.
     https://leetcode.com/problems/binary-tree-level-order-traversal/discuss/33468/One-of-C%2B%2B-solutions-(preorder)
     """
     s = Solution()

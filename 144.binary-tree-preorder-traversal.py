@@ -1,16 +1,8 @@
 #
-# @lc app=leetcode id=109 lang=python
+# @lc app=leetcode id=144 lang=python
 #
-# [109] Convert Sorted List to Binary Search Tree
+# [144] Binary Tree Preorder Traversal
 #
-
-def list2Node(input):
-    dummy = ListNode(0)
-    cur = dummy
-    for item in input:
-        cur.next = ListNode(item)
-        cur = cur.next
-    return dummy.next
 
 def listToTree(input):
     if not input:
@@ -62,15 +54,6 @@ def treeToList(input):
         res.pop()
     return res
 
-# Definition for singly-linked list.
-class ListNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-    def __repr__(self):
-        next = ',' + self.next.__repr__() if self.next else ''
-        return str(self.val) + next
-
 # Definition for a binary tree node.
 class TreeNode(object):
     def __init__(self, x):
@@ -79,36 +62,24 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-    def sortedListToBST(self, head):
+    def preorderTraversal(self, root):
         """
-        :type head: ListNode
-        :rtype: TreeNode
+        :type root: TreeNode
+        :rtype: List[int]
         """
-        def dfs(n):
-            if n <= 0:  # 忘记了..
-                return None  
-            left = dfs(n / 2)
-            tree = TreeNode(self.node.val)
-            tree.left = left
-            self.node = self.node.next
-            tree.right = dfs(n - n / 2 - 1)
-            return tree
-        self.node = head  # 貌似只有builtin的[]和{}才能够在内部修改外部变量. node是不能直接修改的.
-        count = 0
-        cur = ListNode(None)
-        cur.next = head
-        while cur.next:
-            count += 1
-            cur = cur.next
-        return dfs(count)
-
+        def helper(root, res):
+            if root:
+                res.append(root.val)
+                helper(root.left, res)
+                helper(root.right, res)
+        res = []
+        helper(root, res)
+        return res
+            
 if __name__ == '__main__':
     """
-    有一个做法是每次都用slow fast确定中点位置, 速度太慢了. nlog(n)
-    答案的做法还是很高明的. 直接通过个数判断在数上的位置. (和108一样?)
-    还有就是要把node写成self.node: 这是python作用域的问题了. 
+    
     """
     s = Solution()
-
-    print(treeToList(s.sortedListToBST(list2Node([-10,-3,0,5,9]))))
-
+    print(s.preorderTraversal(listToTree([1,None,2,3])))
+    
