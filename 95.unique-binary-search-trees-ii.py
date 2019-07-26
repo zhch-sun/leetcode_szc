@@ -1,7 +1,7 @@
 #
-# @lc app=leetcode id=144 lang=python
+# @lc app=leetcode id=95 lang=python
 #
-# [144] Binary Tree Preorder Traversal
+# [95] Unique Binary Search Trees II
 #
 
 def listToTree(input):
@@ -62,51 +62,17 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-    # def preorderTraversal(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: List[int]
-    #     """
-    #     def helper(root, res):
-    #         if root:
-    #             res.append(root.val)
-    #             helper(root.left, res)
-    #             helper(root.right, res)
-    #     res = []
-    #     helper(root, res)
-    #     return res
-    
-    # def preorderTraversal(self, root):
-    #     if not root:
-    #         return root
-    #     stack = [root]
-    #     res = []
-    #     while stack:
-    #         cur = stack.pop()
-    #         res.append(cur.val)
-    #         if cur.right:
-    #             stack.append(cur.right)
-    #         if cur.left:
-    #             stack.append(cur.left)
-    #     return res
-
-    def preorderTraversal(self, root):
-        # 这样判断条件更少. 而且速度更快. 
-        stack = [root]
-        res = []
-        while stack:
-            cur = stack.pop()
-            if cur:
-                res.append(cur.val)
-                stack.append(cur.right)
-                stack.append(cur.left)
-        return res
+    def generateTrees(self, n):
+        """
+        :type n: int
+        :rtype: List[TreeNode]
+        """
 
 if __name__ == '__main__':
     """
-    recursive很简单. 
-    两种iterative只有很少的区别. 主要就是如何使代码更优雅.
+    
     """
     s = Solution()
-    print(s.preorderTraversal(listToTree([1,None,2,3])))
-    
+    print(s.generateTrees(3))
+        
+
