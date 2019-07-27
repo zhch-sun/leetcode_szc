@@ -62,34 +62,34 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-    def inorderTraversal(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
-        # left root right
-        def helper(root, res):
-            if root:
-                helper(root.left, res)
-                res.append(root.val)
-                helper(root.right, res)
-        res = []
-        helper(root, res)
-        return res
-    
     # def inorderTraversal(self, root):
-    #     # 相对好理解. 如果当前node不为none, 就往left跑
-    #     stack = []
+    #     """
+    #     :type root: TreeNode
+    #     :rtype: List[int]
+    #     """
+    #     # left root right
+    #     def helper(root, res):
+    #         if root:
+    #             helper(root.left, res)
+    #             res.append(root.val)
+    #             helper(root.right, res)
     #     res = []
-    #     cur = root
-    #     while cur or stack: # 这个条件
-    #         while cur is not None:  # 只有下面pop出值来才查左边?
-    #             stack.append(cur)  #  这里add是current, 而不是left..
-    #             cur = cur.left
-    #         cur = stack.pop() # 注意这里必须pop, 因为上面的cur已经变成None..
-    #         res.append(cur.val)  # cur has no left leaf
-    #         cur = cur.right  # might be None
+    #     helper(root, res)
     #     return res
+    
+    def inorderTraversal(self, root):
+        # 相对好理解. 如果当前node不为none, 就往left跑
+        stack = []
+        res = []
+        cur = root
+        while cur or stack: # 这个条件
+            while cur is not None:  # 只有下面pop出值来才查左边?
+                stack.append(cur)  #  这里add是current, 而不是left..
+                cur = cur.left
+            cur = stack.pop() # 注意这里必须pop, 因为上面的cur已经变成None..
+            res.append(cur.val)  # cur has no left leaf
+            cur = cur.right  # might be None
+        return res
 
     # def inorderTraversal(self, root):
     #     # 合并了两个while循环. 这个最快... 
@@ -110,7 +110,9 @@ if __name__ == '__main__':
     """
     recursive很直接. 
     iterative: 
-    解法1:push进去的是cur, 而不是current.left. 意思是push进去所有有left的node. 
+    解法1:
+        就用这个解法. 
+        push进去的是cur, 而不是current.left. 意思是push进去所有有left的node. 
         而不是push进去所有node的left children...
         TODO 这个题因为有两个不同位置的递归, 所以不能直接用stack做?
     解法2: 把两个while循环写到一起. 

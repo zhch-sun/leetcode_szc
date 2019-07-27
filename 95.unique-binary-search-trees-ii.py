@@ -121,6 +121,8 @@ if __name__ == '__main__':
 
     解法2: 加速方案: 可以添加一个cache, 存着从low~high的结果. python3可以直接用lru_cache. 
     python2要手写. 注意cache相当于全局变量. 但是有了cache之后相当于多个tree会共用一个subtree?
+
+    TODO LRU cache
     """
     s = Solution()
     trees = s.generateTrees(3)
