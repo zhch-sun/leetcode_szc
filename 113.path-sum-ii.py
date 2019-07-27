@@ -1,9 +1,8 @@
 #
-# @lc app=leetcode id=106 lang=python
+# @lc app=leetcode id=113 lang=python
 #
-# [106] Construct Binary Tree from Inorder and Postorder Traversal
+# [113] Path Sum II
 #
-
 def listToTree(input):
     if not input:
         return None
@@ -62,39 +61,40 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-    # def buildTree(self, inorder, postorder):
-    #     """
-    #     :type inorder: List[int]
-    #     :type postorder: List[int]
-    #     :rtype: TreeNode
-    #     """
-    #     if inorder:
-    #         item = postorder.pop()
-    #         ind = inorder.index(item)
-    #         node = TreeNode(item)
-    #         node.right = self.buildTree(inorder[ind+1:], postorder)
-    #         node.left = self.buildTree(inorder[0:ind], postorder)
-    #         return node
+    def pathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: List[List[int]]
+        """
+        def helper(root, sum, tmp, res):
+            sum -= root.val
+            tmp.append(root.val)
+            if root.left is None and root.right is None:
+                if sum == 0:
+                    res.append(tmp[:])
+                tmp.pop()  #所有return前都要pop()
+                return
+            if root.left:
+                helper(root.left, sum, tmp, res)
+            if root.right:
+                helper(root.right, sum, tmp, res)
+            tmp.pop()
         
-    def buildTree(self, inorder, postorder):
-        def helper(low, high):  # [low, high)
-            if low < high:
-                item = postorder.pop()
-                ind = inorder_cache[item]
-                node = TreeNode(item)
-                node.right = helper(ind + 1, high)
-                node.left = helper(low, ind)  # 这里写成(0,ind)了
-                return node
-
-        inorder_cache = {item: i for i, item in enumerate(inorder)}
-        return helper(0, len(inorder))
+        if not root:
+            return []
+        res = []
+        helper(root, sum, [], res)
+        return res
         
 if __name__ == '__main__':
     """
-    在把上面的答案转换成下面的答案的时候, 遇到了若干问题..
-    1. recurse出还是调用的self.buildTree... 实际上是helper
-    2. helper的区间范围, 应该是(low, ind), 写成了(0,ind) 还是容易错呀..
+    和前面的区别是前面只要返回是否存在,
+    解法1:
+        这题返回所有解. backtracking可以.
+    解法2: 更短
+        不用backtracking, 每次都返回一个新的list: 但这个需要每次都copy了.
+        解法2不写了. 
     """
     s = Solution()
-    print(treeToList(s.buildTree([9,3,15,20,7], [9,15,7,20,3])))
-
+    print(s.pathSum(listToTree([5,4,8,11,None,13,4,7,2,None,None,5,1]), 22))
