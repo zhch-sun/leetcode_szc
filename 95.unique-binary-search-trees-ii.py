@@ -3,7 +3,6 @@
 #
 # [95] Unique Binary Search Trees II
 #
-
 def listToTree(input):
     if not input:
         return None
@@ -62,17 +61,70 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
+#     def generateTrees(self, n):
+#         """
+#         :type n: int
+#         :rtype: List[TreeNode]
+#         """
+#         # 87%
+#         def helper(low, high):
+#             # low high 都能被取到
+#             if high < low: # 等于的时候也需要return
+#                 return [None]  # 注意必须是None, 因为还要连在left和right上
+#             trees = []
+#             for i in range(low, high + 1):
+#                 left = helper(low, i - 1)
+#                 right = helper(i + 1, high)
+#                 for l in left:
+#                     for r in right:
+#                         node = TreeNode(i)
+#                         node.left = l
+#                         node.right = r
+#                         trees.append(node)
+#             return trees
+        
+#         return helper(1, n) if n > 0 else []
+
     def generateTrees(self, n):
         """
         :type n: int
         :rtype: List[TreeNode]
         """
+        # 98%
+        cache = {}
+        def helper(low, high):
+            # low high 都能被取到
+            if high < low: # 等于的时候也需要return
+                return [None]  # 注意必须是None, 因为还要连在left和right上
+            if (low, high) in cache:
+                return cache[(low, high)]
+            trees = []
+            for i in range(low, high + 1):
+                left = helper(low, i - 1)
+                right = helper(i + 1, high)
+                for l in left:
+                    for r in right:
+                        node = TreeNode(i)
+                        node.left = l
+                        node.right = r
+                        trees.append(node)
+            cache[(low, high)] = trees
+            return trees
+        
+        return helper(1, n) if n > 0 else []
 
 if __name__ == '__main__':
     """
-    
+    解法1: 就是穷举. 注意必须是i-1 i+1, 我一开始放的i...
+    因为recursion, 树是从下向上生长的. 注意返回的list of trees
+    corner case: 答案里有更短的处理方案, 利用and. 但是影响可读性. 
+
+    解法2: 加速方案: 可以添加一个cache, 存着从low~high的结果. python3可以直接用lru_cache. 
+    python2要手写. 注意cache相当于全局变量. 但是有了cache之后相当于多个tree会共用一个subtree?
     """
     s = Solution()
-    print(s.generateTrees(3))
+    trees = s.generateTrees(3)
+    for t in trees:
+        print(treeToList(t))
         
 
