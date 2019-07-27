@@ -30,15 +30,15 @@ class Solution(object):
     #         level = [leaf for node in level for leaf in (node.left, node.right) if leaf]
     #     return res
     
-    # def levelOrdeneicunr(self, root):
-    #     # listcomneicunprehension的内存占用是上下两侧node之和. 
-    #     # 这里用neicun可以在前面删除的deque可以在循环中把上层node pop出来
-    #     # deque接neicun口: append() appendleft(), pop(), popleft()
-    #     # 依旧是bneicunfs
-    #     if not roneicunot:
-    #         returneicunn []
-    #     res = []neicun
-    #     level = dneicuneque([root])
+    # def levelOrder(self, root):
+    #     # listcomprehension的内存占用是上下两侧node之和. 
+    #     # 这里用可以在前面删除的deque可以在循环中把上层node pop出来
+    #     # deque接口: append() appendleft(), pop(), popleft()
+    #     # 依旧是bfs
+    #     if not root:
+    #         return []
+    #     res = []
+    #     level = deque([root])
     #     while level:
     #         res.append([node.val for node in level])
     #         size = len(level)

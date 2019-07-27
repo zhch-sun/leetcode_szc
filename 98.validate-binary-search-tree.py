@@ -81,16 +81,16 @@ class Solution(object):
 
     def isValidBST(self, root):
         stack = []
-        last = None
+        pre = None
         cur = root
         while cur or stack:
             while cur is not None:
                 stack.append(cur)
                 cur = cur.left
             cur = stack.pop()
-            if last is not None and last >= cur.val:  # Note 这里不能if last!!!
+            if pre is not None and pre >= cur.val:  # Note 这里不能if last!!!
                 return False
-            last = cur.val
+            pre = cur.val
             cur = cur.right
         return True
 
