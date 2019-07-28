@@ -41,38 +41,22 @@ class Solution(object):
     #         root = head
     #     return save
 
-    # def connect(self, root):
-    #     dummy = Node(0, None, None, None)  # dummy head
-    #     dummy.next = root
-    #     while dummy.next:
-    #         cur = dummy.next
-    #         dummy.next = None  # new head
-    #         pre = dummy
-    #         while cur:
-    #             if cur.left:
-    #                 pre.next = cur.left
-    #                 pre = cur.left
-    #             if cur.right:
-    #                 pre.next = cur.right
-    #                 pre = cur.right
-    #             cur = cur.next  # 忘了这个!!
-    #     return root
-
-    def connect(self, node):
-        save = node
-        tail = dummy = Node(0, None, None, None)
-        while node:
-            tail.next = node.left
-            if tail.next:
-                tail = tail.next
-            tail.next = node.right
-            if tail.next:
-                tail = tail.next
-            node = node.next
-            if not node:
-                tail = dummy
-                node = dummy.next
-        return save
+    def connect(self, root):
+        dummy = Node(0, None, None, None)  # dummy head
+        dummy.next = root
+        while dummy.next:
+            cur = dummy.next
+            dummy.next = None  # new head
+            pre = dummy
+            while cur:
+                if cur.left:
+                    pre.next = cur.left
+                    pre = cur.left
+                if cur.right:
+                    pre.next = cur.right
+                    pre = cur.right
+                cur = cur.next  # 忘了这个!!
+        return root
 
 if __name__ == '__main__':
     """
