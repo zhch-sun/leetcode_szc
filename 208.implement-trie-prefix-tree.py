@@ -9,7 +9,7 @@ from collections import defaultdict
 class TrieNode(object):
     def __init__(self):
         self.nodes = defaultdict(TrieNode)
-        self.isWord = False
+        self.isEnd = False
 
 class Trie(object):
 
@@ -18,7 +18,7 @@ class Trie(object):
         Initialize your data structure here.
         """
         self.root = TrieNode()  # the 
-        self.root.isWord = True
+        self.root.isEnd = True
 
     def insert(self, word):
         """
@@ -32,7 +32,7 @@ class Trie(object):
             # if char not in cur.nodes:
             #     cur.nodes[char] = TrieNode()
             cur = cur.nodes[char]
-        cur.isWord = True
+        cur.isEnd = True
 
     def search(self, word):
         """
@@ -49,7 +49,7 @@ class Trie(object):
             #     cur = cur.nodes[char]
             # else:
             #     return False
-        return cur.isWord
+        return cur.isEnd
 
     def startsWith(self, prefix):
         """

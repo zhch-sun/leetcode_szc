@@ -4,6 +4,42 @@
 # [79] Word Search
 #
 class Solution(object):
+    # def exist(self, board, word):
+    #     """
+    #     :type board: List[List[str]]
+    #     :type word: str
+    #     :rtype: bool
+    #     """
+    #     def dfs(i, j, k, tmp):
+    #         # check current
+    #         if board[i][j] != word[k]:
+    #             return False
+    #         if k + 1 == len(word):  # note k + 1
+    #             return True      
+    #         # generate next          
+    #         tmp.append((i, j))
+    #         dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+    #         for d in dirs:
+    #             ti = i + d[0]
+    #             tj = j + d[1]
+    #             if 0 <= ti < m and 0 <= tj < n and (ti, tj) not in tmp:  # 这个判断条件不简单
+    #                 if dfs(ti, tj, k + 1, tmp):
+    #                     return True
+    #         tmp.pop()
+    #         return False
+        
+    #     # if not word:
+    #     #     return True
+    #     # if not board:
+    #     #     return False
+    #     m, n = len(board), len(board[0])
+    #     for i in range(m):
+    #         for j in range(n):
+    #             # 不能写下面的写法... 因为这样写board[i][j]没有放到tmp中
+    #             if dfs(i, j, 0, []):  # board[i][j] == word[0] and 
+    #                 return True
+    #     return False
+
     def exist(self, board, word):
         """
         :type board: List[List[str]]
@@ -16,8 +52,8 @@ class Solution(object):
                 return False
             if k + 1 == len(word):  # note k + 1
                 return True      
-            # generate next          
-            tmp.append((i, j))
+            # generate next     
+            tmp.add((i,j))     
             dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]]
             for d in dirs:
                 ti = i + d[0]
@@ -25,21 +61,16 @@ class Solution(object):
                 if 0 <= ti < m and 0 <= tj < n and (ti, tj) not in tmp:  # 这个判断条件不简单
                     if dfs(ti, tj, k + 1, tmp):
                         return True
-            tmp.pop()
+            tmp.remove((i,j))
             return False
-        
-        if not word:
-            return True
-        if not board:
-            return False
+    
         m, n = len(board), len(board[0])
         for i in range(m):
             for j in range(n):
                 # 不能写下面的写法... 因为这样写board[i][j]没有放到tmp中
-                if dfs(i, j, 0, []):  # board[i][j] == word[0] and 
+                if dfs(i, j, 0, set()):  # board[i][j] == word[0] and 
                     return True
-        return False
-    
+        return False    
         
     # def exist(self, board, word):
     #     def dfs(i, j, k):
@@ -90,10 +121,11 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    解法1: for循环+backtrack.  但是有若干细节需要注意. 
-    解法2: 走过的路赋值为奇怪的东西, 这样其实用同样大小的memory. 速度一样
+    解法1: for循环+backtrack. 用list存着之前走过的路径, 但是有若干细节需要注意. 
+    解法2: 和上面同样的思路, 用set存着, 这样查找速度为O(1). 加速了很多! 
+    解法3: 走过的路赋值为奇怪的东西, 这样其实用同样大小的memory. 速度一样
     这个解法2因为在中间跳出, 会改变board的值....
-    解法3: 因为调用了更少的函数所以更快, 但是条件太tricky了. 还是解法1把.
+    解法4: 因为调用了更少的函数所以更快, 但是条件太tricky了. 还是解法1把.
     """
     s = Solution()
     board = \
