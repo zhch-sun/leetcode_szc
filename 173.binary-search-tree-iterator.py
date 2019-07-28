@@ -61,45 +61,16 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
-class BSTIterator(object):
-    # 98%
-    def __init__(self, root):
-        """
-        :type root: TreeNode
-        """
-        self.stack = []
-        while root:
-            self.stack.append(root)
-            root = root.left
-
-    def next(self):
-        """
-        @return the next smallest number
-        :rtype: int
-        """
-        cur = self.stack.pop()
-        if cur.right:
-            item = cur.right
-            while item:
-                self.stack.append(item)
-                item = item.left
-        return cur.val
-
-    def hasNext(self):
-        """
-        @return whether we have a next smallest number
-        :rtype: bool
-        """
-        return len(self.stack) > 0
-        
 # class BSTIterator(object):
-#     # 57.48% 抽象了一个函数. 
+#     # 98%
 #     def __init__(self, root):
 #         """
 #         :type root: TreeNode
 #         """
 #         self.stack = []
-#         self._left2stack(root)
+#         while root:
+#             self.stack.append(root)
+#             root = root.left
 
 #     def next(self):
 #         """
@@ -107,7 +78,11 @@ class BSTIterator(object):
 #         :rtype: int
 #         """
 #         cur = self.stack.pop()
-#         self._left2stack(cur.right)
+#         if cur.right:
+#             item = cur.right
+#             while item:
+#                 self.stack.append(item)
+#                 item = item.left
 #         return cur.val
 
 #     def hasNext(self):
@@ -116,11 +91,36 @@ class BSTIterator(object):
 #         :rtype: bool
 #         """
 #         return len(self.stack) > 0
+        
+class BSTIterator(object):
+    # 92% 抽象了一个函数. 
+    def __init__(self, root):
+        """
+        :type root: TreeNode
+        """
+        self.stack = []
+        self._left2stack(root)
 
-#     def _left2stack(self, root):
-#         while root:
-#             self.stack.append(root)
-#             root = root.left
+    def next(self):
+        """
+        @return the next smallest number
+        :rtype: int
+        """
+        cur = self.stack.pop()
+        self._left2stack(cur.right)
+        return cur.val
+
+    def hasNext(self):
+        """
+        @return whether we have a next smallest number
+        :rtype: bool
+        """
+        return len(self.stack) > 0
+
+    def _left2stack(self, root):
+        while root:
+            self.stack.append(root)
+            root = root.left
 
 # Your BSTIterator object will be instantiated and called as such:
 # obj = BSTIterator(root)
