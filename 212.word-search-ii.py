@@ -95,7 +95,7 @@ class Solution(object):
                 node.word = None
             save, board[i][j] = board[i][j], None
             for ni, nj in [(i-1,j), (i+1,j), (i,j-1), (i,j+1)]:
-                if 0 <= ni < m and 0 <= nj < n and board[ni][nj] is not None:
+                if 0 <= ni < m and 0 <= nj < n and board[ni][nj] is not None:  # 写成了board[i][j]
                     dfs(ni, nj, res, node)
             board[i][j] = save
 
