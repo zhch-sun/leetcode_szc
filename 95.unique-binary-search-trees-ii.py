@@ -120,9 +120,11 @@ if __name__ == '__main__':
     corner case: 答案里有更短的处理方案, 利用and. 但是影响可读性. 
 
     解法2: 加速方案: 可以添加一个cache, 存着从low~high的结果. python3可以直接用lru_cache. 
-    python2要手写. 注意cache相当于全局变量. 但是有了cache之后相当于多个tree会共用一个subtree?
+    python2要手写. 注意cache相当于全局变量. 
+    但是有了cache之后相当于多个tree会共用一个subtree? 应该是的. 
 
-    TODO LRU cache
+    解法3: LRU cache. 假设函数保证给定输入的情况下输出相同. 那么可以给函数加wrapper
+        记录最近n个输入的函数的输出值. 如果再遇到相同输入直接从cache中读取. cache是一个有序字典.
     """
     s = Solution()
     trees = s.generateTrees(3)
