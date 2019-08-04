@@ -41,8 +41,10 @@ class Solution(object):
 if __name__ == '__main__':
     """
     解法1: 答案先转化成set, 非常巧妙.
-    只有 x - 1 不存在的时候, 才开始循环.. 这样可以避免重复操作. 使得最后就是o(n)
-    解法2: 错解... set不是queue, 不能这么搞..
+        只有 x - 1 不存在的时候, 才开始循环.. 这样可以避免重复操作. 使得最后就是o(n)
+    解法2: union find
+        还是要转换成set, 然后连起来..
+    解法3: 错解... set不是queue, 不能这么搞..
     """
     s = Solution()
     print(s.longestConsecutive([100, 4, 200, 1, 3, 2]))
