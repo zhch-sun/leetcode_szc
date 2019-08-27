@@ -9,26 +9,23 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        # next position to write
-        i = 0
-        j = len(nums) - 1
-        k = 0
-        while k <= j:  # 结束条件!
-            if nums[k] == 2:
-                nums[k], nums[j] = nums[j], nums[k]
-                j -= 1  # k不加1!!!
-            elif nums[k] == 0:
+        # [0, i) [i, k) [k, j] (j, N-1]        
+        i, k, j = 0, 0, len(nums) - 1
+        while k <= j:  # [k,j]之间不确定
+            if nums[k] == 0:
                 nums[k], nums[i] = nums[i], nums[k]
+                k += 1
                 i += 1
+            elif nums[k] == 1:
                 k += 1
             else:
-                k += 1
-        return nums
-
+                nums[k], nums[j] = nums[j], nums[k]
+                j -= 1  # Note k
         
 if __name__ == '__main__':
     """
-    实际上是三个指针. 需要仔细想清楚指针的移动. 还有结束条件!
+    荷兰国旗问题, 类似3way quicksort. 三个指针. 
+    [0, i) < v; [i, k) == v; (j, N-1] < v; [k, j]是不确定
     结束条件应该只能是j. 
     """
     s = Solution()
