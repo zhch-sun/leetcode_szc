@@ -68,29 +68,28 @@ class Solution(object):
         sort2(a, aux)
 
     def quickSort(self, a, cmp):
-        # 标准实现56%
-        def partition(a, lo, hi):  # [lo, hi]
-            # partition有多个实现, 我这个是Hoare原版, 比其他少1/3的swap
+        def partition(a, lo, hi):  # 78%
+            # Hoare Partition
             # 和书上相比, 因为python没有++i, 所以实现略有差别. 
-            cur = a[lo]
-            i, j = lo + 1, hi
+            # 循环不变量 [lo + 1, i) [i, j] (j, hi]
+            cur = a[lo]  # 最好手动缓存
+            i, j = lo + 1, hi  # 不能 lo + 1, hi, 因为这样不支持part lo==hi 的情况
             while True:
-                while cmp(a[i], cur) <= 0:  # 不需要i < j因为右边已经排好序
-                    if i == hi:
-                        break
-                    i += 1
-                while cmp(a[j], cur) >= 0:
-                    if j == lo:
-                        break
-                    j -= 1
-                if i >= j:
+                while i <= hi and cmp(a[i], cur) < 0:  # 不需要i < j因为右边已经排好序
+                    i += 1  # i <= hi可以省略, 需要初始化时找到max并移到最右边省掉
+                while j >= lo and cmp(a[j], cur) > 0:
+                    j -= 1  # j >= lo 可以直接省掉
+                if i >= j:  # Note >=. 因为相等的情况也是排好序(要么等于, 要么碰一起)
                     break
                 a[i], a[j] = a[j], a[i]
-            a[lo], a[j] = a[j], a[lo]
+                i += 1
+                j -= 1                  
+
+            a[lo], a[j] = a[j], a[lo]  # 和最后一个大于lo的交换
             return j
 
         def sort(a, lo, hi):  # [lo, hi]
-            if hi <= lo:  # 所以lo和hi可能相邻, lo和j - 1可能相同. 
+            if hi <= lo:  # 至少有两个元素
                 return  # 这一句可以替换成插入排序
             j = partition(a, lo, hi)
             sort(a, lo, j - 1)  # Note 这里是j-1 j+1
