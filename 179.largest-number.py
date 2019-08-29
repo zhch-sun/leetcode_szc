@@ -21,7 +21,7 @@ class Solution(object):
         # 注意循环过程中修改array所以不能用迭代器. 
         for i in range(1, len(a)):  # 0号位不能比较
             j, cur = i, a[i]
-            while j > 0 and cmp(cur, a[j - 1]) < 0:
+            while j > 0 and cmp(cur, a[j - 1]) < 0:  # 忘记 j > 0 啦; 比较的是j - 1!!
                 a[j] = a[j - 1]
                 j -= 1
             a[j] = cur
@@ -32,15 +32,15 @@ class Solution(object):
         def merge(a, aux, lo, mid, hi): # [lo, mid], (mid, hi]
             for i in range(lo, hi + 1):
                 aux[i] = a[i]
-            i, j = lo, mid + 1  # Note mid + 1?
+            i, j = lo, mid + 1  # Note mid + 1!!!
             for k in range(lo, hi + 1):
-                if i > mid:
+                if i > mid:  # 这么处理越界条件!
                     a[k] = aux[j]
                     j += 1
                 elif j > hi:
                     a[k] = aux[i]
                     i += 1
-                elif cmp(aux[i], aux[j]) < 0:
+                elif cmp(aux[i], aux[j]) < 0:  # Note 这里比较的aux!!!
                     a[k] = aux[i]
                     i += 1
                 else:
@@ -59,7 +59,7 @@ class Solution(object):
             N = len(a)
             sz = 1  # 子数组大小
             while sz < N:
-                for lo in range(0, N - sz, sz * 2):
+                for lo in range(0, N - sz, sz * 2):  # Note N - sz很重要: sz是上一次merge的最右边的区间
                     merge(a, aux, lo, lo+sz-1, min(lo+sz*2-1, N - 1)) # Note!
                 sz *= 2
 
@@ -73,20 +73,20 @@ class Solution(object):
             # 和书上相比, 因为python没有++i, 所以实现略有差别. 
             # 循环不变量 [lo + 1, i) [i, j] (j, hi]
             cur = a[lo]  # 最好手动缓存
-            i, j = lo + 1, hi  # 不能 lo + 1, hi, 因为这样不支持part lo==hi 的情况
+            i, j = lo, hi + 1  # 不能 lo + 1, hi, 因为这样不支持part lo==hi 的情况
             while True:
+                i += 1
+                j -= 1   
                 while i <= hi and cmp(a[i], cur) < 0:  # 不需要i < j因为右边已经排好序
                     i += 1  # i <= hi可以省略, 需要初始化时找到max并移到最右边省掉
                 while j >= lo and cmp(a[j], cur) > 0:
                     j -= 1  # j >= lo 可以直接省掉
-                if i >= j:  # Note >=. 因为相等的情况也是排好序(要么等于, 要么碰一起)
+                if i >= j:  # Note >=. 前面两个循环后, 出现等于的情况只能是 a[i] == cur
                     break
-                a[i], a[j] = a[j], a[i]
-                i += 1
-                j -= 1                  
+                a[i], a[j] = a[j], a[i]  # 
 
-            a[lo], a[j] = a[j], a[lo]  # 和最后一个大于lo的交换
-            return j
+            a[lo], a[j] = a[j], a[lo]  # 和最后一个大于lo的交换. 容易忘!
+            return j  # 容易忘!
 
         def sort(a, lo, hi):  # [lo, hi]
             if hi <= lo:  # 至少有两个元素

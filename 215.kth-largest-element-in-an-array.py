@@ -46,8 +46,8 @@ class Solution(object):
                     lo = j + 1
         
         # return sorted(nums, reverse=True)[k-1]  # nums.sort()[k-1] 不行.. 95%
-        return select(nums, k)  # 62%
         # return heapq.nlargest(k, nums)[-1]  # 75%
+        return select(nums, k)  # 62%
 
 if __name__ == '__main__':
     """
