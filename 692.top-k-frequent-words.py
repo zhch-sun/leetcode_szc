@@ -26,7 +26,10 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    
+    1 heapq
+    2 quick selection麻烦
+    3 bucket sort不行
+    4 红黑树不行: 复杂度也是NlogN
     """
     s = Solution()
     print(s.topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], 2))
