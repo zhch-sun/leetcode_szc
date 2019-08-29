@@ -102,7 +102,8 @@ class Solution(object):
         # test sort functions
         strs = map(str, nums)
         # self.insertSort(strs, cmp=lambda x, y: [-1, 1][x + y < y + x])
-        # self.mergeSort(strs, cmp=lambda x, y: [-1, 1][x + y < y + x])
+        # self.mergeSort(strs, cmp=lambda x, y: 
+        # [-1, 1][x + y < y + x])
         self.quickSort(strs, cmp=lambda x, y: [-1, 1][x + y < y + x])
         return '0' if strs[0]=='0' else ''.join(strs)
         
