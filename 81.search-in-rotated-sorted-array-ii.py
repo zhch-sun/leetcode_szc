@@ -9,37 +9,34 @@ class Solution(object):
         :type nums: List[int]
         :type target: int
         :rtype: bool
-        """
-        # 90%
-        left = 0
-        right = len(nums) - 1
-        while right > 0 and nums[left] == nums[right]:
-            right -= 1
-        while left <= right:
-            mid = (right - left) // 2 + left
-            # 问题处在下面这个条件判断上, 比如1311111
-            # mid其实在右边, 但是mid = nums[0] 且 target > nums[0]
-            # 这样意味mid和target都在左边. 
-            # 所以只要确保nums[0]唯一就可以了. 
-            if (nums[mid] < nums[0]) == (target < nums[0]):
-                if nums[mid] == target:
-                    return True
-                elif nums[mid] < target:
-                    left = mid + 1
+        """        
+        if not nums:
+            return False
+        lo, hi = 0, len(nums) - 1
+        pivot = nums[0]
+        while hi > 0 and pivot == nums[hi]:
+            hi -= 1
+        while lo <= hi:
+            mid = lo + (hi - lo) // 2
+            if (nums[mid] < pivot)  == (target < pivot):  # >号是错的!
+                if nums[mid] < target:
+                    lo = mid + 1
+                elif nums[mid] > target:
+                    hi = mid - 1
                 else:
-                    right = mid - 1
-            elif target < nums[0]:
-                left = mid + 1
-            elif target > nums[0]:
-                right = mid - 1
-            else:
-                return True
+                    return True
+            elif nums[mid] < target:
+                hi = mid - 1
+            else:  # 不可能相等.
+                lo = mid + 1
         return False
-
+        
 if __name__ == '__main__':
     """
+    只要保证pivot只出现在左边即可. 注意左边仍然有可能有多个pivot. 
+    条件判断时必须两个小于号, 因为大于的时候仍有可能pivot重复!
     """
     s = Solution()
-    # print(s.search([2,5,6,0,0,1,2], 2))
+    print(s.search([2,5,6,0,0,1,2], 2))
     print(s.search([1,3,1,1,1,1,1], 3))
-    # print(s.search([], 3))
+    print(s.search([], 3))

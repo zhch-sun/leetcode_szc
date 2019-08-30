@@ -10,24 +10,24 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        def search_left(nums, target, left, right):
-            while left <= right:
-                mid = (right - left) // 2 + left
+        def bisect_left(nums, target, lo, hi):
+            while lo <= hi:
+                mid = (hi - lo) // 2 + lo
                 if nums[mid] < target:
-                    left = mid + 1
+                    lo = mid + 1
                 else:
-                    right = mid - 1
-            return left
+                    hi = mid - 1
+            return lo
         
-        def search_right(nums, target, left, right):
-            while left <= right:
-                mid = (right - left) // 2 + left
+        def bisect_right(nums, target, lo, hi):
+            while lo <= hi:
+                mid = (hi - lo) // 2 + lo
                 if nums[mid] <= target:
-                    left = mid + 1
+                    lo = mid + 1
                 else:
-                    right = mid - 1
-            return left
-        # this is 86
+                    hi = mid - 1
+            return lo
+        # this is 86%
         left = 0
         right = len(nums) - 1
         while left <= right:
@@ -37,14 +37,16 @@ class Solution(object):
             elif nums[mid] > target:
                 right = mid -1
             else:
-                left = search_left(nums, target, left, mid)
-                right = search_right(nums, target, mid, right)
+                left = bisect_left(nums, target, left, mid)
+                right = bisect_right(nums, target, mid, right)
                 return [left, right-1]  # Note this -1!!!!
         return [-1, -1]
-        # This is 96
-        # left = search_left(nums, target, 0, len(nums) - 1)
-        # right = search_right(nums, target, left, len(nums) - 1) - 1
+       
+        # This is 96%
+        # left = bisect_left(nums, target, 0, len(nums) - 1)
+        # right = bisect_right(nums, target, left, len(nums) - 1) - 1
         # return [left, right] if left <= right else [-1, -1]
+
 
 if __name__ == '__main__':
     """
@@ -53,5 +55,5 @@ if __name__ == '__main__':
     简单的search left 和 right居然更快....
     """
     s = Solution()
-    print(s.searchRange([5,7,7,8,8,10], 7))
+    print(s.searchRange([5,7,7,8,8,10], 8))
 

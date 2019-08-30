@@ -4,32 +4,25 @@
 # [154] Find Minimum in Rotated Sorted Array II
 #
 class Solution(object):
-    def findMin(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        # 88%
-        left, right = 0, len(nums) - 1
-        while left < right and nums[left] == nums[right]:  # Note 判断条件
-            left += 1
-        # loop invariant [left, right]
-        # exit left == right
-        # always move
-        while left < right:
-            # if nums[left] < nums[right]:
-            #     return nums[left]
-            mid = (right - left) // 2 + left
-            if nums[mid] > nums[-1]:
-                left = mid + 1
+    def findMin(self, nums):  # 99%
+        # 不变量[lo, hi]
+        if not nums:
+            return
+        lo, hi = 0, len(nums) - 1
+        pivot = nums[-1]
+        while lo < hi and nums[lo] == pivot:
+            lo += 1
+        while lo < hi:
+            mid = lo + (hi - lo) // 2
+            if nums[mid] > pivot:
+                lo = mid + 1
             else:
-                right = mid
-        return nums[left]
+                hi = mid
+        return nums[lo]
 
 
 if __name__ == '__main__':
     """
-    TODO 写find max
     所有做法最坏情况的复杂读都是O(n)
     还是没有办法用nums[0]做pivot. 可能因为min一定在后面所以必须用nums[-1]做pivot吧. 
     """

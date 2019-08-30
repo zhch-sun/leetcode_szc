@@ -31,39 +31,36 @@ class Solution(object):
     #     return bisect.bisect_right(nums, target)
 
     def searchInsert(self, nums, target):
-        # 我的bisect_left
+        # 我的bisect_left: 如果有多个重复值, 会插入到最左边
         # 这个解法可以推广到bisect_right. 比标准库更好理解.
         # 根据初始化解一定在[low, high+1]之间
-        low = 0  # even works with [] input
-        high = len(nums) - 1
+        lo = 0  # even works with [] input
+        hi = len(nums) - 1
         # 循环不变量: 循环保证解依旧在[low, high+1]之间. 甚至跳出循环依旧保证!
-        # TODO 为什么一定要 +1 -1
-        while low <= high:  # note the <=
-            mid = low + (high - low) // 2  # overflow bug and //
+        # 为什么一定要 +1 -1: -1是保证循环不变量? +1是因为rounding lo和hi相邻时会死循环在lo上. 
+        while lo <= hi:  # note the <=
+            mid = lo + (hi - lo) // 2  # overflow bug and //
             if nums[mid] < target:  # 改成<=变成bisect_right
-                low = mid + 1   # 保证解>= low (必须同时+1和-1 否则死循环, 原因是最后找错了位置死循环)
+                lo = mid + 1   # 保证解>= low (必须同时+1和-1 否则死循环, 原因是最后找错了位置死循环)
             else:  # nums[mid] >= target
-                high = mid - 1  # the solution <= high + 1
-        return low
+                hi = mid - 1  # the solution <= high + 1
+        return lo
 
     # def searchInsert(self, nums, target):
-    #     # 我的bisect_right
-    #     # 这个解法可以推广到bisect_right. 比标准库更好理解.
-    #     # 根据初始化解一定在[low, high+1]之间
-    #     low = 0
-    #     high = len(nums) - 1
-    #     # 循环不变量: 循环保证解依旧在[low, high+1]之间. 甚至跳出循环依旧保证!
-    #     # TODO 为什么一定要 +1 -1
-    #     while low <= high:  # note the <=
-    #         mid = low + (high - low) // 2  # overflow bug and //
+    #     # 我的bisect_right: 如果有多个重复值, 会插入到最右边
+    #     # 其实是返回大于target的最小值的位置, 解依旧在[low, high+1]
+    #     lo = 0
+    #     hi = len(nums) - 1
+    #     while lo <= hi:  # note the <=
+    #         mid = lo + (hi - lo) // 2  # overflow bug and //
     #         if nums[mid] <= target:  # 改成<=变成bisect_right
-    #             low = mid + 1   # 保证解>= low (必须同时+1和-1 否则死循环, 原因是最后找错了位置死循环)
+    #             lo = mid + 1   # 保证解>= low (必须同时+1和-1 否则死循环, 原因是最后找错了位置死循环)
     #         else:  # nums[mid] >= target
-    #             high = mid - 1  # the solution <= high + 1
+    #             hi = mid - 1  # the solution <= high + 1
     #     import bisect
-    #     if bisect.bisect_right(nums, target) != low:
+    #     if bisect.bisect_right(nums, target) != lo:
     #         raise Exception("wrong results of my bisect_right")
-    #     return low
+    #     return lo
         
     # def searchInsert(self, nums, target):
     #     # 标准库 bisect_left
@@ -97,7 +94,6 @@ class Solution(object):
     #             high = bisect.bisect_right(nums, target, mid, high)
     #             return low, high - 1 # high-1 because the return of bisect_right
     #     return low, high + 1  # low == high+1
-
 
 if __name__ == '__main__':
     """
