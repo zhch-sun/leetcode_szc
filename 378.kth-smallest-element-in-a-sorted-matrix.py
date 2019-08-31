@@ -55,7 +55,7 @@ class Solution(object):
 if __name__ == '__main__':
     """
     二分查找写法 Nlog(max-min):
-        该方法只支持整数元素, 浮点数需要count==k后再二分查找<=mid的最大值
+        该方法只支持整数元素, 浮点数可以在count内部记录最大值
         普通的二分查找lo hi是index, 因为ind和数目是正比的. 这个题目lo hi是num, 因为不完全sorted.
         解一定存在, 且在[lo, hi]之间, 所以可以用return lo的写法... 一开始居然没有想到
             不能count==k的时候return mid. 因为count是<=mid的个数, 等于号不一定能取到

@@ -11,13 +11,12 @@ class Solution(object):
         :rtype: int
         """
         def count(nums, mid, N):
-            i, j = 0, 1  # 0,0 亦可
+            j = 0  # 1亦可
             cnt = 0
-            while i < N:
+            for i in xrange(N):  # 替换原先的while, 快了一些
                 while j < N and nums[j] - nums[i] <= mid:
                     j += 1  # j = 1的时候没有元素..
                 cnt += j - i - 1  #精彩.
-                i += 1
             return cnt
             
         N = len(nums)
