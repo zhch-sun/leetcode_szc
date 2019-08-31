@@ -3,42 +3,28 @@
 #
 # [74] Search a 2D Matrix
 #
+import bisect
 class Solution(object):
     def searchMatrix(self, matrix, target):
-        """
-        :type matrix: List[List[int]]
-        :type target: int
-        :rtype: bool
-        """
-        if not matrix or not matrix[0]:  # 奇怪的特殊情况
+        if not matrix or not matrix[0]:  # Note 两种都要写...
             return False
-        left = 0
-        right = len(matrix) * len(matrix[0]) - 1  # Note overflow
-        Col = len(matrix[0])
-        while left <= right:  # fake insert pos
-            mid = (right - left) // 2 + left
-            # quotient, remainder = divmod(mid, Col)
-            # item = matrix[quotient][remainder]
-            item = matrix[mid//Col][mid%Col]
-            if item < target:
-                left = mid + 1
-            elif item > target:
-                right = mid - 1
-            else:
+        M, N = len(matrix), len(matrix[0])
+        lo, hi = 0, M * N - 1
+        while lo <= hi:  # invariant [lo, hi] 有可能没有值
+            mid = lo + (hi - lo) // 2
+            i, j = divmod(mid, N)  # Note N
+            if matrix[i][j] == target:
                 return True
+            elif matrix[i][j] < target:
+                lo = mid + 1
+            else:
+                hi = mid - 1
         return False
-        # 如果返回的是insert pos, 则不能这样写, 因为有可能超出范围..
-        # return True if matrix[left//Col][left%Col] == target else False
-
 
 if __name__ == '__main__':
     """
-    这个题是返回true或者false, 并不简单. 注意不能最后再判断, 因为我的主体找insert位置,
-    而这个位置是可能超出select的范围的. 
-    正确写法还是
-    1. <= 来判断, 确保最后那个位置与target比较. 如果用<号则有可能不比较.
-    2. 分三种讨论, 并输出唯一的true
-    3. 最后值输出false, 不输出true.
+    这个题不是找插入位置而是找数, 返回的是True False, 所以不变量是[lo, hi]
+    要仿照正常binary search来写. 
     """
     s = Solution()
     matrix = [
