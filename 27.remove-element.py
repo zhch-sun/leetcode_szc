@@ -6,14 +6,14 @@
 class Solution(object):
     def removeElement(self, nums, val):
         start = 0
-        for i in range(len(nums)):
+        for i in xrange(len(nums)):
             if nums[i] != val:
                 nums[start] = nums[i]
                 start += 1
         return start
 
     # def removeElement(self, nums, val):
-    #     # This is the fastest in real world
+    #     # pop居然是实际最快的解法
     #     while val in nums:
     #         nums.pop(nums.index(val))
     #     return len(nums)
@@ -25,8 +25,6 @@ class Solution(object):
     #     # list comprehension use extra space
     #     # return len([x for x in nums if x!=val])
  
-    
-
 if __name__ == '__main__':
     """
     用start是最简单的做法?

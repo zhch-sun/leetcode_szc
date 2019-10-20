@@ -26,10 +26,11 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    还有rooling hash的答案. 
+    还有rooling hash的答案. 不管。
     python的haystack[:i]生成了一个copy, 所有的slice都生成copy!
-    正则表达式? 
-    TODO 有个KMP算法做这个 还有个更快的BM算法, 现在最快的是Sunday算法
+    TODO KMP算法, 还有个更快的BM算法, 还有Sunday算法（其实还有更快的）
+    TODO 经典算法视情况放弃。
+    python的实现是BM变种，不需要extra space
     链接 https://blog.csdn.net/v_july_v/article/details/7041827
     链接 https://www.jianshu.com/p/2e6eb7386cd3
     """

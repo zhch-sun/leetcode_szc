@@ -30,7 +30,8 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    
+    应该判断len(nums)>3
+    TODO pruning法？3*item-target>abs(target-closest)
     """
     s = Solution()
     print(s.threeSumClosest([-1, 2, 1, -4], -1))

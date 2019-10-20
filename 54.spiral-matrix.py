@@ -18,6 +18,7 @@ class Solution(object):
     #     return matrix and list(matrix.pop(0)) + self.spiralOrder(zip(*matrix)[::-1])
 
     # def spiralOrder(self, matrix):
+    #     # 不修改matrix的唯一解法？
     #     dirs = ((1, 0), (0, 1), (-1, 0), (0, -1))  # (col, row) (x, y)
     #     res = []
     #     if not matrix:
@@ -29,7 +30,7 @@ class Solution(object):
     #     idx = 0  # index of direction
     #     ir = 0  # index of row
     #     ic = -1  # index of column
-    #     while nSteps[idx%2] > 0:  # 这个条件只能这么写, 当前这个idx的steps为0
+    #     while nSteps[idx%2] > 0:  # Note 这个条件只能这么写, 当前这个idx的steps为0！！
     #         for _ in range(nSteps[idx % 2]):
     #             ic += dirs[idx][0]
     #             ir += dirs[idx][1]
@@ -51,7 +52,7 @@ class Solution(object):
             res.append(matrix[ir][ic])
             matrix[ir][ic] = None
             # 注意需要mod防止越界. 在0处会变成-1, 对称的位置肯定已经是None了.
-            if matrix[(ir+dr)%nr][(ic+dc)%nc] == None:
+            if matrix[(ir+dr)%nr][(ic+dc)%nc] == None:  # Note %号。。。
                 # 这个公式背后实际是线性代数的旋转矩阵. 
                 # 将向量顺时针旋转九十读
                 dc, dr = -dr, dc
@@ -107,7 +108,7 @@ if __name__ == '__main__':
     解法5:
     发现旋转方向有规律: di, dj = dj, -di. 所以甚至都不用dirs.
     这个实际上就是线性代数的旋转矩阵. 
-    另外他这个只要一个循环就可以, 因为把走过的地方写了 None.
+    另外他这个只要一个循环就可以, 因为把走过的地方写了None.
     解法6:
     无法实现vector的赋值.. 需要各种分类讨论. 不写了. 
     """

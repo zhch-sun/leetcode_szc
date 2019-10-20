@@ -21,6 +21,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    是否排好序都是o（n），只不过没排序需要o（n）的额外空间
     solutions:
     1. for i for j and compare
     2. build hash for each word, then loop

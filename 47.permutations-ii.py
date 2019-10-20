@@ -33,17 +33,18 @@ class Solution(object):
             for l in res:
                 for i in xrange(len(l) + 1):
                     new_res.append(l[:i] + [num] + l[i:])
-                    if i < len(l) and num == l[i]:
+                    if i < len(l) and num == l[i]:  # 要先插入再判断
                         break
             res = new_res
         return res
 
 if __name__ == '__main__':
     """
-    最高的答案是有used, 我就不搞了.. 
+    TODO 最高的答案是有used, 需要重新做
     就是第一题的dfs的swap, 如果两个数相等就不swap. 
+    
     对于插入法: To handle duplication, just avoid inserting a number AFTER any of its duplicates.
-    这个的理解方法是对称性. 
+    TODO 这个的理解方法是对称性. 假设123的permute加入一个新的2. ？？？ 又没有理解了？？？
     """
     s = Solution()
     print(s.permuteUnique([1,2,2]))

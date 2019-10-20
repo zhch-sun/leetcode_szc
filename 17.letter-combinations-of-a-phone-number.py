@@ -45,7 +45,7 @@ class Solution(object):
     # def letterCombinations(self, digits):
     #     # recursion
     #     mapping = ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
-    #     def helper(pos):  # TODO python 闭包应该用吗
+    #     def helper(pos):
     #         if pos < 0:  # have to add this
     #             return []
     #         if pos == 0:
@@ -61,19 +61,23 @@ class Solution(object):
     #     return helper(len(digits) - 1)
         
     def letterCombinations(self, digits):
-        # python's 接近的解: 其实就是list comprehension
+        # 其实就是把我的答案用更多的list comprehension写了
         mapping = ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
         pools = map(tuple, [mapping[int(i) - 2] for i in digits])
-        result = [''] if digits else []
+        result = [''] if digits else []  # TODO corner case，感觉不如直接在前面讨论？
         for pool in pools:
-            result = [x + y for x in result for y in pool] 
+            result = [x + y for x in result for y in pool]  # 这个顺序也可以换一下
         return result
     
 if __name__ == '__main__':
     """
-    实际上是有bfs和dfs两种情况. 
+    本质是写一个笛卡尔积，cartesian product TODO 查询python实现
+    简单解法包括list compr都需要两份res的内存。deque只需要一份内存
+
+    实际上是有bfs和dfs两种情况. TODO 需要搞dfs吗？recursion太慢了？
     还是bfs最合理? dfs需要写一个recursion, 要么搞个stack..
     TODO dfs...
+    TODO 前缀树是组成一个word，这道题和前缀树没有关系？因为要穷举？
     """
     s = Solution()
     print(s.letterCombinations('23'))

@@ -12,7 +12,7 @@ class Solution(object):
     #     s = 1 if x >= 0 else -1
     #     r = int(str(s * x)[::-1])
     #     res = r * s
-    #     return res if res.bit_length() < 32 or r == -2**31 else 0
+    #     return res if res.bit_length() < 32 or r == -2**31 else 0  # 判断r？？？
 
     def reverse(self, x):
         """
@@ -33,9 +33,10 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    按照十进制将int调转，保留负号。若中途溢出则返回0
     convert int to string
     Int in python can automatically switch to Long or larger, 
-    so we cannot use overflow as a condition to return unlike c or java. 
+    so we cannot use overflow as a condition to return unlike cases in c or java. 
     And consider the corner cases!! 2**31 and -2**31
     """
     s = Solution()

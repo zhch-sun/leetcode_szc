@@ -10,7 +10,7 @@ class Solution(object):
         :type divisor: int
         :rtype: int
         """
-        positive = (dividend < 0) == (divisor < 0)  # 必须括号
+        positive = (dividend < 0) == (divisor < 0)  # 必须括号 TODO 其他表示法？
         a, b = abs(dividend), abs(divisor)
         res = 0
         while a >= b:  # >=
@@ -24,13 +24,15 @@ class Solution(object):
         if not positive:
             return max(-2147483648, -res)  # 2 ** 31
         else:
-            return min(2147483647, res) 
+            return min(2147483647, res)
 
 if __name__ == '__main__':
     """
-    只有一种答案。用减法来做除法。通过右移来实现指数级增加查找范围。
+    不许使用乘除法。
+    只有一种答案：用减法来做除法。通过右移来实现指数级增加查找范围。
     corner case: 需要处理最大值以及正负。不能直接取abs，因为负数最大值会溢出!
-    1. 除数是MIN_INT 
+    TODO 这个corner case没看懂
+    1. 除数是MIN_INT （MaxINT不需要考虑）
     2. 被除数是MIN_INT 除数是 -1
     3. 被除数是MIN_INT 除数为其他
     但是毕竟是python, 所以我直接用long了? 
@@ -45,4 +47,3 @@ if __name__ == '__main__':
     print(s.divide(10, 3))
     print(s.divide(-37, 3))
     print(s.divide(-2147483648, -1))
-

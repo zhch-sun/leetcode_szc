@@ -34,6 +34,7 @@ class Solution(object):
                     item = nums[idx]
                     if idx > left and item == nums[idx - 1]:  # Note this!!
                         continue
+                    # TODO 第一个条件直接是target《N*item？第二个条件应该直接写在最前面？还有target很小的情况
                     if target - item < item * (N - 1) or target > nums[-1] * N:
                         break
                     nSum(nums, target-item, N-1, idx+1, before+[item], res)
@@ -46,11 +47,10 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    这道题flag出的很少
+    这道题也是要除重，但是flag出的很少
     两种做法：
     1. 写一个general的n sum. 就是外层for循环，内层2sum.
     2. 外面两个用dict记录，内层2sum. 但是有o(n2)的space呀.. 而且实际速度也不快? 不写了. 
     """
     s = Solution()
     # print(s.fourSum(nums=[1, 0, -1, 0, -2, 2], target=0))
-

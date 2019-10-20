@@ -57,7 +57,7 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    TODO python 支持尾递归吗
+    TODO python 支持尾递归吗：不支持
     TODO 和第二题一样, 都需要一个dummy root?
     第一个recursion太简单不易懂, 采用第二个recursion. 
     cur和l1 l2必须同时前进..别忘了..

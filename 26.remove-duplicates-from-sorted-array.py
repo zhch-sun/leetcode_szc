@@ -9,6 +9,7 @@ class Solution(object):
     #     :type nums: List[int]
     #     :rtype: int
     #     """
+    #     # 可以认为是错解，标准解法双指针
     #     count = 0
     #     n = len(nums)
     #     for i in range(1, n):
@@ -17,22 +18,23 @@ class Solution(object):
     #         else:
     #             nums[i-count] = nums[i]
     #     return n - count
+
     def removeDuplicates(self, nums):
         """
         :type nums: List[int]
         :rtype: int
         """
-        start = 0
-        for i in range(1, len(nums)):
+        start = 0  # start指向待修改位置
+        for i in range(1, len(nums)): # 从1开始
             if nums[i] != nums[i-1]:
                 start += 1
                 nums[start] = nums[i]
-        return start + 1
+        return start + 1  # TODO start应该可以初始化成1？
 
 if __name__ == '__main__':
     """
-    注意不能用额外的space, 需要修改输入的list, 使得前面是不重复的. list后面不care.
-    用start还是比count简单一些. 
+    题设：inplace remove。list后面不care. 
+    即需要双指针。外层i内层start
     """
     s = Solution()
     print(s.removeDuplicates([1,1,2]))

@@ -30,14 +30,14 @@ class Solution(object):
             right = x % 10
             if left != right:
                 return False
-            x = (x % ranger) / 10
-            ranger /= 100
+            x = (x % ranger) / 10  # 这一步需要掌握
+            ranger /= 100  # 这里有个坑
         
         return True
-
         
 if __name__ == '__main__':
     """
+    不能用bit_length()，因为是十进制的回文。
     convert to str is easy but involve extra memory
     needs to do without convert to str. Also pitfalls about bit manipulation.
     """

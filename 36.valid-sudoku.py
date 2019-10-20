@@ -32,11 +32,11 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    解决是否出现过的问题，应该用set。。。
     python 的set. update实际就是list版的add. 
     合理的答案确实用hashset来搞比较好. 甚至用一个hashset...
-    也可以用三个matrix来搞. 但是这样应该多占内存. 
-    也可以用一个list来存所有, 然后转换成set. 看长度. 
-    Note: list不能被hash所以不能被set()!! 只有immutable才可以被hash!!
+    也可以用三个matrix来搞. 但是这样应该多占内存. 也可以用一个list来存所有, 然后转换成set. 看长度. 
+    Note: list不能被hash所以不能被set()!! 只有immutable才可以被hash!（需要tuple）
     """
     matrix = [
   ["5","3",".",".","7",".",".",".","."],

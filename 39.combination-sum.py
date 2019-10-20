@@ -28,9 +28,9 @@ class Solution(object):
         dfs(candidates, target, res, tmp, 0)
         return res
 
-
 if __name__ == '__main__':
     """
+    和N-sum的区别在于，这个不限制N的个数。因此也只能用dfs穷举
     backtracking: 算sum不如target-item快.
     TODO: 还有dp的做法? 应该就不记了. 
     """

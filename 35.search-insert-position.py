@@ -17,7 +17,6 @@ def binarySearch(arr, target):
             high = mid - 1  # note the -1 (必须-1 否则死循环)
     return None  #note this one!
 
-
 class Solution(object):
     # def searchInsert(self, nums, target):
     #     """

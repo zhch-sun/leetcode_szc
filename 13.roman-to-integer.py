@@ -50,12 +50,10 @@ class Solution(object):
             prev = num
         return number 
 
-
-
 if __name__ == '__main__':
     """
-    replace method: the order of replace? 
-    scan method is better: 
+    replace method: 把六种情况分别replace。不用考虑反例顺序，IV和IX不会同时出现。
+    scan method is better: 记录之前的char，遇到反例减去2*prev
     """
     s = Solution()
     print(s.romanToInt('MCMXCIV'))

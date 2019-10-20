@@ -34,9 +34,9 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    use sort to only check the 1st and last str.
-    sort is the original solution is about. 
-    TODO need to understand that. like binary search..
+    use sort to only check the 1st and last str. 但是sort太慢了
+    应该还是zip的方法更好？
+    TODO need to understand that. like binary search..？？？有新解法吗？
     sort itself might not be a good way because it scans all the strings.
     """
     s = Solution()

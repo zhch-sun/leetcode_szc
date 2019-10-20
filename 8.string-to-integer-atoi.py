@@ -52,33 +52,37 @@ class Solution(object):
         sign = 1
         num = 0
         INT_MAX = 2 ** 31 - 1
-        INT_MIN = -1 * 2 ** 31
+        INT_MIN = -1 * 2 ** 31  # TODO 理解负数的补码？
         # white space
         while idx < len(s) and s[idx] == ' ':
             idx += 1
         if idx == len(s):
             return 0
         # sign
-        if s[idx] == '+' or s[idx] == '-':
+        if s[idx] == '+' or s[idx] == '-':  #其实应该考虑只有一个‘-’的情况
             sign = -1 if s[idx] == '-' else 1
             idx += 1
         # integer number
         while idx < len(s) and s[idx].isdigit():
             # num = num * 10 + int(s[idx]) * sign
-            num = num * 10 + (ord(s[idx]) - ord('0')) * sign
+            num = num * 10 + (ord(s[idx]) - ord('0')) * sign  # 最后乘以sign也可以？
             if num > INT_MAX:
                 num = INT_MAX
                 break
             elif num < INT_MIN:
                 num = INT_MIN
-                break                 
+                break           
             idx += 1
         return num
 
 if __name__ == '__main__':
     """
+    将字符串转化为Int，处理trailing空格和符号, 开始循环后碰到任意非数字则跳出，
+    如果超出32位则直接赋最大最小值
+    需要维护idx sign和 num三个变量。
+    中途时刻注意idx是否有效。
     1. 第一种做法中需要时刻check idx是否>len(s)
-    TODO 2.正则表达式
+    TODO 2.正则表达式？？
     """
     s = Solution()
     print(s.myAtoi('-42'))

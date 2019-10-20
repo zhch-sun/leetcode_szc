@@ -17,7 +17,7 @@ class Solution(object):
         }
         for ch in s:
             if ch in mapping:
-                if not stack or not stack.pop() == mapping[ch]:
+                if not stack or not stack.pop() == mapping[ch]:  # pop之前必须check是否为空
                     return False
             else:
                 stack.append(ch)

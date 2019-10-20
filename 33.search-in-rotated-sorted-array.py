@@ -25,15 +25,15 @@ class Solution(object):
                     return mid
             elif nums[mid] > target:  # elif target < pivot 也可以
                 lo = mid + 1
-            else:
+            else:  # 不可能相等
                 hi = mid - 1
         return -1
 
 if __name__ == '__main__':
     """
-    两段上升序列: 左边高比右边高. 
+    两段上升序列: 左边高比右边高. 81th是follow-up
     这种解法最好理解: 只用nums[0]当做pivot. 还有的解法用当前的lo当pivot, 不是那么好分析. 
-    只需要target和nums[0]是否处于同一半区(不用管lo, hi): 
+    只需要target和nums[mid]是否处于同一半区(不用管lo, hi！): 
         原因是循环的内环是通过比较这两个来更新位置的, 在同一半区时mid值可以正确赋值.
         不同半区时比较target和nums[0]的大小, 来更新 lo, hi
     必须有在最上面判断符为<=的时候 必须有+1和-1, 
