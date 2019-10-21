@@ -41,12 +41,20 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    python 没有阶乘!  ...  只能math.factorial. 
-    还有就是k和n的对齐. 因为k=1的时候对应是不选的, 所以k-=1!
-    也可以预先用一个数列存着0-n的阶乘，或者算出最终的阶乘，循环中每次除ｎ．
-    while k的时候, 可以early stopping.
-    while n的时候, 可以先生成一个字符串.
-    Note: 目前所有的做法都需要从一个list里面remove. 要么就是平移所有的数..其实就是remove.
+    题目思路:
+        需要写一下1234的1的所有情况. 
+        1的格数是234的permute也就是3! 
+        所以divmod的商就是第一位的值, 余数是下一个k
+        而且直接pop就可以, 下一次的idx还是正确的
+    两种循环:
+        while n: 正常思路, 可以str +=
+        while k可以实现early stopping. k=0的时候只要按顺序把剩下的数字放进去即可
+        这样最好用一个list暂存
+    corner case:
+        python 没有阶乘!  ...  只能math.factorial. 
+        还有就是k和n的对齐. 因为k=1的时候对应是不选的, 所以k-=1!
+    TODO 也可以先算出最终的阶乘，循环中每次除n? 这样应该可以大幅加速.
+    TODO Note: 目前所有的做法都需要从一个list里面remove.要么就是平移所有的数..其实就是remove.
     """
     s = Solution()
     print(s.getPermutation(4,9))

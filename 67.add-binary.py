@@ -27,7 +27,8 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    和第二题一样呀。。
+    两个binary stings相加
+    和第二题是链表, 这个题是str..
     Note 循环中 str += 很慢呀
     """
     s = Solution()

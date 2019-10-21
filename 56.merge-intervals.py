@@ -24,8 +24,9 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    给定一堆区间, 合并其中重叠的.
     sort 添加函数的写法.
-    注意还有可能出现一个完全在另外一个里的情况. 
+    Note 注意还有可能出现一个完全在另外一个里的情况! corner case呀
     解法2: 可以让res初始化为[], 但是这样就要在for循环里每次都要判断out是否为空. 不优雅.
     """
     s = Solution()

@@ -25,8 +25,9 @@ class Solution(object):
 if __name__ == '__main__':
     """
     荷兰国旗问题, 类似3way quicksort. 三个指针. 
-    [0, i) < v; [i, k) == v; (j, N-1] < v; [k, j]是不确定
-    结束条件应该只能是j. 
+    [0, i) < v; [i, k) == v; (j, N-1] > v; [k, j]是不确定
+    k j 是最开始的左右指针
+    结束条件是k j碰头. 
     """
     s = Solution()
     print(s.sortColors([2,0,2,1,1,0,1,1,1]))

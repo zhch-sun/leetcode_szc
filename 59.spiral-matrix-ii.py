@@ -24,8 +24,8 @@ class Solution(object):
 if __name__ == '__main__':
     """
     1. 简单解法:
-    这题应该是不能用recursion了.. 
-    需要inside-out 从里向外一层层加数字. 仍然用矩阵旋转
+        这题应该是不能用recursion了.. 
+        需要inside-out 从里向外一层层加数字. 仍然用矩阵旋转
     2. walk the spiral
     """
     s = Solution() 
