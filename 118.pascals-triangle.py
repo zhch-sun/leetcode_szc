@@ -27,15 +27,14 @@ class Solution(object):
                 res[i][j] = res[i-1][j-1] + res[i-1][j]
         return res
 
-
 if __name__ == '__main__':
     """
-    1. 我的for循环: 用1初始化可以避免很多逻辑....
-    2. list comprehension: 需要concat头尾,O(n)
-    2. offset sum: 用map和lambda做向量加法, 中间还是要concat
+    题设: 给行数, 生成整个三角
+    解法1: 我的for循环还是复杂
+    解法2: 用1初始化整个三角可以避免很多逻辑....
+    其他解法:
+        1. list comprehension: 需要concat头尾,O(n)? 反正是慢
+        2. offset sum: 用map和lambda做向量加法, 中间还是要concat, 慢;
     """
     s = Solution()
     print(s.generate(5))
-
-
-

@@ -29,9 +29,11 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    heap? 需要从后向前搞...  (因为需要从要输出的位置开始循环)
-    直接用m和n当做位置指针. 用m+n-1当做当前写的位置, 不需要再搞
-    当然也可以加起来sort...  list.sort()是inplace sorted()是return new
+    题设: 合并nums2到nums1上. nums1空间足够.  
+    解法: 
+        从前向后需要copy array, 从后向前就trivial可以了..
+        维护m和n两个指针, 指向两个array最后位置, m+n-1是改写位置
+        当然也可以加起来sort...  list.sort()是inplace sorted()是return new
     """
     s = Solution()
     print(s.merge([1,2,3,0,0,0], 3, [2,5,6], 3))

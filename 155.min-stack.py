@@ -46,7 +46,6 @@
 #         return self.mini[-1]
 
 
-
 class MinStack(object):
 
     def __init__(self):
@@ -61,7 +60,7 @@ class MinStack(object):
         :type x: int
         :rtype: None
         """
-        if x <= self.mini:
+        if x <= self.mini:  # 因为pop的比较方式, 必须取到等于号
             self.s.append(self.mini)
             self.mini = x
         self.s.append(x)
@@ -98,7 +97,14 @@ class MinStack(object):
 
 if __name__ == '__main__':
     """
-    可以用一个额外的stack存着历次min的值.
-    也可以用一个stack实现. 最简单的是当push改变min时push两个, pop改变min时pop两次. 
+    题设: 设计一个随时输出最小元素的栈. push pop top getMin. 
+    解法1: 
+        可以用一个额外的stack存着历次min的值. 只在min改变时push.
+        pop的时候比较item和mini的值, 如果相等pop两次->所以push的时候取等于号
+    解法2:
+        也可以用一个stack实现. 
+        最简单的是当push改变min时push两个, pop改变min时pop两次.
+        push的时候先push mini, push item. (因为top操作)
+        pop时先pop item, 再修改mini
     """
     s = MinStack()

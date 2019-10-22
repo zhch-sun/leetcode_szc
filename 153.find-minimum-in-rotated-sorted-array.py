@@ -35,8 +35,13 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    必须用nums[-1]的原因是, 需要处理只有后半段的情况(解一定在后半段). 
-    findMax Ceiling division
+    题设: 旋转一个数组, 找其中的最小值
+    分析:
+        对于插入位置型二分, 循环不变量是[lo, hi+1], 
+        对于查找位置型二分, 循环不变量是[lo, hi]
+    解法:
+        查找最小值的pivot必须用nums[-1], 因为需要处理只有后半段的情况. 
+        findMax: Ceiling division以及pivot位置变化
     """
     s = Solution()
     print(s.findMin([3,4,5,1,2]))

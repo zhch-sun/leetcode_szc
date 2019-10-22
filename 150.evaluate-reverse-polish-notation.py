@@ -31,7 +31,8 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    注意除法要truncate to zero? 还有负数
+    题设: 逆波兰表达式求值; 先数字, 再符号
+    坑: 注意除法要truncate to zero? 还有负数
     TODO https://stackoverflow.com/questions/19919387/in-python-what-is-a-good-way-to-round-towards-zero-in-integer-division
     还有个变种, 正常顺序但是加满括号. 算法第四版里面有个答案, 需要符号和操作数两个stack. 
     """

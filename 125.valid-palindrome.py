@@ -35,9 +35,13 @@ class Solution(object):
             
 if __name__ == '__main__':
     """
-    alphanumeric characters and ignoring cases. 
-    s.isalnum()
-    也可以先过滤一遍... 再直接比较reverse的..
+    题设: 判断是否为回文. 只考虑字母数字, 忽略大小写
+    解法1: 
+        双指针即可, 循环中判断. 
+        python: s.isalnum()
+    解法2: 
+        也可以先过滤一遍, 且直接比较reverse的..
+        先过滤应该要快, 但是用额外内存.
     """
     s = Solution()
     print(s.isPalindrome("race a car"))

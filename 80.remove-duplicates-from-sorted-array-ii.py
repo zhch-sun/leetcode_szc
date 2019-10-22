@@ -33,9 +33,12 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    下面是我的解法. 注意的是赋值的双方...
-    nums[k] = nums[i]
-    以及聪明的比较方法: nums[i] > nums[k - 2]
+    题设: 26th是系列的第一题. 仍然inplace, 区别是允许最多重复两次. 
+    解法1:
+        非常漂亮. 直接比较当前num和以k为计数的前面的值. 且不需要分类讨论
+        k指向将要被赋值的位置
+    解法2:  
+        我的解法.. 是解法1的丑陋版, 不予考虑
     """
     s = Solution()
     print(s.removeDuplicates([1,1,1,2,2,3]))

@@ -19,13 +19,14 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    
+    题设: 给定一个三角形array of array, 找到从上到下的最短路
+    解法: dp...
     """
     s = Solution()
     array = [
-                [2],
-                [3,4],
-            [6,5,7],
+               [2],
+              [3,4],
+             [6,5,7],
             [4,1,8,3]
             ]
     print(s.minimumTotal(array))

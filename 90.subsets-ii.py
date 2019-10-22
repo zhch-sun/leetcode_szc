@@ -24,9 +24,10 @@ class Solution(object):
             self.backtrack(nums, res, tmp, i + 1)
             tmp.pop()
 
-
 if __name__ == '__main__':
     """
+    题设: 78题第一个, 区别是允许重复
+    思路: 在同一个循环中如果遇到重复则continue, TODO 证明?
     TODO iterative solution
     """
     s = Solution()

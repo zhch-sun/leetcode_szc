@@ -45,6 +45,7 @@ if __name__ == '__main__':
     解法2: union find
         还是要把输入转换成(num,i) 的dict, 并查集的array大小是 nums的长度...
     解法3: 错解... set不是queue, 不能这么搞..
+    TODO union find什么鬼?
     """
     s = Solution()
     print(s.longestConsecutive([100, 4, 200, 1, 3, 2]))

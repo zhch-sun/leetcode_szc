@@ -33,8 +33,13 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    题设：inplace remove。list后面不care. 
-    即需要双指针。外层i内层start
+    题设：
+        inplace remove。list后面不care. 80题是follow-up
+        这题应该不需要排好序, 只需要同样的数在一起即可
+        TODO 应该像80题一样, 直接for循环而不是用idx即可. 
+        TODO 根据80题start指向将要赋值的位置
+    解法: 
+        双指针。外层i内层start
     """
     s = Solution()
     print(s.removeDuplicates([1,1,2]))

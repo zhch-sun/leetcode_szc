@@ -18,7 +18,7 @@ class Solution(object):
             return []
         res = []
         for i in range(1, 4):
-            for j in range(i + 1, min(i + 1 + 3, len(s) - 1)):
+            for j in range(i + 1, min(i + 1 + 3, len(s) - 1)): #注意边界条件
                 for k in range(j + 1, min(j + 1 + 3, len(s))): #注意边界条件
                     if isValid(s[:i]) and isValid(s[i:j]) and isValid(s[j:k]) and isValid(s[k:]):
                         res.append(s[:i] + '.' + s[i:j] + '.' + s[j:k] + '.' + s[k:])
@@ -27,7 +27,11 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    也可以backtracking. 但还是直接写for循环. 
+    题设: 给一个数字字符串, 判断能够构成几个合法ip
+    解法:
+        也可以backtracking. 但还是直接写for循环. 
+        [0, i] [i, j] [j, k] [k, len]
+        TODO 倒序写应该更快? [k, len]应该经常不满足?
     """
     s = Solution()
     # print(s.restoreIpAddresses("25525511135"))

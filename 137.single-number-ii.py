@@ -15,10 +15,11 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    没有人考bit, 写正常的O(n)答案
+    题设: 除了一个出现一次, 其余均出现三次
+    解法1: 数学大法.
+    解法2: 逻辑电路设计: 设计一个不考虑进位的三进制加法器. 先不写了. 
     """
     s = Solution()
     print(s.singleNumber([2,2,3,2]))
     print(s.singleNumber([0,1,0,1,0,1,99]))
-
 

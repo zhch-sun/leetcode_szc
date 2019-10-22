@@ -4,54 +4,19 @@
 # [79] Word Search
 #
 class Solution(object):
-    # def exist(self, board, word):
-    #     """
-    #     :type board: List[List[str]]
-    #     :type word: str
-    #     :rtype: bool
-    #     """
-    #     def dfs(i, j, k, tmp):
-    #         # check current
-    #         if board[i][j] != word[k]:
-    #             return False
-    #         if k + 1 == len(word):  # note k + 1
-    #             return True      
-    #         # generate next          
-    #         tmp.append((i, j))
-    #         dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]]
-    #         for d in dirs:
-    #             ti = i + d[0]
-    #             tj = j + d[1]
-    #             if 0 <= ti < m and 0 <= tj < n and (ti, tj) not in tmp:  # 这个判断条件不简单
-    #                 if dfs(ti, tj, k + 1, tmp):
-    #                     return True
-    #         tmp.pop()
-    #         return False
-        
-    #     # if not word:
-    #     #     return True
-    #     # if not board:
-    #     #     return False
-    #     m, n = len(board), len(board[0])
-    #     for i in range(m):
-    #         for j in range(n):
-    #             # 不能写下面的写法... 因为这样写board[i][j]没有放到tmp中
-    #             if dfs(i, j, 0, []):  # board[i][j] == word[0] and 
-    #                 return True
-    #     return False
-
     def exist(self, board, word):
         """
         :type board: List[List[str]]
         :type word: str
         :rtype: bool
         """
+        # 用set存tmp
         def dfs(i, j, k, tmp):
             # check current
             if board[i][j] != word[k]:
                 return False
             if k + 1 == len(word):  # note k + 1
-                return True      
+                return True
             # generate next     
             tmp.add((i,j))     
             dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]]
@@ -121,11 +86,18 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    解法1: for循环+backtrack. 用list存着之前走过的路径, 但是有若干细节需要注意. 
-    解法2: 和上面同样的思路, 用set存着, 这样查找速度为O(1). 加速了很多! 
-    解法3: 走过的路赋值为奇怪的东西, 这样其实用同样大小的memory. 速度一样
-    这个解法2因为在中间跳出, 会改变board的值....
-    解法4: 因为调用了更少的函数所以更快, 但是条件太tricky了. 还是解法1把.
+    题设: 二维棋盘上搜索字符串, 字符不能重用, 返回是否存在.
+    坑: 1. 字符是否可以重用  2. 是否可以修改原matrix  3. word board为空的情况
+    解法1: 
+        for循环+backtrack. 用list/ set存着之前走过的路径, set实际会快很多 
+        TODO dirs应该是tuple of tuple? 
+        但是有若干细节需要注意: 运动方向需要可行. 上下左右都不能越界
+    解法2: 
+        走过的路赋值为奇怪的东西, 但是其实用同样大小的memory. 
+        速度可能会快一点, 但是相对set没有绝对优势? 都是o(1)
+        如果找到, 因为return True会直接返回, 所以之前路径的board的值来不及改回来.
+    解法3: 
+        因为调用了更少的函数所以更快, 但是条件太tricky了. 仍然用解法1.
     """
     s = Solution()
     board = \
@@ -143,5 +115,3 @@ if __name__ == '__main__':
 
     # board = [["a","a"]]
     # print(s.exist(board, "aaa"))
-
-
