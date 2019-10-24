@@ -38,7 +38,6 @@ class Solution(object):
                 j -= 1
         return False
 
-
 if __name__ == '__main__':
     """
     题设: 

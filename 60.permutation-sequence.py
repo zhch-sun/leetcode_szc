@@ -41,6 +41,7 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
+    题设: 给定n和k, 返回第k个排列
     题目思路:
         需要写一下1234的1的所有情况. 
         1的格数是234的permute也就是3! 

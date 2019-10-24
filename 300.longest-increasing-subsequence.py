@@ -28,7 +28,6 @@ class Solution(object):
         maximum = max(dp)  # max can not take [] input!!!
         return maximum
 
-
 if __name__ == '__main__':
     """
     dynamic programming

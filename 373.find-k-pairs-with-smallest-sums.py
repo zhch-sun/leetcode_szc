@@ -50,5 +50,3 @@ if __name__ == '__main__':
     print(s.kSmallestPairs([1,7,11], [2,4,6], 3))
     print(s.kSmallestPairs([1,1,2], [1,2,3], 3))
     print(s.kSmallestPairs([1,2], [3], 3))
-        
-

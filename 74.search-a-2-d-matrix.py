@@ -23,8 +23,10 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    理解题意:
+    题设: 
+        一个有序矩阵. 
         不是行列都递增, 而是更严格的下面一行第一个大于上面一行最后一个.
+    理解题意:
         相当于一个递增array拆成了一个matrix
         这个题不是找插入位置而是找数, 返回的是True False, 所以不变量是[lo, hi]?
         240题follow up
