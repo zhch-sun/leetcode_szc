@@ -18,10 +18,12 @@ class Solution(object):
                 hi = mid
         return lo
         
-        
 if __name__ == '__main__':
     """
-    len(nums) > 3, 相邻元素不等.
+    题设:
+        整个array是个山脉, len(A) > 3, 相邻元素不等, 找峰.  
+        162题相似
+    解法: 注意不变量[lo, hi], 
     """
     s = Solution()
     print(s.peakIndexInMountainArray([0,2,1,0]))

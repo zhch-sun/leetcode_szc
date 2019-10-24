@@ -86,7 +86,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    题设: 二维棋盘上搜索字符串, 字符不能重用, 返回是否存在.
+    题设: 二维棋盘上搜索字符串, 字符不能重用, 返回是否存在. 212th
     坑: 1. 字符是否可以重用  2. 是否可以修改原matrix  3. word board为空的情况
     解法1: 
         for循环+backtrack. 用list/ set存着之前走过的路径, set实际会快很多 

@@ -15,12 +15,9 @@ class Solution:
 
     def reverseBits(self, n):
         """
-        Divide and Conquer!  Someway like merge sort.
-        For example, if there are 8 bit binary number abcdefgh,
-        the process is as follow:
-        abcdefgh -> efghabcd -> ghefcdab -> hgfedcba
         """
-        n = (n >> 16) | (n << 16) 
+        # n = n & 0xffffffff # 可以强制32bit
+        n = (n >> 16) | (n << 16)  # 16的时候会自动添0所以不用&0x
         n = ((n & 0xff00ff00) >> 8) | ((n & 0x00ff00ff) << 8)
         n = ((n & 0xf0f0f0f0) >> 4) | ((n & 0x0f0f0f0f) << 4)
         n = ((n & 0xcccccccc) >> 2) | ((n & 0x33333333) << 2)
@@ -29,9 +26,11 @@ class Solution:
 
 if __name__ == '__main__':
     """
-    
+    reverse整数的32bit. 
+    解法1: 循环32次. TODO 为什么不能直接在n上搞, 还要额外的res? 
+    解法2: 
+        类似于mergesort的分治法, 用bit操作来代替循环. 
+        abcdefgh -> efghabcd -> ghefcdab -> hgfedcba
     """
     s = Solution()
     print(s.reverseBits(1))
-        
-

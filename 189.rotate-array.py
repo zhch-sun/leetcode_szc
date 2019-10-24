@@ -20,18 +20,18 @@ class Solution(object):
     #     k = k % len(nums)
     #     nums[:] = nums[-k:] + nums[:-k]
 
-    # def rotate(self, nums, k):
-    #     # 速度只有 58% ? 
-    #     def reverse(array, l, r):
-    #         while l < r:
-    #             array[l], array[r] = array[r], array[l]
-    #             l += 1
-    #             r -= 1
-    #     k %= len(nums)  # must use this
-    #     n = len(nums)
-    #     reverse(nums, 0, n - k - 1)
-    #     reverse(nums, n - k, n - 1)
-    #     reverse(nums, 0, n - 1)
+    def rotate(self, nums, k):
+        # 94% 
+        def reverse(array, l, r):
+            while l < r:
+                array[l], array[r] = array[r], array[l]
+                l += 1
+                r -= 1
+        k %= len(nums)  # must use this
+        n = len(nums)
+        reverse(nums, 0, n - k - 1)
+        reverse(nums, n - k, n - 1)
+        reverse(nums, 0, n - 1)
     
     # def rotate(self, nums, k):
     #     # 92.34%
@@ -54,25 +54,28 @@ class Solution(object):
     #                 nums[l + i], nums[n - k + i] = nums[n - k + i], nums[l + i]
     #             l += k
     #             helper(k, l)
-
     #     helper(k, 0)
     
-    def rotate(self, nums, k):
-        l = 0
-        n = len(nums)
-        k %= (n - l)
-        while k != 0:
-            for i in range(k):
-                nums[l + i], nums[n - k + i] = nums[n - k + i], nums[l + i]
-            l += k
-            k %= (n - l)
-
+    # def rotate(self, nums, k):
+    #     l = 0
+    #     n = len(nums)
+    #     k %= (n - l)
+    #     while k != 0:
+    #         for i in range(k):
+    #             nums[l + i], nums[n - k + i] = nums[n - k + i], nums[l + i]
+    #         l += k
+    #         k %= (n - l)
 
 if __name__ == '__main__':
     """
-    1. 最简单直接在0位置插入 2.用slice
-    3. reverse算法. 
-    3. cyclic算法: 需要仔细可视化
+    题设: 
+        给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+        inplace原地解决. 
+    注意: 应该先mod出最短要滚动的位置
+    解法1: pop然后在0位置insert, 太慢了 
+    解法2: slice: 实际用了额外内存. 注意用-k索引.
+    解法3: 分别reverse两部分, 再reverse整个. 不知证明? 面试算法. 
+    解法4: cyclic算法: 需要仔细可视化, 而且也不cache friendly; 太复杂了.
     """
     s = Solution()
     array = [1,2,3,4,5,6,7]

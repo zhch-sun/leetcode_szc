@@ -45,11 +45,13 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    题设target=0
-    注意有 -1, -1, 2这种搭配, 所以不能在最前面搞一个set!!!!(或者sort之后再set))
-    思路1 sort之后每个元素来, 剩下的两个元素就是一个sorted 2sum.
+    题设: target=0
+    解法:
+        sort之后每个元素来, 剩下的两个元素就是一个sorted 2sum.
         167th是sorted2sum：用循环不变量证明: 里面可能有多组解
-        问题是duplicates, 一个是2sum内的重复, 一个是2sum间的重复（只要去除同一个最小值的重复即可）
+        问题是除重: 
+            一个是2sum内的重复, 一个是2sum间的重复（只要去除同一个最小值的重复即可）
+            或者也可以sort之后再把所有解放到set里. (必须sort)
     """
     s = Solution()
     print(s.threeSum([-1, 0, 1, 2, -1, -4]))

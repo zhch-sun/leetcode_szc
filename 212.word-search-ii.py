@@ -111,17 +111,20 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    题设: 
+        二维棋盘上搜索若干字符串, 一个字符不允许被一个单词重复使用.
+        79th只搜索一个词. 
     解法1:
         数据结构: 稍微不一样的trie: search的时候需要提供node来加速.
         因为set是无序的, 所以不能用来回复word的值...
         一个关键错误: 在找到一个解之后不能停, 要继续找...
         set初始化是set([(i,j)])...卧槽..
         注意实际上不需要 hasPrefix... 直接在dfs里面写更简单
-
     解法2:
         用给走过的路用None赋值. 
         trie: 不调用hasPrefix.  在trie的end节点存储word... 这样就不用在dfs里面存了. 
         还有个trick.. 在找到一个之后, 在trie里面把对应的node.word赋值为None. 
+    TODO 回溯法
     """
     board = [
     ['o','a','a','n'],
@@ -140,5 +143,3 @@ if __name__ == '__main__':
     # words = ["aba","baa","bab","aaab","aaa","aaaa","aaba"]
     # s = Solution()
     # print(s.findWords(board, words))
-
-    

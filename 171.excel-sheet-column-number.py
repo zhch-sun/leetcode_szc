@@ -20,7 +20,8 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    
+    题设: 给定列名称, 返回序号 z->26 ZZ->26*26+26
+    解法: reduce还是不太会用. 从高到底搞. 每个乘以26. 
     """
     s = Solution()
     print(s.titleToNumber('ZY'))

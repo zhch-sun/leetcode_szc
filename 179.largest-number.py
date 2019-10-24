@@ -109,10 +109,13 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
+    题设: 给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。
+    解法: 
+        发现一个规律, 变成str之后, 按照x + y < y + x的顺序排, 就是最大值. 
+        然而不知道如何证明; 
+        s1 > s2 则 s2 < s1; s1 < s2, s2 < s3, 则 s1 < s3
+        坑: 多个0的输入..
     可以用这道题实现一下各种sort. mergesort quicksort insertsort. 
-    没有公司考.. 估计是因为怎么证明呢? 
-    s1 > s2 则 s2 < s1; s1 < s2, s2 < s3, 则 s1 < s3
-    注意还有corner case: 多个0的输入..
     """
     s = Solution()
     print(s.largestNumber([10, 2]))

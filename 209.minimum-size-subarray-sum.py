@@ -24,12 +24,17 @@ class Solution(object):
                 lo += 1
         return 0 if res == float('inf') else res
 
-
 if __name__ == '__main__':
     """
-    简答解法O(n): two pointers
-        还有一种写法是用for循环. 因为这个循环每次hi+1, 所以hi可以当for的index. 
-    复杂解法O(nlogn): binary search: 
+    题设: 
+        给定一个含有n个正整数的数组和一个正整数s ，
+        找出该数组中满足其和 ≥s 的长度最小的连续子数组。不存在返回0。
+        76题进阶版, 151题 三指针 TODO 560题: 这题存在负数, 不能指针!
+    解法1: 
+        双指针. 
+        还有一种写法是用for循环. 因为这个循环每次hi+1, 所以hi可以当for的index???
+    解法2: 
+        二分查找O(nlogn). 复杂不写. 
         先求出cumsum, 再对每一个其实位置通过cumsum二分找结束点: 复杂不写
     """
     s = Solution()

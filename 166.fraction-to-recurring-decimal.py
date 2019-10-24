@@ -35,18 +35,17 @@ class Solution(object):
             idx += 1
         return ret
 
-        
 if __name__ == '__main__':
     """
-    1. 需要各种各样的分类讨论...
-    2. 最重要的细节是了解
-        1. cache里面是remain. 
-        2. 循环最开始就要把remain加到cache里.前面算出的remain仍要利用上. 
+    题设: 给定分子分母, 返回小数, 循环小数包含在括号里.
+    解法:
+        需要各种各样的分类讨论...
+        最重要的细节是:
+            cache里面是remain. 
+            循环最开始就要把remain加到cache里.前面算出的remain仍要利用上. 
     """
     s = Solution()
     # print(float(-2) / 7)
     print(s.fractionToDecimal(1, 4))
     print(s.fractionToDecimal(1, 333))
-    print(s.fractionToDecimal(-9, 7))
-        
-
+    print(s.fractionToDecimal(-9, 7))      
