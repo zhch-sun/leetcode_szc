@@ -30,36 +30,35 @@ class Solution(object):
     #     center = sorted(a[i:i+2] + b[j:j+2])  # len可能是1, 2, 3, 4...
     #     return (center[0] + center[1 - (m+n)%2]) / 2.0
 
-    def findMedianSortedArrays(self, nums1, nums2):
-        a, b = sorted((nums1, nums2), key=len)
-        m, n = len(a), len(b)
-        lo, hi = 0, m   # [lo, hi] 取到m的时候意味着中位数a里, 包括m==0的情况; 取0的时候不在a里
-        half = (m + n + 1) // 2  # 偶数的时候可能出现在左右, 奇数的时候只在左边
-        while lo <= hi:  # 一定进入循环
-            i = lo + (hi - lo) // 2  # i和j代表个数
-            j = half - i  # [0, i-1], [i, m-1]; [0, j-1] [j, n-1]
-            if i > 0 and a[i - 1] > b[j]:  # 因为i-1所以i>0; m=n=0或者m=0 n=1的时候, j能取到n
-                hi = i - 1
-            elif i < m and a[i] < b[j - 1]: # i==m时j才能取到0, 包括m=n=0的情况
-                lo = i + 1
-            else:  # i是正确的
-                if i == 0:
-                    maxL = b[j - 1]
-                elif j == 0:
-                    maxL = a[i - 1]
-                else:
-                    maxL = max(a[i - 1], b[j - 1])
-                if (m + n) % 2 == 1:
-                    return maxL
+    # def findMedianSortedArrays(self, nums1, nums2):
+    #     a, b = sorted((nums1, nums2), key=len)
+    #     m, n = len(a), len(b)
+    #     lo, hi = 0, m   # [lo, hi] 取到m的时候意味着中位数a里, 包括m==0的情况; 取0的时候不在a里
+    #     half = (m + n + 1) // 2  # 偶数的时候可能出现在左右, 奇数的时候只在左边
+    #     while lo <= hi:  # 一定进入循环
+    #         i = lo + (hi - lo) // 2  # i和j代表个数
+    #         j = half - i  # [0, i-1], [i, m-1]; [0, j-1] [j, n-1]
+    #         if i > 0 and a[i - 1] > b[j]:  # 因为i-1所以i>0; m=n=0或者m=0 n=1的时候, j能取到n
+    #             hi = i - 1
+    #         elif i < m and a[i] < b[j - 1]: # i==m时j才能取到0, 包括m=n=0的情况
+    #             lo = i + 1
+    #         else:  # i是正确的
+    #             if i == 0:
+    #                 maxL = b[j - 1]
+    #             elif j == 0:
+    #                 maxL = a[i - 1]
+    #             else:
+    #                 maxL = max(a[i - 1], b[j - 1])
+    #             if (m + n) % 2 == 1:
+    #                 return maxL
                 
-                if i == m:  # 右边是min!!!
-                    minR = b[j]
-                elif j == n:
-                    minR = a[i]
-                else:
-                    minR = min(a[i], b[j])
-                
-                return (maxL + minR) / 2.0
+    #             if i == m:  # 右边是min!!!
+    #                 minR = b[j]
+    #             elif j == n:
+    #                 minR = a[i]
+    #             else:
+    #                 minR = min(a[i], b[j])
+    #             return (maxL + minR) / 2.0
 
 if __name__ == '__main__':
     """    

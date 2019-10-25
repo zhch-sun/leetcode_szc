@@ -20,11 +20,10 @@ class Solution(object):
                 hi = mid
         return nums[lo]
 
-
 if __name__ == '__main__':
     """
-    存在重复. 
-    所有做法最坏情况的复杂读都是O(n)
+    存在重复. 除重时需要留一个元素. 
+    所有做法最坏情况的复杂度都是O(n)
     """
     s = Solution()
     print(s.findMin([1,3,5]))

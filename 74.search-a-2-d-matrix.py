@@ -5,20 +5,36 @@
 #
 import bisect
 class Solution(object):
+    # def searchMatrix(self, matrix, target):
+    #     if not matrix or not matrix[0]:  # Note 两种都要写...
+    #         return False
+    #     M, N = len(matrix), len(matrix[0])
+    #     lo, hi = 0, M * N - 1
+    #     while lo <= hi:  # invariant [lo, hi] 有可能没有值
+    #         mid = lo + (hi - lo) // 2
+    #         i, j = divmod(mid, N)  # Note N
+    #         if matrix[i][j] == target:
+    #             return True
+    #         elif matrix[i][j] < target:
+    #             lo = mid + 1
+    #         else:
+    #             hi = mid - 1
+    #     return False
+
     def searchMatrix(self, matrix, target):
-        if not matrix or not matrix[0]:  # Note 两种都要写...
+        if not matrix or not matrix[0]:
             return False
         M, N = len(matrix), len(matrix[0])
         lo, hi = 0, M * N - 1
-        while lo <= hi:  # invariant [lo, hi] 有可能没有值
+        while lo <= hi:  # [lo, hi]
             mid = lo + (hi - lo) // 2
-            i, j = divmod(mid, N)  # Note N
-            if matrix[i][j] == target:
-                return True
-            elif matrix[i][j] < target:
+            i, j = divmod(mid, N)
+            if matrix[i][j] < target:
                 lo = mid + 1
-            else:
+            elif matrix[i][j] > target:
                 hi = mid - 1
+            else:
+                return True
         return False
 
 if __name__ == '__main__':
@@ -32,6 +48,8 @@ if __name__ == '__main__':
         240题follow up
     解法:
         相比正常binary search就是多了一个array2matrix译码
+    坑: 
+        divmod居然是除以 N. 
     """
     s = Solution()
     matrix = [
@@ -40,4 +58,5 @@ if __name__ == '__main__':
         [23, 30, 34, 50]
     ]
     matrix= [[1]]
-    print(s.searchMatrix(matrix, 16))
+    matrix= [[1, 1]]
+    print(s.searchMatrix(matrix, 2))

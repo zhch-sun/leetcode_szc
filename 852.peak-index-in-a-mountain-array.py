@@ -9,21 +9,23 @@ class Solution(object):
         :type A: List[int]
         :rtype: int
         """
-        lo, hi = 0, len(A) - 1
+        lo, hi = 1, len(A) - 2
         while lo < hi:  # invariant [lo, hi]
             mid = lo + (hi - lo) // 2
-            if A[mid] < A[mid+1]:
+            if A[mid] < A[mid + 1]:
                 lo = mid + 1
             else:
                 hi = mid
         return lo
-        
+
 if __name__ == '__main__':
     """
     题设:
         整个array是个山脉, len(A) > 3, 相邻元素不等, 找峰.  
         162题相似
-    解法: 注意不变量[lo, hi], 
+    解法: 
+        注意不变量[lo, hi], 一定存在解
+        解的范围实际是 [1, N-2]
     """
     s = Solution()
     print(s.peakIndexInMountainArray([0,2,1,0]))

@@ -14,11 +14,11 @@ class Solution(object):
             return False
         lo, hi = 0, len(nums) - 1
         pivot = nums[0]  # 仍然用nums[0]当pivot
-        while hi > 0 and pivot == nums[hi]:
+        while hi > 0 and pivot == nums[hi]:  # 不能>=0, 需要留一个数
             hi -= 1
         while lo <= hi:
             mid = lo + (hi - lo) // 2
-            if (nums[mid] < pivot)  == (target < pivot):  # Note >号是错的!
+            if (nums[mid] < pivot)  == (target < pivot):
                 if nums[mid] < target:
                     lo = mid + 1
                 elif nums[mid] > target:
@@ -30,14 +30,13 @@ class Solution(object):
             else:  # 不可能相等.
                 lo = mid + 1
         return False
-        
+
 if __name__ == '__main__':
     """
     题设: 33题是第一题. 区别是允许重复
     解法:
         只要保证pivot只出现在左边即可. 注意左边仍然有可能有多个pivot. 
-        条件判断时必须两个小于号, 因为大于的时候仍有可能pivot重复!！只给一边除了重！！
-        TODO 是不是也可以>=呀？
+        条件判断时可以两个小于号, 也可以两个>=号
     """
     s = Solution()
     print(s.search([2,5,6,0,0,1,2], 2))

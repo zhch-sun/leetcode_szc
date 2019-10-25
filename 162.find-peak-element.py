@@ -5,7 +5,7 @@
 #
 class Solution(object):
     def findPeakElement(self, nums):
-        if not nums:  # 只有一个元素时直接返回0
+        if not nums:  # 只有一个元素时直接返回
             return
         lo, hi = 0, len(nums) - 1
         while lo < hi:  # 不变量 [lo, hi]

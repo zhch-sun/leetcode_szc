@@ -4,38 +4,24 @@
 # [240] Search a 2D Matrix II
 #
 class Solution(object):
-    # def searchMatrix(self, matrix, target):
-    #     """
-    #     :type matrix: List[List[int]]
-    #     :type target: int
-    #     :rtype: bool
-    #     """
-    #     if not matrix or not matrix[0]:
-    #         return False
-    #     row = 0
-    #     col = len(matrix[0]) - 1
-    #     while row < len(matrix) and col > -1:
-    #         if matrix[row][col] == target:
-    #             return True
-    #         elif matrix[row][col] < target:
-    #             row += 1
-    #         else:
-    #             col -= 1
-    #     return False
-
     def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """        
         if not matrix or not matrix[0]:
             return False
         M = len(matrix)
         N = len(matrix[0])
         i, j = 0, N - 1
         while i < M and j >= 0:
-            if matrix[i][j] == target:
-                return True
-            elif matrix[i][j] < target:
+            if matrix[i][j] < target:
                 i += 1
-            else:
+            elif matrix[i][j] > target:
                 j -= 1
+            else:
+                return True
         return False
 
 if __name__ == '__main__':
@@ -45,7 +31,6 @@ if __name__ == '__main__':
         74题前置
     解法: 
         从左上角拎起来是一个堆!, 右上角是一个树BST.
-        两个解法一样, 下面的写法更合理
     """
     s = Solution()
     array = [
@@ -55,5 +40,5 @@ if __name__ == '__main__':
     [10, 13, 14, 17, 24],
     [18, 21, 23, 26, 30]
     ]
-    # print(s.searchMatrix(array, 20))
+    print(s.searchMatrix(array, 20))
     print(s.searchMatrix(array, 5))
