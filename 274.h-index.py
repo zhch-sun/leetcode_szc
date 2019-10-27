@@ -33,10 +33,10 @@ class Solution(object):
     #     for cite in citations:
     #         count[min(cite, N)] += 1
     #     total = 0
-    #     for cite in range(N, -1, -1):  # 从N到0循环, 取到0则不需要最后return 0
+    #     for cite in xrange(N, -1, -1):  # 从N到0循环, 取到0则不需要最后return 0
     #         total += count[cite]
     #         if total >= cite:  # 这里total是1-indexed, i也是
-    #             return cite # 如果文章数大于等于引用, 返回i, 即小的那个
+    #             return cite # 如果文章数大于等于引用, 返回cite, 即小的那个
 
 if __name__ == '__main__':
     """
@@ -49,7 +49,7 @@ if __name__ == '__main__':
         官方solu里的图的交线是对的! 要理解! 需要找到一个错误的位置然后倒推. 
         应该通过循环不变量直接用while loop.
         主要的坑是 [] [0] [1]
-    解法1: 不推荐!
+    解法1: 不推荐! for loop
         x轴文章数量, y轴引用次数, 降序排列. 
         画一下是个递减直方图与f(x)=x的交点, 从大到小最后一个cite>i的就是解
         corner case1: 有一篇0引用文章:

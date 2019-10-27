@@ -40,12 +40,12 @@ class Solution(object):
                 elif j > hi:
                     a[k] = aux[i]
                     i += 1
-                elif cmp(aux[i], aux[j]) < 0:  # Note 这里比较的aux!!!
-                    a[k] = aux[i]
-                    i += 1
-                else:
+                elif cmp(aux[j], aux[i]) < 0:  # Note 这里比较的aux!!!, 而且j先i后
                     a[k] = aux[j]
                     j += 1
+                else:
+                    a[k] = aux[i]
+                    i += 1
 
         def sort1(a, aux, lo, hi):  #[lo, hi]
             if hi <= lo:  # 又忘记退出条件了. 

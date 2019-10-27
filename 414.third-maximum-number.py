@@ -16,7 +16,9 @@ class Solution(object):
             return max(nums)
         else:
             # return heapq.nlargest(3, nums)[-1]
-            return self.quickSelect(nums, len(nums) - 3)
+            nums = list(nums)
+            k = len(nums) - 3
+            return self.quickSelect(nums, k)
 
     def quickSelect(self, a, k):
         def partition(a, lo, hi):
@@ -35,7 +37,6 @@ class Solution(object):
             a[lo], a[j] = a[j], a[lo]
             return j
         
-        a = list(a)
         random.shuffle(a)
         lo, hi = 0, len(a) - 1
         while True:
@@ -49,7 +50,11 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    这个题就是要distinct的number. 我的实现是需要O(N)的额外空间. 答案其实也要O(N)空间
+    题设: distinct num, 如果不存在, 则返回最大的数.
+    解法1:
+        注意前处理, 转换成set. 再转换会list. set没法shuffle. 
+    解法2:
+        优先队列. 不够快? 
     https://leetcode.com/problems/third-maximum-number/discuss/90190/Java-PriorityQueue-O(n)-%2B-O(1)
     另外可以用 红黑树等有序符号表 存储三个数, 然后for循环. 但是红黑树的查询和插入应该都是logK, 所以不快
     """

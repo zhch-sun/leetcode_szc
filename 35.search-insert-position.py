@@ -18,16 +18,16 @@ def binarySearch(arr, target):
     return None  #note this one!
 
 class Solution(object):
-    def searchInsert(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
-        """       
-        import bisect
-        return bisect.bisect_left(nums, target)
-        import bisect
-        return bisect.bisect_right(nums, target)
+    # def searchInsert(self, nums, target):
+    #     """
+    #     :type nums: List[int]
+    #     :type target: int
+    #     :rtype: int
+    #     """       
+    #     import bisect
+    #     return bisect.bisect_left(nums, target)
+    #     import bisect
+    #     return bisect.bisect_right(nums, target)
 
     def searchInsert(self, nums, target):
         # 标准库 bisect_left

@@ -40,11 +40,20 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    题设:
+        给定两个升序的整形数组 nums1 和 nums2, 以及一个整数 k。
+        定义一对值 (u,v)，其中第一个元素来自 nums1，第二个元素来自 nums2。
+        找到和最小的前k 对数字 (u1,v1), (u2,v2) ... (uk,vk)。
+    注意: 因为是前k对, 所以不能二分. 
     解法1:
         生成器似乎不能嵌套. 而且comprehension的写法似乎有问题? 
         最快的还是用map
     解法2:
+        这个是个手动merge... 参见378th
         注意while循环中hq可能为空...
+    解法3:
+        仍然有纯二分更快的解法! 先不搞了  TODO
+        https://leetcode-cn.com/problems/find-k-pairs-with-smallest-sums/solution/c-da-ding-dui-by-da-li-wang/
     """
     s = Solution()
     print(s.kSmallestPairs([1,7,11], [2,4,6], 3))

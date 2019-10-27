@@ -12,11 +12,11 @@ class Solution(object):
     #     :type s: str
     #     :rtype: str
     #     """
-    #     s = list(s)
-    #     count = list(Counter(s).items())  # Counter有个most_common是排好序的.
-    #     count.sort(key=lambda x: x[1], reverse=True)
+    #     cnt = list(Counter(s).items())  # Counter有个most_common是排好序的.
+    #     cnt.sort(key=lambda x: x[1], reverse=True)
+    #     return ''.join([x[0] * x[1] for x in cnt])
         
-    #     res = ''  # 下面是一个连接字符串操作, 应该还是+=最快.
+    #     res = ''  # 下面是一个连接字符串操作, +=和join速度差不多
     #     for key, num in count:
     #         res += key * num
     #     return res
@@ -25,12 +25,12 @@ class Solution(object):
         N = len(s)
         bucket = [[] for _ in s]
         count = list(Counter(list(s)).items())  # Counter有个most_common是排好序的.
-        for key, num in count:
-            bucket[-num].append(key)
+        for char, freq in count:
+            bucket[-freq].append(char)
         res = ''
         for idx, item in enumerate(bucket):
-            for i in item:
-                res += (N - idx) * i
+            for char in item:
+                res += (N - idx) * char
         return res
 
 

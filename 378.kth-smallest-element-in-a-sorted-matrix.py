@@ -13,42 +13,44 @@ class Solution(object):
     #     :rtype: int
     #     """
     #     # Nlog(max-min), 140ms 97%
-    #     M = len(matrix)
-    #     N = len(matrix[0])
-    #     lo = matrix[0][0]
-    #     hi = matrix[-1][-1]
+    #     M, N = len(matrix), len(matrix[0])
+    #     lo, hi = matrix[0][0], matrix[-1][-1]
         
     #     while lo < hi:  # k in [lo, hi]
-    #         mid = lo + (hi - lo) / 2  # integer num
-    #         count = 0
+    #         mid = lo + (hi - lo) // 2  # integer num
+    #         cnt = 0
     #         j = N - 1  # 在下面的for循环中, j只会变小
-    #         for i in range(0, M):
+    #         for i in xrange(0, M):  # 直接写会写出while. for循环需要背过
     #             while j >= 0 and matrix[i][j] > mid:
     #                 j -= 1
-    #             count += (j + 1)
-    #         if count < k:
+    #             cnt += (j + 1)
+    #         if cnt < k:
     #             lo = mid + 1
     #         else:
     #             hi = mid
     #     return lo
 
-    def kthSmallest(self, matrix, k):
-        # # bruteforce heapq n**2 logK  216ms 56%
-        # return heapq.nsmallest(k, list(itertools.chain(*matrix)))[-1]
+    # def kthSmallest(self, matrix, k):
+    #     # # bruteforce heapq n**2 logK  216ms 56%
+    #     # return heapq.nsmallest(k, list(itertools.chain(*matrix)))[-1]
 
-        # # heap merge max(n,k)logN  216ms 56%
-        # hq = heapq.merge(*matrix)
-        # return list(itertools.islice(hq, k))[-1]
-        
+    #     # # heap merge max(n,k)logN  216ms 56%
+    #     hq = heapq.merge(*matrix)
+    #     # return list(itertools.islice(hq, k))[-1]
+
+    def kthSmallest(self, matrix, k):        
+        # 下面是手动实现heap的merge算法
+        def push(i, j):
+            if i < M and j < N:
+                heapq.heappush(pq, (matrix[i][j], i , j))
         M, N = len(matrix), len(matrix[0])  # 224ms
         pq = []
-        heapq.heappush(pq, (matrix[0][0], 0, 0))  # num, i, j
+        push(0, 0)
         while k > 0:
             num, i, j = heapq.heappop(pq)
-            if j < N - 1:  # Note N-1
-                heapq.heappush(pq, (matrix[i][j+1], i, j + 1))
-            if j == 0 and i < M - 1:  # Note 忘记M-1了!
-                heapq.heappush(pq, (matrix[i+1][j], i + 1, j))
+            push(i, j + 1)
+            if j == 0:  # Note 忘记M-1了!
+                push(i + 1, j)
             k -= 1
         return num
 
@@ -64,12 +66,12 @@ if __name__ == '__main__':
         题目保证matrix和k valid, 且是方阵. 为了general我就写M, N了
         
     pq标准库写法 max(n,k)logN: 
-        直接塞进去和heap merge写法. 两种做法速度差别不大? 可能是因为k都比较大.
+        chain和heap merge写法. merge的写法更好. 
         merge的输入是若干排序好的list. 
         实现方式先把所有iter放进去, 就是pop哪个, 就push哪个iter后面的进去. 返回一个generator.
         generator需要用islice拿到第k个.
         
-    pq手动实现:
+    pq手动实现: 仍然可能用到.. 373只能这么搞
         从左上角开始, 每次pop之后, 把比它大的加到pq中. 
         因为除重, 这时我们可以pop之后只加入右边的, 只有j==0时才加入下边的. 
         需要注意i, j范围, 也可以把push包装成函数, 里面判断 j < N -1; i < M - 1

@@ -50,9 +50,12 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
-    pq方法, 不能generator 套 generator, 内环需要是list. 但是直接生成还是会MLE
-    二分查找可以通过除法count..., 而且要注意那个min函数...
-    generator似乎不能嵌套, 还是用map
+    题设: 在乘法表中找到第k大的数
+    解法1:
+        二分. 记住计算cnt的函数
+    解法2:
+        pq方法, 不能generator 套 generator, 内环需要是list. 但是直接生成还是会MLE
+        generator似乎不能嵌套, 还是用map
     """
     s = Solution()
     print(s.findKthNumber(3,3,5))
