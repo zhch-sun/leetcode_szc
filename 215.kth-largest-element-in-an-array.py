@@ -14,7 +14,7 @@ class Solution(object):
         """
         def partition(a, lo, hi, k):
             cur = a[lo]
-            i, j = lo, hi + 1  # 不能 lo + 1, hi, 因为这样不支持区间只有一个元素
+            i, j = lo, hi + 1  #不能lo+1, hi,这样不支持区间只有一个元素
             while True:
                 i += 1
                 j -= 1                
@@ -30,9 +30,9 @@ class Solution(object):
             return j
         
         def select(a, k):
-            # 这意味着可以不需要递归， 直接for循环...            
+            # 这意味着可以不需要递归, 直接while循环...            
             random.shuffle(nums)  # 容易忘
-            k = len(nums) - k  # clever trick!! 
+            k = len(nums) - k  # clever trick!!
             # k -= 1  # 如果不用上述trick, 需要-1 以及改正负!!!
             lo, hi = 0, len(nums) - 1
             while lo < hi:  # [lo, hi]一定有解

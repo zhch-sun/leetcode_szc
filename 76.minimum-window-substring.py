@@ -5,47 +5,40 @@
 #
 
 from collections import Counter
+from collections import defaultdict
 
 class Solution(object):
     def minWindow(self, s, t):
-        """
-        :type s: str
-        :type t: str
-        :rtype: str
-        """
-        count, missing = Counter(t), len(t)
-        lo, hi = 0, 0  # [lo, hi) 
+        cnt, missing = Counter(t), len(t)
+        lo = 0
         rl, rh = 0, float('inf')
-        while hi < len(s):
-            hi += 1
-            if s[hi - 1] in count:  # TODO 这里全是hi-1, 更好表达?
-                count[s[hi - 1]] -= 1
-                if count[s[hi - 1]] == 0:  # 只在变为0的时刻-1
-                    missing -= 1
-                while missing == 0:
-                    if hi - lo < rh - rl:
-                        rh, rl = hi, lo
-                    if s[lo] in count:
-                        count[s[lo]] += 1
-                        if count[s[lo]] >= 0:
-                            missing += 1
-                    lo += 1
-        return '' if rh == float('inf') else s[rl:rh]
-        
+        for hi, char in enumerate(s, start=1):  # [lo, hi)
+            missing -= 1 if cnt[char] > 0 else 0
+            cnt[char] -= 1
+            while missing == 0:
+                # 可以在while外面加一个if判断, 然后把下面的赋值拿出去, 更快                        
+                if hi - lo < rh - rl:  
+                    rl, rh = lo, hi         
+                if s[lo] in cnt:
+                    cnt[s[lo]] += 1
+                    if cnt[s[lo]] > 0:
+                        missing += 1
+                lo += 1
+        return '' if rh == float('inf') else s[rl:rh]              
+
 if __name__ == '__main__':
     """
     题设: 
         给定字符串S和T, 找到S中包含T的最小窗. 
         209题是简单版, 只需要求和即可. 
         151题是复杂版 三指针
-    思路: 
-        TODO: 这个答案是错的?!
-        需要对T进行表示, 因为是只要含有T即可, 所以dict;因为有重复, 所以counter
-        需要双指针lo, hi记录当前的窗的位置, 主循环生长hi, 窗运动时修改counter的值
-        注意counter不能自动找出当前是否所有均为0, 所以需要一个变量missing辅助记录
-        TODO: 能否把missing封装到counter里
-        missing为0时可以开始lo的的循环
-        中途必须记录res的hi, lo, 因为最后输出的不是大小而是窗
+    解法1: 
+        1. 需要对T进行表示, 注意Counter比defaultdict慢了很多. 
+        2. 需要双指针lo, hi记录当前的窗的位置, 主循环生长hi, 窗运动时修改counter的值
+        3. 注意counter不能自动找出当前是否所有均为0, 所以需要一个变量missing辅助记录
+        4. 更新rl rh的语句可以放到while循环结束之后(需要while前面再套一层if)
+    解法2:
+        针对S中存在大量T中不存在的字符, 先过滤一遍S, 存下(idx, char) pair
     """
     s = Solution()
     print(s.minWindow("ADOBECODEBANC", "ABC"))
