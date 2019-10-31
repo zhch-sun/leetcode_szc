@@ -14,16 +14,14 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        cumsum = 0
-        cnt = 0
-        d = defaultdict(int)  # 注意初始化
-        d[0] = 1  # 不是针对[], 而是针对cumsum == k
-
+        psum, ans = 0, 0
+        seen = defaultdict(int)
+        seen[0] = 1  # 不是针对[], 而是针对psum==0的情况
         for n in nums:
-            cumsum += n
-            cnt += d[cumsum - k]  #顺序不能调换
-            d[cumsum] += 1  # 计算cnt
-        return cnt
+            psum += n
+            ans += seen[psum - k]  # Note psum与k顺序
+            seen[psum] += 1   # Note 与上面不能调换, 只有k==0的时候会触发错误
+        return ans
             
 if __name__ == '__main__':
     """
@@ -40,6 +38,8 @@ if __name__ == '__main__':
     """
     s = Solution()
     print(s.subarraySum([1,1,1], 2))
-    print(s.subarraySum([1], 0))
+    print(s.subarraySum([1,2,3], 3))
+    print(s.subarraySum([1,1,2,2,3], 3))
+    print(s.subarraySum([1,1,1], 0))
 # @lc code=end
 
