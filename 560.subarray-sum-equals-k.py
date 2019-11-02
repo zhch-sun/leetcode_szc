@@ -14,6 +14,7 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        # 动态psum
         psum, ans = 0, 0
         seen = defaultdict(int)
         seen[0] = 1  # 不是针对[], 而是针对psum==0的情况
@@ -22,6 +23,20 @@ class Solution(object):
             ans += seen[psum - k]  # Note psum与k顺序
             seen[psum] += 1   # Note 与上面不能调换, 只有k==0的时候会触发错误
         return ans
+
+    # def subarraySum(self, nums, k):
+    #     # 预计算psum
+    #     N = len(nums)
+    #     P = [0] * (N + 1)
+    #     for i, n in enumerate(nums):
+    #         P[i + 1] = P[i] + n
+        
+    #     seen = defaultdict(int)
+    #     ans = 0
+    #     for psum in P:
+    #         ans += seen[psum - k]
+    #         seen[psum] += 1
+    #     return ans
             
 if __name__ == '__main__':
     """

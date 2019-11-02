@@ -5,31 +5,38 @@
 #
 
 # @lc code=start
+from collections import defaultdict
 class Solution(object):
     def findMaxLength(self, nums):
         """
         :type nums: List[int]
         :rtype: int
         """
-        d = {}
-        s = 0  # current sum
-        res = 0
-        d[0] = -1  # cumsum的起始位都是很特殊的
+        psum, ans = 0, 0
+        seen = defaultdict(int)
+        seen[0] = -1
         for idx, n in enumerate(nums):
-            s += 1 if n else -1
-            if s in d:
-                res = max(res, idx - d[s])  # Note 这里不加1!
+            psum += 1 if n else -1
+            if psum in seen:
+                ans = max(ans, idx - seen[psum])
             else:
-                d[s] = idx
-        return res
+                seen[psum] = idx
+        return ans
 
 if __name__ == '__main__':
     """
-    只要存起始位置就可以. 不需要存两个数
-    cumsum的起始位还是一个特殊处理. 
+    题设: 
+        给定一个二进制数组, 找到含有相同数量的 0 和 1 的最长连续子数组（的长度）
+    思路:
+        把0转化成-1, 这样就可以用psum了...
+    解法1:
+        只要存每个psum的最开始位置
+        起始位根据计算index需要是-1. 
+        dict用in不要用get, 速度更快更易读
     """
     s = Solution()
-    print(s.findMaxLength([0,1]))
-    print(s.findMaxLength([0,1,0]))
+    # print(s.findMaxLength([0,1]))
+    # print(s.findMaxLength([0,1,0]))
+    print(s.findMaxLength([0,0,1]))
 # @lc code=end
 

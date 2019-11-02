@@ -30,9 +30,11 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    dynamic programming
-    还有一个patience sorting, 可以二分, 但是需要很多证明..
-    https://leetcode.com/problems/longest-increasing-subsequence/discuss/74824/JavaPython-Binary-search-O(nlogn)-time-with-explanation
+    解法1:
+        dynamic programming
+    解法2: 
+        还有一个patience sorting, 可以二分, 但是需要很多证明..
+        https://leetcode.com/problems/longest-increasing-subsequence/discuss/74824/JavaPython-Binary-search-O(nlogn)-time-with-explanation
     """
     s = Solution()
     array = [10,9,2,5,3,7,101,18]
