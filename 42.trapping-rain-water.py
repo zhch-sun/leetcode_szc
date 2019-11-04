@@ -5,21 +5,6 @@
 #
 
 # @lc code=start
-# class MonoStack(object):  
-#     # min monostack
-#     def __init__(self, nums):
-#         self.s = []
-#         self.a = nums
-#         self.cnt = 0
-
-#     def push(self, x):
-#         while self.s and self.a[self.s[-1]] < self.a[x]:
-#             self.a.pop()
-#         self.s.append(x)
-
-#     def min(self):
-#         return self.s[-1] if self.s else -1
-
 class Solution(object):
     def trap(self, height):
         """
@@ -31,9 +16,9 @@ class Solution(object):
         # 每一步都得出以当前idx为结尾的水量的正确值
         for idx, item in enumerate(height):  # 下面在分类讨论item
             # 尽管是while stack, 但是只有len(stack) >= 2 才有解
-            while stack and item > height[stack[-1]]:  # Note stack为空!
+            while stack and item > height[stack[-1]]:  # Note!
                 low = height[stack.pop()]  # 容易忘记height
-                if not stack:
+                if not stack:  # 必须这么写... 不能再上门while写len(stack)>1
                     break
                 dist = idx - stack[-1] - 1
                 diff = min(item, height[stack[-1]]) - low

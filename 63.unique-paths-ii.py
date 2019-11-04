@@ -3,29 +3,53 @@
 #
 # [63] Unique Paths II
 #
+
 class Solution(object):
+    # def uniquePathsWithObstacles(self, obstacleGrid):
+    #     """
+    #     :type obstacleGrid: List[List[int]]
+    #     :rtype: int
+    #     """        
+    #     # O(n2)空间, 学习循环内写法!!
+    #     g = obstacleGrid
+    #     if not g or not g[0]:
+    #         return None
+    #     M, N = len(g), len(g[0])
+    #     f = [[0] * N for i in xrange(M)]
+    #     f[0][0] = 0 if g[0][0] else 1  # Note 处理[[1]]的情况!!
+    #     for i in xrange(M):
+    #         for j in xrange(N):
+    #             if g[i][j]:
+    #                 continue  # 已经初始化为0了
+    #             if i:
+    #                 f[i][j] += f[i - 1][j]
+    #             if j:
+    #                 f[i][j] += f[i][j - 1]
+    #     return f[-1][-1]
+
     def uniquePathsWithObstacles(self, obstacleGrid):
-        """
-        :type obstacleGrid: List[List[int]]
-        :rtype: int
-        """
-        # m row, n col
-        m = len(obstacleGrid)
-        n = len(obstacleGrid[0])
-        dp = [0] * n  # Note this 0!
-        dp[0] = 1  # Note this 1!
-        for i in xrange(0, m):  # or iter with row in obstacleGrid
-            for j in xrange(0, n):
-                if obstacleGrid[i][j]:
-                    dp[j] = 0
+        g = obstacleGrid
+        if not g or not g[0]:
+            return 0
+        M, N = len(g), len(g[0])
+        f = [0] * N
+        f[0] = 0 if g[0][0] else 1  # 其实不需要判断
+        # f[0] = 1
+        for i in xrange(M):
+            for j in xrange(N):
+                if g[i][j]:
+                    f[j] = 0
                 elif j > 0:
-                    dp[j] = dp[j] + dp[j-1]
-        return dp[-1]
-        
+                    f[j] += f[j - 1]
+        return f[-1]
 
 if __name__ == '__main__':
     """
-    TODO an inplace implementation
+    解法1:
+        原始dp解法. O(N2)空间. 
+        注意初始化! 其实不需要提供一个判断, 但是最好还是考虑. 
+    解法2:
+        O(N)空间    
     """
     s = Solution()
     array = [
@@ -34,5 +58,4 @@ if __name__ == '__main__':
             [0,0,0]
             ] 
     # array = [[0], [1]]
-    print(s.uniquePathsWithObstacles(array))       
-
+    print(s.uniquePathsWithObstacles(array))

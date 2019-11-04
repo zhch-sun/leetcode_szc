@@ -14,18 +14,22 @@ class Solution(object):
         N = len(nums)
         res = [-1] * N
         stack = []
-        for idx in range(2 * N):  # Note
-            item = nums[idx % N]  # Note
-            while stack and item > nums[stack[-1]]:
+        for i in xrange(2 * N):  # Note
+            n = nums[i % N]  # Note
+            while stack and n > nums[stack[-1]]:
                 pre = stack.pop()
-                res[pre] = item
-            stack.append(idx % N)  # Note
+                res[pre] = n
+            stack.append(i % N)  # Note
         return res
 
 if __name__ == '__main__':
     """
     题设: 
-    解法: 循环数组: 循环边界, item取值, stack赋值, 都要处理
+    解法1: 
+        循环数组: 循环边界, item取值, stack赋值, 都要处理
+    解法2:
+        可以利用max prune, 不写. 
+        用deque清空不需要的值? 需要吗? 可能不需要. 
     """
     s = Solution()
     print(s.nextGreaterElements([1,2,1]))

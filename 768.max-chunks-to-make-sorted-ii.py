@@ -18,12 +18,17 @@ class Solution(object):
                 while stack and item < stack[-1]:
                     stack.pop()
                 stack.append(maxV)
-            else:
-                stack.append(item)
+            else:  # Note 必须有这个else!!!!
+                stack.append(item) 
         return len(stack)
 
 if __name__ == '__main__':
     """
+    思路:
+        应该是先 对值的二分: 不行
+        再理解升序的时候每个值都是一个chunk, 降序的时候整体是一个chunk.
+        所以每个chunk可以维护两个指针, 可以证明lo指针不重要
+        所以就是单调栈. 
     解法: 
         每个chunk是个范围, 所有chunk单调递增.
         即下一个chunk的最小值大于上一个chunk的最大值

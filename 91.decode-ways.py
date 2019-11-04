@@ -5,57 +5,53 @@
 #
 class Solution(object):
     def numDecodings(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        if not s:
+        if not s:  #  or not s.isdigit()  # 不需要了. 循环里判断. 
             return 0
-        dp = [0] * (len(s) + 1)
-        dp[0] = 1  # 这个初始化...
-        dp[1] = 1 if s[0] != '0' else 0
-        for idx in range(1, len(s)):  # the index of s
-            p1 = int(s[idx])
-            p2 = int(s[idx-1: idx+1])  # 这个奇怪的slice. 
-            if 0 < p1 <= 9:  # 注意符号.. 另外这里不需要 <=9..
-                # 因为dp[idx+1]本身是0, 所以如果出现连续两个dp为0, 后面必为0
-                dp[idx + 1] += dp[idx] 
-            if 10 <= p2 <= 26:
-                dp[idx + 1] += dp[idx - 1]
-        return dp[-1]
-        
-    # def numDecodings(self, s):
-    #     # 必须要把cover所有len(s) == 1的跳出条件, 因为这时候cur没有...
-    #     if not s or s == '0':
-    #         return 0
-    #     if len(s) == 1:
-    #         return 1
-    #     pre2 = 1
-    #     pre1 = 1 if s[0] != '0' else 0
-    #     for idx in range(1, len(s)):  # the index of s
-    #         p1 = int(s[idx])
-    #         p2 = int(s[idx-1: idx+1])  # 这个奇怪的slice. 
-    #         cur = 0
-    #         if 0 < p1 <= 9:
-    #             cur += pre1
-    #         if 10 <= p2 <= 26:
-    #             cur += pre2
-    #         pre2 = pre1
-    #         pre1 = cur
-    #     return cur    
+        N = len(s)
+        f = [0] * (N + 1)  # 初始化
+        f[0] = 1
+        for i in xrange(N):
+            if 0 < int(s[i]) <= 9:  # <=9 按照题意可以舍去
+                f[i + 1] = f[i]
+            # if i > 0 and 10 <= int(s[i-1:i+1]) <= 26:
+            if i > 0 and 10 <= int(s[i - 1]+s[i]) <= 26:  # slice很慢.
+                f[i + 1] +=+ f[i - 1]
+            # if f[i + 1] == 0:  # early stopping加速
+            #     return 0  # 实际不快? 
+        return f[-1]
 
+    # def numDecodings(self, s):
+    #     if not s:  #  or not s.isdigit()  # 不需要了. 循环里判断. 
+    #         return 0
+    #     N = len(s)
+    #     p0 = 1
+    #     p1 = 1 if s[0] != '0' else 0
+    #     for i in xrange(N):
+    #         cur = 0  # Note 忘了初始化!!!
+    #         if 0 < int(s[i]) <= 9:  # <=9 按照题意可以舍去
+    #             cur = p1
+    #         # if i > 0 and 10 <= int(s[i - 1:i + 1]) <= 26:
+    #         if i > 0 and 10 <= int(s[i - 1]+s[i]) <= 26:  # slice很慢.
+    #             cur += p0
+    #         p0, p1 = p1, cur
+    #     return p1        
 
 if __name__ == '__main__':
     """
-    这个dp并不简单! 注意 string中可能有若干个0.
-    1. 不是dp[idx + 1] = dp[idx] +１!!
-    2. 处理0的情况 '10' '01'
-    3. 初始化dp[0]是为了递推的正确性. 否则只能dp[idx + 1] += dp[idx - 1]在这个后面加一个判断..
-    解法2: 因为只依赖前两个值, 所以也可以不需要整个dp[]
-    解法3: 用乘法代替里面的两个if判断, 用python的交换赋值代替后面的赋值, 
-    这样for循环里可以缩成一句话.. 而且还可以省掉一个memory变量(因为python的交换)
+    题设: 
+        给定一个只包含数字的非空字符串，请计算解码方法的总数。
+        A 1 Z 26
+    坑:  
+        1. 不是dp[idx + 1] = dp[idx] +１!!
+        2. 处理0的情况 '10' '01'. 并不是出现0就不对...
+    解法1:
+        DP数组之所以需要N+1, 是为了把0位置的判断也放进循环里.
+        或者理解为空字符串有一种表达? 
+    修改2: 不需要数组, 用两个变量代替. 
+    修改3: early stopping
     """
     s = Solution()
+    print(s.numDecodings('12'))
     print(s.numDecodings('99'))
     print(s.numDecodings('000123'))
     print(s.numDecodings('2267'))

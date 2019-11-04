@@ -14,11 +14,11 @@ class Solution(object):
         # 这题对T append 0 是没有用的
         res = [0] * len(T)  # 必须初始化!!! 且用0初始化, 不能None
         stack = []  
-        for idx, item in enumerate(T):
-            while stack and item > T[stack[-1]]:
+        for i, n in enumerate(T):
+            while stack and n > T[stack[-1]]:
                 pre = stack.pop()
-                res[pre] = idx - pre  # Note 忘记-pre了.....
-            stack.append(idx)
+                res[pre] = i - pre  # Note 忘记-pre了.....
+            stack.append(i)
         return res
 
 if __name__ == '__main__':

@@ -13,13 +13,15 @@ class Solution(object):
         """
         stack = [-1]  # 需要-1处理栈中只有1个数且被pop的情况
         heights.append(0)  # 最后加0可以确保数组中均被处理
-        area = 0
-        for idx, item in enumerate(heights):
-            while len(stack) > 1 and item < heights[stack[-1]]:
-                area = max(area, heights[stack.pop()] * (idx - stack[-1] - 1) )
-            stack.append(idx)
-        heights.pop(0)  # 最好还是加上
-        return area
+        ans = 0
+        for i, h in enumerate(heights):
+            while len(stack) > 1 and h < heights[stack[-1]]:  # Note len>1!
+                pre = stack.pop()  # index
+                dist = i - stack[-1] - 1  # Note not idx-pre, idx-stack[-1]
+                ans = max(ans, heights[pre] * dist)
+            stack.append(i)
+        heights.pop(0)  # Note 最好还是加上!
+        return ans
 
     # def largestRectangleArea(self, heights):
     #     stack = [-1]  # 需要-1处理栈中只有1个数且被pop的情况

@@ -18,16 +18,16 @@ class Solution(object):
         N = len(A) 
         
         P = [0] * (N + 1)   # prefix sum, k为负数不好处理? 
-        for idx, item in enumerate(A):
-            P[idx + 1] = P[idx] + item
+        for i, n in enumerate(A):
+            P[i + 1] = P[i] + n
 
-        for idx, item in enumerate(P):
+        for i, n in enumerate(P):
             # 两个while顺序可以调换. 
-            while dq and item - P[dq[0]] >= K:
-                res = min(res, idx - dq.popleft())  # Note 不能+1!!!
-            while dq and item < P[dq[-1]]:
+            while dq and n - P[dq[0]] >= K:
+                res = min(res, i - dq.popleft())  # Note 不能+1!!!
+            while dq and n < P[dq[-1]]:
                 dq.pop()
-            dq.append(idx) # 这里再append...
+            dq.append(i) # 这里再append...
         return -1 if res == float('inf') else res
 
 if __name__ == '__main__':

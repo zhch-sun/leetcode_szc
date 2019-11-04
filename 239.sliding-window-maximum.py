@@ -19,17 +19,17 @@ class Solution(object):
             return []
         if k == 1:
             return nums
-        res = []
-        deq = deque([])
-        for idx, item in enumerate(nums):
-            while deq and nums[deq[-1]] < item:  # 忘了nums..
-                deq.pop()
-            deq.append(idx)
-            if deq[0] == idx - k:
-                deq.popleft()
-            if idx >= k -1:
-                res.append(nums[deq[0]])  # 忘了nums...
-        return res
+        ans = []
+        dq = deque([])
+        for i, n in enumerate(nums):
+            if dq and dq[0] == i - k:
+                dq.popleft()
+            while dq and nums[dq[-1]] <= n:  # 忘了nums..
+                dq.pop()
+            dq.append(i)
+            if i >= k - 1:  # Note k-1 !!!
+                ans.append(nums[dq[0]])  # 忘了nums...
+        return ans
 
 if __name__ == '__main__':
     """
