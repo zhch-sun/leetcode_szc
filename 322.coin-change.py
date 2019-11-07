@@ -19,7 +19,8 @@ class Solution(object):
     #     return -1 if f[-1] == float('inf') else f[-1]
     
     def coinChange(self, coins, amount):
-        # 48ms vs 其他人最好 56ms
+        # leetcode历史最快, 48ms vs 其他人最好 56ms
+        # leetcode中文站, 36ms vs 其他人最好 132ms
         def dfs(idx, target, cnt):
             if idx == len(coins):
                 return

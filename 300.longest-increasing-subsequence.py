@@ -60,7 +60,7 @@ class Solution(object):
                 if f[mid] < n:  # Note 不是nums, 
                     lo = mid + 1
                 elif f[mid] > n:
-                    hi = mid  
+                    hi = mid
                 else: 
                     lo = hi = mid  # 三种讨论的二分速度更快.
             f[lo] = n

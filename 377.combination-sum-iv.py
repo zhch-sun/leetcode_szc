@@ -22,6 +22,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    TODO 需要对这道题加深理解.
     f[j] = f[j-n[0]] + f[j-n[1]] + ... f[j-n[n-1]]
     非常漂亮的图解
     https://leetcode-cn.com/problems/combination-sum-iv/solution/dong-tai-gui-hua-python-dai-ma-by-liweiwei1419/
