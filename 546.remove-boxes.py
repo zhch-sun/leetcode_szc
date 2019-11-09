@@ -11,11 +11,37 @@ class Solution(object):
         :type boxes: List[int]
         :rtype: int
         """
+        def dfs(i, j, k):
+            if (i, j, k) in f:
+                return f[i, j, k]
+            if i > j:  # =0的情况后面cover
+                return 0
+            while i < j and boxes[i + 1] == boxes[i]:
+                i += 1
+                k += 1
+            # 用左边和i相同的字母做初始化. 
+            # 左边k是0, 右边k是1.
+            f[i, j, k] = (k + 1) * (k + 1) + dfs(i + 1, j, 0)
+            for idx in xrange(i + 1, j + 1):
+                if boxes[idx] == boxes[i]: # 这里需要i仍然指向最初值
+                    # 转移方程的第二个部分是k+1啊.
+                    f[i, j, k] = max(f[i, j, k], \
+                        dfs(i + 1, idx - 1, 0) + dfs(idx, j, k + 1))
+            return f[i, j, k]
+            
+        N = len(boxes)
+        f = {}
+        return dfs(0, N - 1, 0)  # k表示的是不包含在i,j内的和i相同的个数
         
 if __name__ == '__main__':
     """
     这题就是祖玛..
-    为什么需要k, 二维数组不行吗? 
+    错解: 和burst ballon一样, 设定一个位置是最后炸.
+        但这是错的, 因为需要一个区间最后炸! 比如 1234111. 
+        这要求四维dp. 
+    解法1: 
+        设计i, j, k. k表示多少个"区间外"和i位置元素一样的元素将和i一起消失. 
+        注意k表示的是区间的外部信息.
     """
     s = Solution()
     print(s.removeBoxes([1, 3, 2, 2, 2, 3, 4, 3, 1]))

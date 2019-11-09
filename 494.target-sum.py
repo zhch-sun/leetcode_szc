@@ -21,16 +21,17 @@ class Solution(object):
         for n in nums:
             curSum += n
             for j in xrange(min(target, curSum), n - 1, -1):  # 又忘了截止位置
-                f[j] += f[j - n]  # TODO 什么时候+1, 什么时候不加呢?
+                f[j] += f[j - n]
         return f[-1]
 
 if __name__ == '__main__':
     """
+    题设: 
+        非负整数. 填正负号. 求总和为target得方案数. 
     解法1: 
-        01背包, 但是注意过滤条件... 必须加上否则报错
-        注意可以常数优化
+        01背包
     解法2:
-        未写. 
+        两个优化, 未写. 
         sort, 过滤前面的0和后面的大于target的值, 因为最后面的一定是正的? 需要推导
         最后2**num0*f[-1]
     """

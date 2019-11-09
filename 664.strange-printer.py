@@ -56,7 +56,8 @@ if __name__ == '__main__':
             返回值: f[0, -1]  # 这里错了...
         循环过程不是对i, j循环, 外环是n, 内环是i, r是i+n. 
     解法2: 
-        区间DP, 顺序搜索. 
+        TODO 区间DP, 顺序搜索. 怎么写是标准写法? 
+        需要些标准写法吗? recursion会更快吗? 
     """
     s = Solution()
     # print(s.strangePrinter('aaabbb'))
