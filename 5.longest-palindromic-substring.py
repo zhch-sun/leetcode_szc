@@ -5,52 +5,98 @@
 #
 class Solution(object):
     # def longestPalindrome(self, s):
-    #     """
-    #     :type s: str
-    #     :rtype: str
-    #     """
-    #     start = 0
-    #     end = 0
-    #     for i in xrange(len(s)):  # note this should be xrange
-    #         start, end = self.helper(s, i, i, start, end)
-    #         start, end = self.helper(s, i, i + 1, start, end)
-    #     return s[start:end]
+    #     # DP解法, 循环sz
+    #     N = len(s)  # 不需要判断s==''
+    #     f = [[False] * N for _ in xrange(N)]
+    #     ans = ''
+    #     for sz in xrange(1, N + 1):  # Note 这里是N+1...
+    #         for i in xrange(0, N - sz + 1):  # Note 这里+1
+    #             j = i + sz - 1
+    #             f[i][j] = s[i] == s[j] and (sz < 3 or f[i + 1][j - 1])
+    #             if f[i][j] and sz > len(ans):
+    #                 ans = s[i:j+1]  # 这里可以记录ij位置避免copy
+    #     return ans
 
-    # def helper(self, s, l, r, start, end):  # l, r is the center
-    #     while l >= 0 and r < len(s) and s[l] == s[r]:
-    #         l -= 1
-    #         r += 1
-    #     # return s[l+1:r]  # this is actually O(n)!!!
-    #     if r - (l + 1) > end - start:
-    #         start = l + 1  # note this
-    #         end = r  # Note this
-    #     return start, end  # use less return in function
+    # def longestPalindrome(self, s):
+    #     # DP 循环i, j
+    #     N = len(s)
+    #     f = [[False] * N for _ in xrange(N)]
+    #     ans = ''
+    #     for j in xrange(N):  # 我喜欢的循环方式. 
+    #         for i in xrange(j, -1, -1):  # 这题特殊, 这里正序也是正确的!
+    #             sz = j - i + 1
+    #             f[i][j] = s[i] == s[j] and (sz < 3 or f[i + 1][j - 1])
+    #             if f[i][j] and sz > len(ans):
+    #                 ans = s[i:j+1]
+    #     return ans
+
+    # def longestPalindrome(self, s):
+    #     # DP 空间O(N)
+    #     N = len(s)
+    #     f = [False] * N
+    #     ans = ''
+    #     for j in xrange(N):
+    #         for i in xrange(j + 1):  # 因为也可以正序, 所以空间可以O(N)
+    #             sz = j - i + 1
+    #             f[i] = s[i] == s[j] and (sz < 3 or f[i + 1])
+    #             if f[i] and sz > len(ans):
+    #                 ans = s[i:j+1]
+    #     return ans
 
     def longestPalindrome(self, s):
-        n = len(s)
-        dp = [[False] * len(s) for _ in xrange(len(s))]  # Note this!
-        start = end = 0
-        for i in xrange(n - 1, -1, -1):  # Note n-1!!!
-            for j in xrange(i, n):
-                dp[i][j] = True if s[i] == s[j] and (j - i < 3 or dp[i + 1][j - 1]) else False
-                if dp[i][j] and j - i > end - start:
-                    start = i
-                    end = j  # Note end is included!
-        return s[start:end + 1]
-
+        # 中心扩散法
+        def expand(i, j):
+            while i >= 0 and j < N and s[i] == s[j]:
+                i -= 1
+                j += 1
+            return j - i - 1  # 跳出时比实际大小+2
+       
+        N = len(s)
+        ans = ''
+        for i in xrange(N):
+            sz = expand(i, i)  # Note: 奇偶两种情况!
+            if sz > len(ans):
+                rd = (sz - 1) // 2
+                ans = s[i - rd: i + rd + 1] 
+            sz = expand(i, i + 1)  # expand函数处理越界问题
+            if sz > len(ans):
+                rd = sz // 2 - 1
+                ans = s[i - rd: i + rd + 2]
+        return ans
 
 if __name__ == '__main__':
     """
-    brute force. Note string copy makes it O(n3)
-    2D-DP!: 参见 leetcode 答案 (比较慢)
-    还是比较优雅 dp[i, j] 意味着 i到j之间是回文. 然后用dp[i-1, j+1]作为子任务. 
-    这样做问题是要保证循环时dp[i-1, j+1]存在, 所以i循环时递减, j递增...
-    注意: geeksforgeeks的题目不一样! 1.子串内的字符不需要紧挨着.. 2.只需要返回最大值, 不需要前后位置.
-    TODO Manacher algorithm https://www.hackerearth.com/zh/practice/algorithms/string-algorithm/manachars-algorithm/tutorial/
-    https://leetcode.com/problems/longest-palindromic-substring/discuss/3337/Manacher-algorithm-in-Python-O(n)
-    leetcode答案里还有个链接...
+    解法1: DP 外层循环sz
+        f[i][j]表示 区间i,j是否为回文子串. 
+        f[i][j] = f[i + 1][j - 1] & (s[i] == s[j])
+        因为问题的对称性质, 这题必须循环length, 而不能i,j
+        Note 再主循环中考虑sz=1 sz=2时的判断条件.
+        结果输出: 
+            不是最后搞个for循环输出, 直接在主循环中判断赋值. 
+            也可以存ij 避免copy str
+    解法2: DP 循环 i, j
+    解法3: 优化空间
+        1 1 1 0
+        0 1 1 0
+        0 0 1 0
+        下面的矩阵, 每次是写右边一列. 只依赖于j-1列
+        但还是因为这题特殊, 内环也可以正序, 所以才能优化到O(N)
+    解法4:
+        中心扩展法.
+        注意处理奇偶两种情况. 
+    解法5: 
+        马拉车manacher算法. 
+        基于中心扩散, 用了kmp的思路, 空间换时间.
+        1. 先填充#处理奇偶性.
+        2. 用一个数组P保存s中每个位置的最大扩展半径.
+        https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/
+        Manacher algorithm https://www.hackerearth.com/zh/practice/algorithms/string-algorithm/manachars-algorithm/tutorial/
+        https://leetcode.com/problems/longest-palindromic-substring/discuss/3337/Manacher-algorithm-in-Python-O(n)
+    解法6: 
+        python还有些pruning的解法更快. 不管了. 
     """
     s = Solution()
+    print(s.longestPalindrome('a'))
     print(s.longestPalindrome('babad'))
     print(s.longestPalindrome('cbbd'))
     print(s.longestPalindrome('dakffdadff'))
