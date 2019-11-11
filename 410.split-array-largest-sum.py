@@ -47,7 +47,8 @@ if __name__ == '__main__':
             3. total在开始新part时的初值很灵性
             4. early stopping
     解法2: N2 * M
-        TODO DP 更慢, 但是还是要理解? 
+        i组, 到j位置, k<j
+        f[i][j] = min(f[i][j], max(f[i-1][k], presum[j] - presum[k]))
     """
     s = Solution()
     print(s.splitArray([7,2,5,10,8], 2))

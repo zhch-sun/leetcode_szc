@@ -4,37 +4,30 @@
 # [121] Best Time to Buy and Sell Stock
 #
 class Solution(object):
-    # def maxProfit(self, prices):
-    #     """
-    #     :type prices: List[int]
-    #     :rtype: int
-    #     """
-    #     n = len(prices)
-    #     if n < 2:
-    #         return 0
-    #     dp = [0] * n
-    #     mini = prices[0]
-    #     for i, p in enumerate(prices[1:]):  # pos = i + 1
-    #         dp[i+1] = max(p - mini, dp[i])
-    #         mini = min(mini, p)
-    #     return dp[-1]
-
     def maxProfit(self, prices):
-        # 实际上是转换成为一个差值序列, 求最大连续子序列.
-        n = len(prices)
-        local_max = global_max = 0
-        # if n < 2:
-        #     return 0
-        for i in xrange(1, len(prices)) :
-            local_max = max(local_max + prices[i] - prices[i-1], 0)
-            global_max = max(local_max, global_max)
-        return global_max
-
+        """
+        :type prices: List[int]
+        :rtype: int
+        """        
+        # 算法使得不需要处理空输入.
+        ans = 0  # 其实是globalMin
+        curMin = float('inf')
+        for n in prices:
+            curMin = min(curMin, n)
+            ans = max(ans, n - curMin)
+        return ans
 
 if __name__ == '__main__':
     """
-    my own algorithm record a minimum price. 
-    也可以用max subarray的Kadane's Algorithm求最大连续子序列. 
+    题设: 最多有一次交易, 找到最大收益. 
+    解法1:
+        推导: 
+            以i位置为结尾的最小值是nums[i] - prevMin
+            再加入一个变量记录globalMin即可.
+        就是53题最大连续子序列和的psum版.
+        直接记录curMIn, 更新ans即可. 
+        背过写法, 这个写法最简单可靠. 
     """
     s = Solution()
     print(s.maxProfit([7,1,5,3,6,4]))
+    print(s.maxProfit([7,6,4,3,1]))

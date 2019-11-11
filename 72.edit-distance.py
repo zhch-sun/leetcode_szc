@@ -29,27 +29,46 @@ class Solution(object):
     #                     f[i][j+1], f[i][j]]) + 1                    
     #     return f[-1][-1]
 
-    def minDistance(self, word1, word2):
-        def helper(i, j):
-            if i == 0:
-                return j
-            if j == 0:
-                return i
-            if f[i][j]:
-                return f[i][j]
+    # def minDistance(self, word1, word2):
+    #     # 76ms / 64ms
+    #     def dfs(i, j):
+    #         if i == 0:
+    #             return j
+    #         if j == 0:
+    #             return i
+    #         if f[i][j]:
+    #             return f[i][j]
 
-            if w1[i - 1] == w2[j - 1]:  # 这里啊....
-                ans = helper(i-1, j-1)
-            else:
-                ans = min(helper(i-1, j), \
-                    helper(i, j-1), helper(i-1, j-1)) + 1
-            f[i][j] = ans  # Note 忘记赋值了...
-            return ans
+    #         if word1[i - 1] == word2[j - 1]:  # 这里啊....
+    #             ans = dfs(i-1, j-1)
+    #         else:
+    #             ans = min(dfs(i-1, j), \
+    #                 dfs(i, j-1), dfs(i-1, j-1)) + 1
+    #         f[i][j] = ans  # Note 忘记赋值了...
+    #         return ans
             
-        w1, w2 = word1, word2
-        M, N = len(w1), len(w2)
-        f = [[0] * (N + 1) for _ in xrange(M + 1)]
-        return helper(M, N)
+    #     M, N = len(word1), len(word2)
+    #     f = [[0] * (N + 1) for _ in xrange(M + 1)]
+    #     return dfs(M, N)
+    
+    def minDistance(self, word1, word2):
+        # 80ms/ 88ms
+        def dfs(i, j):
+            if i < 0:  # 首先没想到这两个判断..
+                return j + 1 # 其次是i+1, 返回的是个数..
+            if j < 0:
+                return i + 1
+            if (i, j) in f:
+                return f[i, j]            
+            if word1[i] == word2[j]:
+                f[i, j] = dfs(i-1, j-1)
+            else:
+                f[i, j] = min(dfs(i-1,j), dfs(i,j-1), dfs(i-1,j-1)) + 1
+            return f[i, j]
+             
+        M, N = len(word1), len(word2)   # 不需要判断M和N, dfs中判断了.
+        f = {}
+        return dfs(M - 1, N - 1) 
 
 if __name__ == '__main__':
     """
@@ -65,12 +84,12 @@ if __name__ == '__main__':
         DP是个穷举. 递推中不可能找到最终的解法路径!
         集合: f[i][j]所有将s1中前i个字母, 变成s2中前j个字母的方案.
         属性: 求方案的opt的最小值. 
-        状态转移方程: f[i+1][j+1] = 
+        状态转移方程: f[i][j] = 
             下面的操作都是针对第i+1个字符.
-            空: f[i][j] 当w1[i+1]==w2[j+1]
-            替换: f[i][j] + 1, 当二数不等, 替换第i+1个字符.
-            删除: f[i][j+1] + 1, i,j+1早已匹配, i+1无用, 即删除使i+1,j+1匹配
-            插入: f[i+1][j] + 1, 在第i+1个字符后插入新值与j+1匹配
+            空: f[i-1][j-1] 当w1[i]==w2[j]
+            替换: f[i-1][j-1] + 1, 当二数不等, 替换第i+1个字符.
+            删除: f[i-1][j] + 1, i-1,j早已匹配, i无用, 删除i使i,j匹配
+            插入: f[i][j-1] + 1, 在第i个字符后插入新值与j匹配
         注意是已经变成. 所以过程不考虑, 只考虑最后一步!!
         
         alignment: 
@@ -86,6 +105,7 @@ if __name__ == '__main__':
     s = Solution()
     print(s.minDistance("horse", "ros"))
     print(s.minDistance("intention", "execution"))
+    print(s.minDistance("a", ""))
     
 # @lc code=end
 

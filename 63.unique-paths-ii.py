@@ -28,16 +28,16 @@ class Solution(object):
     #     return f[-1][-1]
 
     def uniquePathsWithObstacles(self, obstacleGrid):
-        g = obstacleGrid
-        if not g or not g[0]:
+        nums = obstacleGrid
+        if not nums or not nums[0]:
             return 0
-        M, N = len(g), len(g[0])
+        M, N = len(nums), len(nums[0])
         f = [0] * N
-        f[0] = 0 if g[0][0] else 1  # 其实不需要判断
+        f[0] = 0 if nums[0][0] else 1  # 其实不需要判断
         # f[0] = 1
         for i in xrange(M):
             for j in xrange(N):
-                if g[i][j]:
+                if nums[i][j]:
                     f[j] = 0
                 elif j > 0:
                     f[j] += f[j - 1]

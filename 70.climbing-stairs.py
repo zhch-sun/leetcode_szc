@@ -15,23 +15,24 @@ class Solution(object):
     #     for i in range(2, n + 1):
     #         dp[i] = dp[i-1] + dp[i-2]  # fibonacci
     #     return dp[n]
-    
+
     def climbStairs(self, n):
+        # f[i] = f[i - 1] + f[i - 2]
         if n <= 2:
             return n
-        item0, item1 = 1, 1
-        for _ in range(2, n + 1):
-            # the logic below is faster than swap item1 item0
-            tmp = item1
-            item1 = item0 + item1
-            item0 = tmp
-        return item1
+        pre, cur = 1, 2
+        for _ in xrange(3, n + 1):  # n + 1
+            pre, cur = cur, pre + cur
+        return cur
 
 if __name__ == '__main__':
     """
-    Note also can use const space
+    状态转移公式: 
+        f[i] = f[i - 1] + f[i - 2]
+    斐波那契数列
     """
     s = Solution()
     print(s.climbStairs(3))
+    print(s.climbStairs(4))
         
 

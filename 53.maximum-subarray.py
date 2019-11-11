@@ -4,20 +4,30 @@
 # [53] Maximum Subarray
 #
 class Solution(object):
-    def maxSubArray(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        if not nums:
-            return 0
-        localV = float('-inf')
-        globalV = float('-inf')
-        for n in nums:
-            localV = n + max(localV, 0)
-            globalV = max(globalV, localV)
-        return globalV
+    # def maxSubArray(self, nums):
+    #     """
+    #     :type nums: List[int]
+    #     :rtype: int
+    #     """
+    #     if not nums:
+    #         return 0
+    #     localV = float('-inf')
+    #     globalV = float('-inf')
+    #     for n in nums:
+    #         localV = n + max(localV, 0)
+    #         globalV = max(globalV, localV)
+    #     return globalV
 
+    def maxSubArray(self, nums):
+        psum = 0
+        curMin = 0  # Note 不能初始化成float('inf'), 实际是N+1的第一位!
+        ans = float('-inf')
+        for n in nums:
+            psum += n
+            ans = max(ans, psum - curMin)  # Note 和下面顺序不能调换
+            curMin = min(curMin, psum)
+        return ans
+    
     # def maxSub(self, nums, l, r):
     #     if l > r:
     #         return float('-inf')
@@ -49,31 +59,19 @@ class Solution(object):
     #         return 0
     #     return self.maxSub(nums, 0, len(nums) - 1)
 
-    # def maxSubArray(self, nums):
-    #     psum = 0
-    #     minP = 0  # Note minP不能初始化成float('inf')
-    #     ans = float('-inf')
-    #     for n in nums:
-    #         psum += n
-    #         ans = max(ans, psum - minP)  # Note 和下面顺序不能调换
-    #         minP = min(minP, psum)
-    #     return ans
-            
-
 if __name__ == '__main__':
     """
-    题设: 找到和最大的连续子序列, 返回和. 
+    题设: 找到和最大的连续子序列, 返回和. 正负数. 
     解法1 动态规划:
-        Note: 不需要psum? psum反而复杂! 
         状态: 集合: 以i为结尾的所有子序列, 属性: 最大值f[i]
         状态转移: i->i+1. 
             一定含有A[i+1]这个值. 
             如果f[i]>0, 则加上f[i], 反之只有A[i+1]自己
         返回值: 所有状态中的最大值. 
+    解法3: psum法
+        psum: 维护过程中的最小的psum值, 和每个psum比较即可.
     解法2 分治法
         答案: https://www.geeksforgeeks.org/maximum-subarray-sum-using-divide-and-conquer-algorithm/
-    解法3: 
-        psum: 维护过程中的最小的psum值, 和每个psum比较即可.
     """
     s = Solution()
     print(s.maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
