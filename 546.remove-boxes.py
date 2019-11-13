@@ -40,10 +40,17 @@ if __name__ == '__main__':
         但这是错的, 因为需要一个区间最后炸! 比如 1234111. 
         这要求四维dp. 
     解法1: 
-        设计i, j, k. k表示多少个"区间外"和i位置元素一样的元素将和i一起消失. 
-        注意k表示的是区间的外部信息.
+        非常详细的答案, 需要全部读完. 
+        https://leetcode.com/problems/remove-boxes/discuss/101310/Java-top-down-and-bottom-up-DP-solutions
+        思路:
+            对于[i,j]区间, 先考虑数i. 只有两种可能, 
+            要么自己消, 要么与后面颜色相同的消
+                如果没有同样颜色, f[i,j] = 1 + f[i+1,j]
+                未来有若干同样颜色 f[i,j] = max(f[i,j], f[idx,j], i+1个第一个数)
+                所以递归中需要一个新信息, 有区间外有多少个元素和i位置一样颜色.
+        即i, j, k. k表示多少个"区间外"和i位置元素一样的元素将和i一起消失. 
+        k引入了是区间的外部信息.
     """
     s = Solution()
     print(s.removeBoxes([1, 3, 2, 2, 2, 3, 4, 3, 1]))
 # @lc code=end
-

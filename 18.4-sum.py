@@ -14,7 +14,7 @@ class Solution(object):
         def nSum(nums, target, N, left, before, res):
             if N == 2:
                 l = left
-                r = len(nums) - 1 
+                r = len(nums) - 1
                 while l < r:
                     cur = nums[l] + nums[r]
                     if cur == target:

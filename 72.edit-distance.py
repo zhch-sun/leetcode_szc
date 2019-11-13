@@ -73,7 +73,7 @@ class Solution(object):
 if __name__ == '__main__':
     """
     题设:
-        给两个word, 找到最小操作数使a变成b
+        给两个word, 找到使a变成b的最少操作的个数. 
         三种操作: 插入, 删除, 替换, 均为任意位置. 
     分析:
         wiki很好. 里面列了最新进展, 有O(max(m,n))的算法
@@ -101,6 +101,7 @@ if __name__ == '__main__':
         加速原因:
             遇到w1[i]==w2[j]时可以直接转移, 没有分支
             没找到证明 O(m+n) 的证明
+    解法3: 用{}记忆化
     """
     s = Solution()
     print(s.minDistance("horse", "ros"))

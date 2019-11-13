@@ -132,6 +132,7 @@ if __name__ == '__main__':
         sort + dfs(backtrack)
         sort的结果是从大到小的, dfs时先考虑大的, 从这个角度来讲是启发式的, 会快
         用[half, half]代表dfs的两条支路. 
+        TODO: 应该可以搞正常的backtrack? 一个half即可. 
     """
     s = Solution()
     print(s.canPartition([1, 5, 11, 5]))

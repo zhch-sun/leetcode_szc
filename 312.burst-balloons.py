@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 #
 # @lc app=leetcode id=312 lang=python
 #
@@ -29,24 +30,37 @@ class Solution(object):
     #     nums = [1] + nums + [1]  # 大家还是都加了sentinel
     #     N = len(nums)  # Note 加哨兵之后再求N
     #     f = {}
-    #     return dfs(1, N - 2)
+    #     return dfs(1, N - 2) 
+
+    # def maxCoins(self, nums):
+    #     nums = [1] + nums + [1]
+    #     N = len(nums)
+    #     f = [[0] * N for _ in xrange(N)]
+    #     for j in xrange(1, N - 1):
+    #         for i in xrange(j, 0, -1):  # 0取不到
+    #             ans = float('-inf')
+    #             for k in xrange(j, i - 1, -1):
+    #                 cur = nums[k] * nums[i - 1] * nums[j + 1] + \
+    #                     f[i][k - 1] + f[k + 1][j]   # k+1, j没算过啊
+    #                 ans = max(ans, cur)                    
+    #             f[i][j] = ans
+    #             # list comprehension快得多
+    #             # f[i][j] = max([nums[k] * nums[i - 1] * nums[j + 1] + \
+    #             #         f[i][k - 1] + f[k + 1][j] for k in xrange(j, i - 1, -1)])
+    #     return f[1][N - 2]
 
     def maxCoins(self, nums):
+        # 居然也是历史最快. 
+        # 状态变为开区间. 使得不需要-1
         nums = [1] + nums + [1]
         N = len(nums)
         f = [[0] * N for _ in xrange(N)]
-        for j in xrange(1, N - 1):
-            for i in xrange(j, 0, -1):  # 0取不到
-                ans = float('-inf')
-                for k in xrange(j, i - 1, -1):
-                    cur = nums[k] * nums[i - 1] * nums[j + 1] + \
-                        f[i][k - 1] + f[k + 1][j]   # k+1, j没算过啊
-                    ans = max(ans, cur)                    
-                f[i][j] = ans
+        for j in xrange(2, N):  # Note tricky...
+            for i in xrange(j - 2, -1, -1):  # Note tricky
                 # list comprehension快得多
-                # f[i][j] = max([nums[k] * nums[i - 1] * nums[j + 1] + \
-                #         f[i][k - 1] + f[k + 1][j] for k in xrange(j, i - 1, -1)])
-        return f[1][N - 2]
+                f[i][j] = max([nums[k] * nums[i] * nums[j] + \
+                        f[i][k] + f[k][j] for k in xrange(j - 1, i, -1)])
+        return f[0][N - 1]
 
 if __name__ == '__main__':
     """
@@ -75,11 +89,19 @@ if __name__ == '__main__':
             是随着j的增加, [0, i]的情况不变, 
             所以每次只需要求区间[i, j]的情况. 因为j是新加入的, 需要从后向前循环.
     解法3: 
-        最快的答案是变掉了dp的定义? 不管了.
+        哈哈我的答案是最快的, 196ms vs 220ms
+        把ij的闭区间变成了开区间, 内环里少了很多
+        ij的循环起始位置非常tricky. 
+        不过相比原先最快的答案, 
+            1. 用了xrange
+            2. 我的外环是顺序, 内环是逆序.
     """
     s = Solution()
     print(s.maxCoins([3,1,5,8]))
     print(s.maxCoins([2]))
     print(s.maxCoins([2, 3]))
+    # import random
+    # nums = [random.randint(1,20) for _ in xrange (10000)]
+    # s.maxCoins([3,1,5,8,100,11,15,17,19,20,25,96,32,76,88])
 # @lc code=end
 
