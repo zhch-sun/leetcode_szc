@@ -36,89 +36,88 @@ class Solution(object):
     #     """
     #     :type head: Node
     #     :rtype: Node
-    #     """
-    #     # 99.7%
-    #     # 还是不写这个了...
-    #     if not head:
-    #         return None
-    #     cur = head
-    #     tmp = {}
-    #     prev = None  # the previous second node
-    #     while cur is not None:
-    #         sec = Node(cur.val, None, None)  # the copied node
-    #         tmp[cur] = sec
-    #         if prev is not None:
-    #             prev.next = sec
-    #         else:
-    #             head2 = sec
-    #         prev = sec  # 这里也太难了.
-    #         cur = cur.next
-        
-    #     cur = head
-    #     while cur is not None:
-    #         sec = tmp[cur]
-    #         if cur.random is not None:
-    #             sec.random = tmp[cur.random]  #天呐这个顺序..
-    #         cur = cur.next
-
-    #     return head2
-
-    # def copyRandomList(self, head):
-    #     if not head:
+    #     """           
+    #     if not head:  # 没有dummy时checkhead
     #         return head
-    #     cur = head
     #     tmp = {}
-    #     while cur is not None:
+    #     cur = head
+    #     while cur:
     #         tmp[cur] = Node(cur.val, None, None)
     #         cur = cur.next
     #     cur = head
-    #     while cur is not None:
-    #         if cur.next is not None:
+    #     while cur:
+    #         if cur.next:  # 需要判断..
     #             tmp[cur].next = tmp[cur.next]
-    #         if cur.random is not None:
-    #             tmp[cur].random = tmp[cur.random]  # Note 容易错呀
-    #         cur = cur.next
-    #     return tmp[head] #Note 没有dummyle.
+    #         if cur.random:
+    #             tmp[cur].random = tmp[cur.random]
+    #         cur = cur.next  # 忘记了!!!
+    #     return tmp[head]
+
+    # def copyRandomList(self, head):
+    #     # 不写这个, 太麻烦
+    #     def getNew(old):
+    #         if old in tmp:
+    #             return tmp[old]
+    #         else:
+    #             new = Node(old.val, None, None)
+    #             tmp[old] = new
+    #             return new
+        
+    #     if not head:
+    #         return None
+    #     tmp = {}
+    #     old = head
+    #     new = getNew(old) # 这里也调函数
+    #     while old is not None:
+    #         new.random = getNew(old.random)
+    #         new.next = getNew(old.next)
+    #         old = old.next
+    #         new = new.next
+    #     return tmp[head]
 
     def copyRandomList(self, head):
         if not head:
             return head
-        # copy after the position
+        
         cur = head
-        while cur is not None:
-            save = cur.next
-            node = Node(cur.val, None, None)
-            cur.next = node
-            node.next = save
-            cur = save
-        # set random
+        while cur:  # 建立node, 连next
+            new = Node(cur.val, cur.next, None)
+            cur.next = new
+            cur = new.next
+        
+        cur = head  # copy random
+        while cur:
+            new = cur.next
+            new.random = cur.random.next if cur.random else None  # Note 必须判断..
+            cur = new.next
+        
         cur = head
-        while cur is not None:  #一定是偶数
-            sec = cur.next
-            if cur.random is not None:
-                sec.random = cur.random.next
-            cur = sec.next
-        # split the list node
-        head0 = head  # head of the original list
-        cur = head1 = head.next  # 从head.next开始!!
-        while cur.next:  # 这里写cur.next!
-            head.next = cur.next
-            head = head.next
+        cur1 = head1 = head.next
+        while cur1.next:  # 拆开. 注意写法
             cur.next = cur.next.next
-            cur = cur.next # 这里cur.next就行了..
-        head.next = None # 回复到原来的list.
+            cur1.next = cur1.next.next
+            cur = cur.next
+            cur1 = cur1.next
+        cur.next = None  # Note 容易忘!
         return head1
-
 
 if __name__ == '__main__':
     """
-    第一种解法: 这题应该不需要dummy head. TODO 理解什么时候需要dummy. 
-        第一遍需要记录sec的prev? 有什么更好的方法吗? 
-    第二种解法: 第一遍只负责copy, 第二个循环负责next和random的指针. 
-        这个算法简洁得多
-    第三种解法: 在每个node后面又搞了一个node. 
-        注意这个copy之后, 不能同时连next和random? 需要分两步走
-        而且原list是不能改变的
+    解法1: 
+        用字典记录之前的node. 
+        第一遍只负责创建node并存入字典, 第二个循环负责next和random的指针. 
+        坑:
+            1. cur = cur.next
+            2. 判断next和random是否为空...
+    解法2:
+        用字典, 但是one pass
+        主要是定义了getnew函数, 缺啥补啥
+    解法3: 
+        在每个node后面又搞了一个node. 方便找位置. 
+        先连next.
+        再搞random: 注意这里必须判断是否为None
+        然后split
+        最后还要赋值None
     """
     s = Solution()
     print(s.copyRandomList(list2Node([[1,2], [2,2]])))

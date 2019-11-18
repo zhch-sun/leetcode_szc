@@ -8,45 +8,46 @@ class ListNode(object):
     def __init__(self, x):
         self.val = x
         self.next = None
-
+    
     def __repr__(self):
-        next = ',' + self.next.__repr__() if self.next else ''
-        return str(self.val) + next
+        cur = str(self.val)
+        return cur + ', ' + self.next.__repr__() if self.next else cur
+        
+def list2Node(lst):
+    dummy = ListNode(0)
+    cur = dummy
+    for item in lst:
+        cur.next = ListNode(item)
+        cur = cur.next
+    return dummy.next
 
 class Solution(object):
     def deleteDuplicates(self, head):
         """
         :type head: ListNode
         :rtype: ListNode
-        """
+        """        
         dummy = ListNode(None)
         dummy.next = head
-        pre = dummy
-        while head and head.next:
-            if pre.next.val == head.next.val:
-                while head.next and pre.next.val == head.next.val:
-                    head = head.next
-                pre.next = head.next
-                head = head.next
+        a = dummy
+        while a.next is not None:
+            b = a.next
+            if b.next and b.next.val == b.val:
+                while b.next and b.next.val == b.val:
+                    b = b.next  # b停留的地方也要删除
+                a.next = b.next  # Note 后面没有a=a.next!
             else:
-                pre = head
-                head = head.next
+                a = a.next
         return dummy.next
-        
+
 if __name__ == '__main__':
     """
-    突然理解了, 之所以需要dummy, 是因为我们需要一个node, 它的指针指向第一个node. 
-    只能是两个while了...没有更好的解法了.
-    而且还需要分类讨论
+    解法1:
+        分类讨论. 注意第一个分支没有a=a.next!
+    解法2:
+        submission有更快解法, 不管了.
     """
     s = Solution()
-    def list2Node(input):
-        dummy = ListNode(0)
-        cur = dummy
-        for item in input:
-            cur.next = ListNode(item)
-            cur = cur.next
-        return dummy.next
     print(s.deleteDuplicates(list2Node([1,2,3,3,4,4,5])))
     print(s.deleteDuplicates(list2Node([1,1,1,2,3])))
 

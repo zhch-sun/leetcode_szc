@@ -3,22 +3,24 @@
 #
 # [203] Remove Linked List Elements
 #
-def list2Node(input):
-    dummy = ListNode(0)
-    cur = dummy
-    for item in input:
-        cur.next = ListNode(item)
-        cur = cur.next
-    return dummy.next
 
 # Definition for singly-linked list.
 class ListNode(object):
     def __init__(self, x):
         self.val = x
         self.next = None
+    
     def __repr__(self):
-        next = ',' + self.next.__repr__() if self.next else ''
-        return str(self.val) + next        
+        cur = str(self.val)
+        return cur + ', ' + self.next.__repr__() if self.next else cur
+        
+def list2Node(lst):
+    dummy = ListNode(0)
+    cur = dummy
+    for item in lst:
+        cur.next = ListNode(item)
+        cur = cur.next
+    return dummy.next
 
 class Solution(object):
     def removeElements(self, head, val):
@@ -34,7 +36,6 @@ class Solution(object):
                 cur.next = cur.next.next  #Note 这里后面不能再跟cur=cur.next了...
             else:
                 cur = cur.next
-                
         return dummy.next
 
 if __name__ == '__main__':

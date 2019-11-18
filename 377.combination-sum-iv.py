@@ -16,13 +16,13 @@ class Solution(object):
         f[0] = 1
         for i in xrange(1, target + 1):
             for n in nums:
-                if i >= n:
+                if i >= n:  # 这里没法去掉判断
                     f[i] += f[i - n]
         return f[-1]
 
 if __name__ == '__main__':
     """
-    TODO 需要对这道题加深理解.
+    可以选多次, 又不除重, 因此不是背包. 
     f[j] = f[j-n[0]] + f[j-n[1]] + ... f[j-n[n-1]]
     非常漂亮的图解
     https://leetcode-cn.com/problems/combination-sum-iv/solution/dong-tai-gui-hua-python-dai-ma-by-liweiwei1419/

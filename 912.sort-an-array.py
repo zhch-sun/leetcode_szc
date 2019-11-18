@@ -47,7 +47,7 @@ class Solution(object):
                     return  # 这里如果加入insert, 会TLE, 但是代码应该没问题?
                 mid = lo + (hi - lo) // 2
                 sort1(a, aux, lo, mid)
-                sort1(a, aux, mid + 1, hi)  # Note wfpmid+1
+                sort1(a, aux, mid + 1, hi)  # Note mid+1
                 merge(a, aux, lo, mid, hi)  # Note 忘记写了..
             
             def sort2(a, aux):
@@ -57,7 +57,7 @@ class Solution(object):
                     # N - sz是因为上一个sz已经被排好序了, 而且又是下一次排序的左半边
                     for i in xrange(0, N - sz, sz * 2):
                         # 通过[0,1]两个位置确定需要-1, 以及处理循环最后的情况
-                        # 前面的N-sz确定i+sz-1不用min
+                        # 前面的N-sz确定i+sz-1不用min, 且第二段一定有值, i最大N-sz-1, 带入i+sz-1
                         merge(a, aux, i, i+sz-1, min(N-1, i+sz*2-1)) # Note不是N
                     sz *= 2
                     

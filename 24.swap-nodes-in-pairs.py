@@ -12,63 +12,90 @@ class ListNode(object):
         next = (',' + self.next.__repr__()) if self.next is not None else ''
         return str(self.val) +  next        
 
+def list2Node(lst):
+    dummy = ListNode(0)
+    cur = dummy
+    for item in lst:
+        cur.next = ListNode(item)
+        cur = cur.next
+    return dummy.next
+
 class Solution(object):
+    # def swapPairs(self, head):
+    #     """
+    #     :type head: ListNode
+    #     :rtype: ListNode
+    #     """        
+    #     dummy = ListNode(None)
+    #     dummy.next = head
+    #     a = dummy
+    #     while a and a.next and a.next.next:
+    #         b = a.next
+    #         c = b.next
+    #         d = c.next
+    #         a.next = c
+    #         b.next = d
+    #         c.next = b
+    #         a = b
+    #     return dummy.next
+
+    # def swapPairs(self, head):
+    #     # 省略变量d  
+    #     dummy = ListNode(None)
+    #     dummy.next = head
+    #     a = dummy
+    #     while a and a.next and a.next.next:
+    #         b = a.next
+    #         c = b.next
+    #         b.next = c.next       
+    #         a.next = c
+    #         c.next = b
+    #         a = b
+    #     return dummy.next
+
     def swapPairs(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        # 96%
-        dummy = pre = ListNode(0)
+        # 省略变量c, d  
+        dummy = ListNode(None)
         dummy.next = head
-        pre = dummy
-        while pre.next and pre.next.next:
-            a = pre.next
+        a = dummy
+        while a and a.next and a.next.next:
             b = a.next
-            pre.next = b
             a.next = b.next
-            b.next = a
-            pre = a
+            b.next = b.next.next       
+            a.next.next = b
+            a = b
         return dummy.next
-        
-    def swapTriple(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        # 96%
-        dummy = pre = ListNode(0)
-        dummy.next = head
-        pre = dummy
-        while pre.next and pre.next.next and pre.next.next.next:
-            a = pre.next
-            b = a.next
-            c = b.next
-            pre.next = c
-            a.next = c.next
-            c.next = b
-            b.next = a
-            pre = a
-        return dummy.next  
+
+    # def swapPairs(self, head):
+    #     """
+    #     :type head: ListNode
+    #     :rtype: ListNode
+    #     """
+    #     # 96%
+    #     dummy = pre = ListNode(0)
+    #     dummy.next = head
+    #     pre = dummy
+    #     while pre.next and pre.next.next:
+    #         a = pre.next
+    #         b = a.next
+    #         pre.next = b
+    #         a.next = b.next
+    #         b.next = a
+    #         pre = a
+    #     return dummy.next
 
 if __name__ == '__main__':
     """
-    调换方法见图
-    https://leetcode.com/problems/swap-nodes-in-pairs/discuss/11046/My-simple-JAVA-solution-for-share
-    注意这里必须要不仅要记录当下两个node, 还要前一个node, 因为前一个node也有指针..
-    理解这个调换: pre a b的值不变! 我们只需要改指针. 
-    pre.next 和 b.next实际上是外面的接口, 需要早赋值. 其他的内部就直接赋值好了. 
+    题设: 调换每两个元素
+    解法1:
+        最优雅, 最简单, 直接给相关变量都赋值. 
+        这样可以abcd顺序改变next即可... 实在是太简单. 
+        当然还是要画图理解. 
+    解法2: 去掉变量d
+    解法3: 去掉变量c, d
     """
-    def singleListInit(l):
-        if len(l) == 0:
-            return None
-        else:
-            cur = ListNode(l[0])
-            cur.next = singleListInit(l[1:])
-            return cur
-    head = singleListInit([1,2,3,4,5,6,7,8,9])
-    # print(head)
     s = Solution()
+    head = list2Node([1,2,3,4,5,6,7,8,9])
     print(s.swapPairs(head))
     # print(s.swapTriple(head))
     

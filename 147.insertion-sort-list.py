@@ -3,55 +3,82 @@
 #
 # [147] Insertion Sort List
 #
-def list2Node(input):
-    dummy = ListNode(0)
-    cur = dummy
-    for item in input:
-        cur.next = ListNode(item)
-        cur = cur.next
-    return dummy.next
-
-# Definition for singly-linked list.
 class ListNode(object):
     def __init__(self, x):
         self.val = x
         self.next = None
+    
     def __repr__(self):
-        next = ',' + self.next.__repr__() if self.next else ''
-        return str(self.val) + next     
+        cur = str(self.val)
+        return cur + ', ' + self.next.__repr__() if self.next else cur
+        
+def list2Node(lst):
+    dummy = ListNode(0)
+    cur = dummy
+    for item in lst:
+        cur.next = ListNode(item)
+        cur = cur.next
+    return dummy.next
 
 class Solution(object):
-    def insertionSortList(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        # 95%
-        pre = dummy = ListNode(None)  #用pre代表之前的插入位置。 
-        cur = dummy.next = head
-        while cur and cur.next:  #  and cur.next
-            val = cur.next.val  # 必须用cur.next的值，因为我们需要被插入数据的前面的node
-            if cur.val < val:
-                cur = cur.next # 必须要有这里才对，确保pre.next不会是cur.next自己
-                continue
-            if pre.next.val > val:
-                pre = dummy
-            while pre.next.val < val:  # 去掉 while pre.next 加速了10%..
-                pre = pre.next
-            # 此时 pre <= cur.next < pre.next。 
-            new = cur.next
-            cur.next = new.next  # 因为被跳过的元素已经有指针了。
-            new.next = pre.next
-            pre.next = new  # 为什么人家就能写对？
-
-        return dummy.next
+    # def insertionSortList(self, head):
+    #     """
+    #     :type head: ListNode
+    #     :rtype: ListNode
+    #     """        
+    #     dummy = ListNode(None)
+    #     dummy.next = head
+    #     a = dummy  # a 是b前面的一个元素, 需要a因为要拆开b
+    #     b = a.next  # b 指向正在被排序的元素
+    #     while b:
+    #         p = dummy
+    #         # 处理bp相等有更快的方式
+    #         while p.next.val <= b.val and b is not p.next:
+    #             p = p.next
+    #         if b is not p.next:
+    #             p2 = p.next
+    #             a.next = b.next
+    #             p.next = b
+    #             b.next = p2
+    #             b = a.next
+    #         else:
+    #             a = a.next
+    #             b = a.next
+    #     return dummy.next
         
+    def insertionSortList(self, head):
+        dummy = ListNode(None)
+        dummy.next = head
+        a = dummy  # a 是b前面的一个元素, 需要a因为要拆开b
+        b = a.next  # b 指向正在被排序的元素
+        while b:
+            p = dummy
+            if a.val <= b.val:  # shortcut
+                a = a.next
+                b = a.next
+                continue
+            else:
+                while p.next.val <= b.val:
+                    p = p.next
+                p2 = p.next
+                a.next = b.next
+                p.next = b
+                b.next = p2
+                b = a.next
+        return dummy.next
 
 if __name__ == '__main__':
     """
     sort stable的意思是同样大小的元素保持了之前的顺序。
-    TODO 到底要怎样一次写出正确的插入呀。。但是这道题本身貌似不会考？
+    解法1:
+        a是b前面的元素, 需要a因为要单独拿出b
+        p是搜索的指针, p.next与b比较, 因为需要比较元素前面的元素
+        需要处理p和b相同的情况, 做法是循环中check bp是否是同一个元素
+    解法2:
+        更快的处理pb相同, 直接先看ab相对大小, 
+            如果a <= b, 则直接赋值,
+            如果a > b, 则一定不会相等.
     """
     s = Solution()
     print(s.insertionSortList(list2Node([4,2,1,3])))
-    print(s.insertionSortList(list2Node([-1,0,3,4,5])))
+    print(s.insertionSortList(list2Node([-1,3,5,0,4])))
