@@ -68,33 +68,42 @@ class Solution(object):
         """
         :type root: TreeNode
         :rtype: List[List[int]]
-        """
+        """        
         if not root:
-            return None  # Note 必须有这里... 无法处理None input
-        queue = deque([root])
-        res = []
-        level = 0
-        while queue:
-            size = len(queue)
-            res_cur = [cur.val for cur in queue]
-            if level % 2 == 1:
-                res_cur.reverse()
-            res.append(res_cur)
-            for _ in range(size):
-                cur = queue.popleft()
-                if cur.left is not None:
-                    queue.append(cur.left)
-                if cur.right is not None:
-                    queue.append(cur.right)
+            return None
+        ans = []
+        dq = deque([root])
+        level = 0  # 感觉level比一个flag还是要好
+        while dq:
+            if level & 1:  # deque的reverse没有copy!
+                ans.append([x.val for x in reversed(dq)])
+            else:  
+                ans.append([x.val for x in dq])
+            # if level & 1:  # 改良版 mod(2)
+            #     ans[-1].reverse()
+            for _ in xrange(len(dq)):
+                cur = dq.popleft()
+                if cur.left:
+                    dq.append(cur.left)
+                if cur.right:
+                    dq.append(cur.right)
             level += 1
-        return res
-        
-        
-        
+        return ans
+
 if __name__ == '__main__':
     """
-    把res_cur部分放到下面的循环里, 可以实现insert(0)的做法. 但是我不喜欢.
-    还是reverse吧. 
+    错解: 
+        不能直接由popleft改为pop, 逻辑就错了.    
+    解法1: reveres法
+        1. 直接正常level, 把ans按照层数reverse...额外O(N)复杂度
+        2. 给ans赋值时reverse dq, 这个复杂度是O(1)!
+        3. 或者先计算dq长度, 然后赋值到最后.
+    解法2:
+        想要reverse dq里面的node, 失败了??!!
+    解法3:
+        双栈...不写
+        s1 pushd到s2, s2 push到s1...
     """
     s = Solution()
     print(s.zigzagLevelOrder(listToTree([3,9,20,None,None,15,7])))
+    print(s.zigzagLevelOrder(listToTree([1,2,3,4,None,None,5])))

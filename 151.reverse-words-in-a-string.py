@@ -126,8 +126,15 @@ if __name__ == '__main__':
         clean1的解法最稳定.. 不容易出bug..
         clean2注意加空格除了lo==0还要保证hi<len(s)
     解法4:
-        最简单, 未写
+        最简单, 用这个写法. 
         先clean前后的空格, 再调转. 最后再clean word中间多出的空格
+    解法5:
+        大雪菜还有个解法...
+        1. 去除空格
+        2. 判断是否为空
+        3. 翻转
+        4. 如果k不等于0, 赋值' '
+        5. copy到k开始的位置..
     """
     s = Solution()
     print(s.reverseWords("a good   example"))

@@ -61,70 +61,42 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-#     def generateTrees(self, n):
-#         """
-#         :type n: int
-#         :rtype: List[TreeNode]
-#         """
-#         # 87%
-#         def helper(low, high):
-#             # low high 都能被取到
-#             if high < low: # 等于的时候也需要return
-#                 return [None]  # 注意必须是None, 因为还要连在left和right上
-#             trees = []
-#             for i in range(low, high + 1):
-#                 left = helper(low, i - 1)
-#                 right = helper(i + 1, high)
-#                 for l in left:
-#                     for r in right:
-#                         node = TreeNode(i)
-#                         node.left = l
-#                         node.right = r
-#                         trees.append(node)
-#             return trees
-        
-#         return helper(1, n) if n > 0 else []
-
     def generateTrees(self, n):
         """
         :type n: int
         :rtype: List[TreeNode]
-        """
-        # 98%
-        cache = {}
-        def helper(low, high):
-            # low high 都能被取到
-            if high < low: # 等于的时候也需要return
-                return [None]  # 注意必须是None, 因为还要连在left和right上
-            if (low, high) in cache:
-                return cache[(low, high)]
-            trees = []
-            for i in range(low, high + 1):
-                left = helper(low, i - 1)
-                right = helper(i + 1, high)
-                for l in left:
+        """        
+        def dfs(lo, hi):  # [lo, hi] [1, N]
+            if lo > hi:
+                return [None]  # 要这么搞..
+            if (lo, hi) in cache:
+                return cache[lo, hi]
+            cache[lo, hi] = []
+            for i in xrange(lo, hi + 1):  # i就是元素名
+                left = dfs(lo, i - 1)
+                right = dfs(i + 1, hi)
+                for l in left:  # 必须要三重循环..
                     for r in right:
-                        node = TreeNode(i)
-                        node.left = l
-                        node.right = r
-                        trees.append(node)
-            cache[(low, high)] = trees
-            return trees
-        
-        return helper(1, n) if n > 0 else []
+                        root = TreeNode(i)  # 必须建立新node!
+                        root.left = l
+                        root.right = r
+                        cache[lo, hi].append(root)
+            return cache[lo, hi]
+        if n == 0:
+            return None
+        cache = {} # 可以defaultdict
+        dfs(1, n)
+        return cache[1, n]
 
 if __name__ == '__main__':
     """
-    解法1: 就是穷举. 注意必须是i-1 i+1, 我一开始放的i...
-    因为recursion, 树是从下向上生长的. 注意返回的list of trees
-    corner case: 答案里有更短的处理方案, 利用and. 但是影响可读性. 
-
-    解法2: 加速方案: 可以添加一个cache, 存着从low~high的结果. python3可以直接用lru_cache. 
-    python2要手写. 注意cache相当于全局变量. 
-    但是有了cache之后相当于多个tree会共用一个subtree? 应该是的. 
-
-    解法3: LRU cache. 假设函数保证给定输入的情况下输出相同. 那么可以给函数加wrapper
-        记录最近n个输入的函数的输出值. 如果再遇到相同输入直接从cache中读取. cache是一个有序字典.
+    解法1: 
+        记忆化搜索. 注意必须在 l和r的循环内部建立新root. 
+        否则root的指向就不对了.
+    解法2: LRU cache. 假设函数保证给定输入的情况下输出相同. 
+        那么可以给函数加wrapper
+        记录最近n个输入的函数的输出值. 如果再遇到相同输入直接从cache中读取. 
+        cache是一个有序字典.
     """
     s = Solution()
     trees = s.generateTrees(3)

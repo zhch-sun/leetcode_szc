@@ -91,35 +91,23 @@ class TreeNode(object):
 #         :rtype: bool
 #         """
 #         return len(self.stack) > 0
-        
+
 class BSTIterator(object):
-    # 92% 抽象了一个函数. 
     def __init__(self, root):
-        """
-        :type root: TreeNode
-        """
-        self.stack = []
-        self._left2stack(root)
+        self.sta = []
+        self._addLeft(root)
 
     def next(self):
-        """
-        @return the next smallest number
-        :rtype: int
-        """
-        cur = self.stack.pop()
-        self._left2stack(cur.right)
-        return cur.val
+        cur = self.sta.pop()
+        self._addLeft(cur.right)
+        return cur.val      
 
     def hasNext(self):
-        """
-        @return whether we have a next smallest number
-        :rtype: bool
-        """
-        return len(self.stack) > 0
+        return len(self.sta) > 0
 
-    def _left2stack(self, root):
+    def _addLeft(self, root):
         while root:
-            self.stack.append(root)
+            self.sta.append(root)
             root = root.left
 
 # Your BSTIterator object will be instantiated and called as such:
@@ -129,9 +117,9 @@ class BSTIterator(object):
 
 if __name__ == '__main__':
     """
-    解法1: 用stack, 这样相当于在inorder iterative一个tree. 
-    在初始化时先找到最左边, 然后每次next都update stack.
-    解法2: 在解法1的基础上把left2stack抽象出来
+    解法1/ 解法2: 
+        用stack, 迭代的中序遍历一个tree. 
+        写的时候发现初始化和next函数可以共用代码, 所以抽象出一个函数. 
     """
     tree = listToTree([7,3,15,None,None,9,20])
     s = BSTIterator(tree)

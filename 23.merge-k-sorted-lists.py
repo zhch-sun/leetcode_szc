@@ -88,7 +88,7 @@ if __name__ == '__main__':
         注意merge的输入是*lists!!!. 忘记*
         而且merge也不能加key或者cmp
     解法2:
-        用heapq, 队列里面的东西只能是(x.val, x)...
+        用heapq, 不改数据结构. 队列里面的东西只能是(x.val, x)...
         类似378题, 只有行有序, 手动merge
         设链表总长度为N, 则复杂度为NlogK, 空间是O(k)
     解法3:

@@ -13,31 +13,28 @@ class TreeNode(object):
 from collections import deque
 
 class Solution(object):
-    # def invertTree(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: TreeNode
-    #     """
-    #     if root:
-    #         # left = self.invertTree(root.right)
-    #         # right = self.invertTree(root.left)
-    #         # root.left = left
-    #         # root.right = right
-    #         root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
-    #     return root
-    
     def invertTree(self, root):
-        # bfs and dfs
-        queue = deque([root])
-        while queue:
-            # cur = queue.popleft()  # bfs 必须用queue
-            cur = queue.pop()  # dfs 这里可以改用list..  
-            if cur:
-                cur.left, cur.right = cur.right, cur.left
-                queue.append(cur.left)
-                queue.append(cur.right)
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return None
+        root.left, root.right = \
+            self.invertTree(root.right), self.invertTree(root.left)
         return root
-
+    
+    # def invertTree(self, root):
+    #     # bfs and dfs
+    #     queue = deque([root])
+    #     while queue:
+    #         # cur = queue.popleft()  # bfs 必须用queue
+    #         cur = queue.pop()  # dfs 这里可以改用list..  
+    #         if cur:
+    #             cur.left, cur.right = cur.right, cur.left
+    #             queue.append(cur.left)
+    #             queue.append(cur.right)
+    #     return root
 
 if __name__ == '__main__':
     """

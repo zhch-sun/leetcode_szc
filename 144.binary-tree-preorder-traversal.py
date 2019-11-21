@@ -66,46 +66,34 @@ class Solution(object):
     #     """
     #     :type root: TreeNode
     #     :rtype: List[int]
-    #     """
-    #     def helper(root, res):
-    #         if root:
-    #             res.append(root.val)
-    #             helper(root.left, res)
-    #             helper(root.right, res)
-    #     res = []
-    #     helper(root, res)
-    #     return res
-    
-    # def preorderTraversal(self, root):
-    #     if not root:
-    #         return root
-    #     stack = [root]
-    #     res = []
-    #     while stack:
-    #         cur = stack.pop()
-    #         res.append(cur.val)
-    #         if cur.right:
-    #             stack.append(cur.right)
-    #         if cur.left:
-    #             stack.append(cur.left)
-    #     return res
+    #     """        
+    #     def helper(root, ans):
+    #         if not root:
+    #             return
+    #         ans.append(root.val)
+    #         helper(root.left, ans)
+    #         helper(root.right, ans)
+    #     ans = []
+    #     helper(root, ans)
+    #     return ans
 
     def preorderTraversal(self, root):
         # 这样判断条件更少. 而且速度更快. 
-        stack = [root]
-        res = []
-        while stack:
-            cur = stack.pop()
-            if cur:
-                res.append(cur.val)
-                stack.append(cur.right)
-                stack.append(cur.left)
-        return res
+        sta = [root]  # 不需判断root非空
+        ans = []
+        while sta:
+            cur = sta.pop()
+            if cur:  # 还是直接把None都push进去
+                ans.append(cur.val)
+                sta.append(cur.right)  # 注意顺序! 先right在left
+                sta.append(cur.left)
+        return ans
 
 if __name__ == '__main__':
     """
-    recursive很简单. 
-    两种iterative只有很少的区别. 主要就是如何使代码更优雅.
+    解法1: 递归简单
+    解法2: 迭代
+        还是把None也push进去. 这样代码更简单. 速度更快
     """
     s = Solution()
     print(s.preorderTraversal(listToTree([1,None,2,3])))

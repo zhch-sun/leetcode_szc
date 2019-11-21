@@ -48,15 +48,15 @@ if __name__ == '__main__':
     """
     相同字母异序词
     做法1:
-    1. 一个直接的做法是sort每个词, tuple, 然后丢到dict里. 
-    3. .values()是个view!
+        1. 一个直接的做法是sort每个词, tuple, 然后丢到dict里. 
+        3. .values()是个view!
     解法2：
-    利用get处理key可能不存在的情况。
+        利用get处理key可能不存在的情况。
     做法3 
-    defaultdict:对于这种不停get的,可以直接搞defaultdict!!!
+        defaultdict:对于这种不停get的,可以直接搞defaultdict!!!
     做法4:
-    用counter当key变成O(n), 即count sort或者radix sort
-    问题是python缺省的counter是实际上是个dict, 而且是无序的. 不能用来当key. 
+        用counter当key变成O(n), 即count sort或者radix sort
+        问题是python缺省的counter是实际上是个dict, 而且是无序的. 不能用来当key. 
     """
     s = Solution()
     print(s.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))

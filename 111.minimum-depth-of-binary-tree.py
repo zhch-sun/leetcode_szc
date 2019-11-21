@@ -11,41 +11,6 @@ class TreeNode(object):
         self.val = x
         self.left = None
         self.right = None
-    
-
-class Solution(object):
-    # def minDepth(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: int
-    #     """
-    #     # This is the DFS version
-    #     if not root:
-    #         return 0
-    #     left = self.minDepth(root.left)
-    #     right = self.minDepth(root.right)
-    #     if left == 0 or right == 0:
-    #         return left + right + 1
-    #     else:
-    #         return min(left, right) + 1
-    
-    def minDepth(self, root):
-        if not root:
-            return 0
-        queue = deque([root])
-        level = 0
-        while queue:
-            size = len(queue)
-            for _ in xrange(size):
-                node = queue.popleft()  # Note this is not pop!!
-                if node.left is None and node.right is None:
-                    # Note this is a leaf!
-                    return level + 1
-                if node.left is not None:
-                    queue.append(node.left)
-                if node.right is not None:
-                    queue.append(node.right)
-            level += 1
 
 def listToTree(input):
     if not input:
@@ -75,18 +40,69 @@ def listToTree(input):
         index += 1
     return root
 
+class Solution(object):
+    # def minDepth(self, root):
+    #     """
+    #     :type root: TreeNode
+    #     :rtype: int
+    #     """        
+    #     if not root:
+    #         return 0
+    #     if not root.left and not root.right:
+    #         return 1
+    #     return 1 + min(minDepth(root.left, root.right))
+    
+    # def minDepth(self, root):
+    #     if not root:
+    #         return 0
+    #     queue = deque([root])
+    #     level = 0
+    #     while queue:
+    #         size = len(queue)
+    #         for _ in xrange(size):
+    #             node = queue.popleft()  # Note this is not pop!!
+    #             if node.left is None and node.right is None:
+    #                 # Note this is a leaf!
+    #                 return level + 1
+    #             if node.left is not None:
+    #                 queue.append(node.left)
+    #             if node.right is not None:
+    #                 queue.append(node.right)
+    #         level += 1
+
+    def minDepth(self, root):
+        if not root:
+            return 0
+        dq = deque([root])
+        level = 0
+        while dq:
+            level += 1
+            for _ in xrange(len(dq)):
+                cur = dq.popleft()  # pop的是left
+                if not cur.left and not cur.right:
+                    return level
+                if cur.left:
+                    dq.append(cur.left)
+                if cur.right:
+                    dq.append(cur.right)
+        return level
+
 if __name__ == '__main__':
     """
+    解法1: 
+        递归, 分类讨论
+    解法2: 
+        BFS, 显然更快, 层序遍历
     mini-depth的定义是从root到叶子节点的最短距离. leaf的定义是一个没有children的node. 
-    BFS更快
+    显然BFS更快
     Note - can not directly use min(left, right) + 1 因为
         当root有一个分支是none的时候, depth不是1 ! 所以还需要额外的条件判断
     当只有一个root的时候, root本身也是一个leaf
     """
     s = Solution()
     tree = listToTree([3,9,20,None,None,15,7])
-    tree = listToTree([1,2])
-    tree = listToTree([1,2,3,4,None,None,5])
+    # tree = listToTree([1,2])
+    # tree = listToTree([1,2,3,4,None,None,5])
     print(s.minDepth(tree))
         
 

@@ -61,40 +61,59 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
+    # def pathSum(self, root, sum):
+    #     """
+    #     :type root: TreeNode
+    #     :type sum: int
+    #     :rtype: List[List[int]]
+    #     """      
+    #     def dfs(root, total, tmp):
+    #         if not root:
+    #             return
+    #         tmp.append(root.val)
+    #         total -= root.val
+    #         if not root.left and not root.right and total == 0:
+    #             ans.append(tmp[:])
+    #             tmp.pop()  # Note 所有return都要pop
+    #             return
+    #         dfs(root.left, total, tmp)
+    #         dfs(root.right, total, tmp)
+    #         tmp.pop()
+    #     ans = []
+    #     dfs(root, sum, [])
+    #     return ans  # 忘记return了...
+
     def pathSum(self, root, sum):
         """
         :type root: TreeNode
         :type sum: int
         :rtype: List[List[int]]
-        """
-        def helper(root, sum, tmp, res):
-            sum -= root.val
-            tmp.append(root.val)
-            if root.left is None and root.right is None:
-                if sum == 0:
-                    res.append(tmp[:])
-                tmp.pop()  #所有return前都要pop()
+        """      
+        def dfs(root, total, tmp, ans):
+            if not root:
                 return
-            if root.left:
-                helper(root.left, sum, tmp, res)
-            if root.right:
-                helper(root.right, sum, tmp, res)
+            tmp.append(root.val)
+            total -= root.val
+            if not root.left and not root.right and total == 0:
+                ans.append(tmp[:])
+                tmp.pop()  # Note 所有return都要pop
+                return
+            dfs(root.left, total, tmp, ans)
+            dfs(root.right, total, tmp, ans)
             tmp.pop()
-        
-        if not root:
-            return []
-        res = []
-        helper(root, sum, [], res)
-        return res
-        
+        ans = []
+        dfs(root, sum, [], ans)
+        return ans  # 忘记return了...
+
 if __name__ == '__main__':
     """
     和前面的区别是前面只要返回是否存在,
     解法1:
         这题返回所有解. backtracking可以.
-    解法2: 更短
-        不用backtracking, 每次都返回一个新的list: 但这个需要每次都copy了.
-        解法2不写了. 
+        注意所有return都要pop...
+    解法2:
+        不用全局变量, 输入ans.
+        TODO backtrack模板? 
     """
     s = Solution()
     print(s.pathSum(listToTree([5,4,8,11,None,13,4,7,2,None,None,5,1]), 22))

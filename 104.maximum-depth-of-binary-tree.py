@@ -10,15 +10,6 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
-class Solution(object):
-    def maxDepth(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        if not root:
-            return 0
-        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
 
 def listToTree(input):
     if not input:
@@ -65,9 +56,17 @@ def treeToList(input):
         res.pop()
     return res
 
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """        
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right)) \
+            if root else 0
+
 if __name__ == '__main__':
     """
-    TODO bfs solution
     """
     s = Solution()
     tree = listToTree([3,9,20,None,None,15,7])

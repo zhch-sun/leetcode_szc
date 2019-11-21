@@ -77,23 +77,21 @@ class Solution(object):
     #         return node
         
     def buildTree(self, inorder, postorder):
-        def helper(low, high):  # [low, high)
-            if low < high:
-                item = postorder.pop()
-                ind = inorder_cache[item]
-                node = TreeNode(item)
-                node.right = helper(ind + 1, high)
-                node.left = helper(low, ind)  # 这里写成(0,ind)了
-                return node
+        def helper(lo, hi):  # [lo,hi)
+            if lo < hi:
+                val = postorder.pop()
+                root = TreeNode(val)
+                idx = inorder_dict[val]
+                root.right = helper(idx + 1, hi)
+                root.left = helper(lo, idx)
+                return root
+        inorder_dict = {n: i for i, n in enumerate(inorder)}
+        lo, hi = 0, len(inorder)
+        return helper(lo, hi)
 
-        inorder_cache = {item: i for i, item in enumerate(inorder)}
-        return helper(0, len(inorder))
-        
 if __name__ == '__main__':
     """
-    在把上面的答案转换成下面的答案的时候, 遇到了若干问题..
-    1. recurse出还是调用的self.buildTree... 实际上是helper
-    2. helper的区间范围, 应该是(low, ind), 写成了(0,ind) 还是容易错呀..
+    不需deque, 直接pop即可. 
     """
     s = Solution()
     print(treeToList(s.buildTree([9,3,15,20,7], [9,15,7,20,3])))

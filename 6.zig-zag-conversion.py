@@ -45,7 +45,9 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    
+    找规律的题目
+    上下是等差数列.
+    中间是等差数列交错的形态. 利用等差数列直接生成. 
     """
     s = Solution()
     s.convert('PAYPALISHIRING', 3)

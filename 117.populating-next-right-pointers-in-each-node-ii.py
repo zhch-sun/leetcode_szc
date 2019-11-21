@@ -17,36 +17,53 @@ class Solution(object):
     #     :type root: Node
     #     :rtype: Node
     #     """
-    #     save = root
-    #     # while root and root.left: # 这里也错了. 
-    #     while root:
-    #         cur = root
+    #     from collections import deque
+    #     if not root:
+    #         return None
+    #     dq = deque([root])
+    #     while dq:
     #         pre = None
-    #         head = None
+    #         for _ in xrange(len(dq)):
+    #             cur = dq.popleft()
+    #             if cur.left:
+    #                 dq.append(cur.left)
+    #             if cur.right:
+    #                 dq.append(cur.right)
+    #             if pre:
+    #                 pre.next = cur
+    #             pre = cur
+    #     return root
+
+    # def connect(self, root):
+    #     if not root:
+    #         return None
+    #     save = root
+    #     while root:  # root是最左边节点
+    #         cur = root
+    #         root = None  # 不知道下一层是否有root
+    #         pre = None  # 内环前更新变量
     #         while cur:
     #             if cur.left:
     #                 if pre:
     #                     pre.next = cur.left
     #                 else:
-    #                     head = cur.left
+    #                     root = cur.left  # Note 更新最左边节点
     #                 pre = cur.left
     #             if cur.right:
     #                 if pre:
     #                     pre.next = cur.right
     #                 else:
-    #                     head = cur.right
+    #                     root = cur.right
     #                 pre = cur.right
     #             cur = cur.next
-    #         # root = root.left  # 原来是这里错了... 不能保证left一定有值..
-    #         root = head
     #     return save
 
     def connect(self, root):
-        dummy = Node(0, None, None, None)  # dummy head
+        dummy = Node(None, None, None, None)
         dummy.next = root
-        while dummy.next:
-            cur = dummy.next
-            dummy.next = None  # new head
+        while dummy.next:  # root是最左边节点
+            cur = dummy.next  # 循环内部dummy会自动更新到下一层...
+            dummy.next = None  # 又忘记了..
             pre = dummy
             while cur:
                 if cur.left:
@@ -55,17 +72,21 @@ class Solution(object):
                 if cur.right:
                     pre.next = cur.right
                     pre = cur.right
-                cur = cur.next  # 忘了这个!!
+                cur = cur.next
         return root
 
 if __name__ == '__main__':
     """
-    解法1: 第一遍写出了错解, 
-        错误1: 不能够保证root.left是下一层开始的位置.
-        错误2: 最外层不能是root and root.left, left不一定存在了...
+    题设: 要求O(1)空间.
+    解法1:
+        通解: 使用level遍历. 同116. 但是用了额外空间.
+    解法2:
+        相比于116, next指针可能要隔山打牛, 所以需要存pre
+        不仅要存pre, 每行第一个head值不是上一个行首的left!!!
+        所以循环中还要更新root, 注意内环开始前要把root赋值为None..
     解法2: 用dummy head替换掉原来的真head, 节省逻辑.
-        理解什么时候需要dummy!
+        dummy处理行首不存在的情况.
+        dummy内环前也要None...
         另外如果循环中用root来做, 逻辑更简单. 
-    解法3: 用一个while loop.. 但是我觉得影响可读性? 而且实际速度也不快, 不写.
     """
     s = Solution()

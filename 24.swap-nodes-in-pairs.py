@@ -21,23 +21,23 @@ def list2Node(lst):
     return dummy.next
 
 class Solution(object):
-    # def swapPairs(self, head):
-    #     """
-    #     :type head: ListNode
-    #     :rtype: ListNode
-    #     """        
-    #     dummy = ListNode(None)
-    #     dummy.next = head
-    #     a = dummy
-    #     while a and a.next and a.next.next:
-    #         b = a.next
-    #         c = b.next
-    #         d = c.next
-    #         a.next = c
-    #         b.next = d
-    #         c.next = b
-    #         a = b
-    #     return dummy.next
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """        
+        dummy = ListNode(None)
+        dummy.next = head
+        a = dummy
+        while a and a.next and a.next.next:
+            b = a.next
+            c = b.next
+            d = c.next
+            a.next = c
+            b.next = d
+            c.next = b
+            a = b
+        return dummy.next
 
     # def swapPairs(self, head):
     #     # 省略变量d  
@@ -53,35 +53,17 @@ class Solution(object):
     #         a = b
     #     return dummy.next
 
-    def swapPairs(self, head):
-        # 省略变量c, d  
-        dummy = ListNode(None)
-        dummy.next = head
-        a = dummy
-        while a and a.next and a.next.next:
-            b = a.next
-            a.next = b.next
-            b.next = b.next.next       
-            a.next.next = b
-            a = b
-        return dummy.next
-
     # def swapPairs(self, head):
-    #     """
-    #     :type head: ListNode
-    #     :rtype: ListNode
-    #     """
-    #     # 96%
-    #     dummy = pre = ListNode(0)
+    #     # 省略变量c, d  
+    #     dummy = ListNode(None)
     #     dummy.next = head
-    #     pre = dummy
-    #     while pre.next and pre.next.next:
-    #         a = pre.next
+    #     a = dummy
+    #     while a and a.next and a.next.next:
     #         b = a.next
-    #         pre.next = b
     #         a.next = b.next
-    #         b.next = a
-    #         pre = a
+    #         b.next = b.next.next       
+    #         a.next.next = b
+    #         a = b
     #     return dummy.next
 
 if __name__ == '__main__':

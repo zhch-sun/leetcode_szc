@@ -67,57 +67,38 @@ class Solution(object):
     #     :type root: TreeNode
     #     :rtype: List[int]
     #     """
-    #     # left root right
-    #     def helper(root, res):
-    #         if root:
-    #             helper(root.left, res)
-    #             res.append(root.val)
-    #             helper(root.right, res)
+    #     def helper(root, ans):
+    #         if not root:
+    #             return 
+    #         helper(root.left, ans)
+    #         ans.append(root.val)
+    #         helper(root.right, ans)
     #     res = []
     #     helper(root, res)
     #     return res
-    
-    def inorderTraversal(self, root):
-        # 相对好理解. 如果当前node不为none, 就往left跑
-        stack = []
-        res = []
-        cur = root
-        while cur or stack: # 这个条件
-            while cur is not None:  # 只有下面pop出值来才查左边?
-                stack.append(cur)  #  这里add是current, 而不是left..
-                cur = cur.left
-            cur = stack.pop() # 注意这里必须pop, 因为上面的cur已经变成None..
-            res.append(cur.val)  # cur has no left leaf
-            cur = cur.right  # might be None
-        return res
 
-    # def inorderTraversal(self, root):
-    #     # 合并了两个while循环. 这个最快... 
-    #     stack = []
-    #     res = []
-    #     cur = root  # 可以直接用root. 
-    #     while cur or stack: # 这个条件
-    #         if cur is not None:  # 只有下面pop出值来才查左边?
-    #             stack.append(cur)  #  这里add是current, 而不是left..
-    #             cur = cur.left
-    #         else:
-    #             cur = stack.pop() # 注意这里必须pop, 因为上面的cur已经变成None..
-    #             res.append(cur.val)  # cur has no left leaf
-    #             cur = cur.right  # might be None
-    #     return res
+    def inorderTraversal(self, root):
+        sta = []
+        ans = []
+        while sta or root:  # sta里是左边的, root代表右边的root
+            while root:  # 直到None的时候停下.  
+                sta.append(root)
+                root = root.left  
+            cur = sta.pop()
+            ans.append(cur.val)
+            root = cur.right  # 可能是None
+        return ans
 
 if __name__ == '__main__':
     """
-    recursive很直接. 
-    iterative: 
-    解法1:
-        就用这个解法. 
-        push进去的是cur, 而不是current.left. 意思是push进去所有有left的node. 
-        而不是push进去所有node的left children...
-        TODO 这个题因为有两个不同位置的递归, 所以不能直接用stack做?
-    解法2: 把两个while循环写到一起. 
-    解法3: Morris traversal: O(1)空间复杂度.. 很复杂. 
+    解法1: 递归直接写掉.
+    解法2:
+        算法是对的, 没有证明? 没有完全理解. 
+        先入栈所有左边的, 再逐个pop, 写值, 改root为right. 
+    解法3: 
+        TODO 大雪菜还有个通用递归转换方法
+        https://www.acwing.com/solution/LeetCode/content/176/
+    解法4: Morris traversal: O(1)空间复杂度.. 很复杂. 不管 
     """
     s = Solution()
     print(s.inorderTraversal(listToTree([1,None,2,3])))
-    

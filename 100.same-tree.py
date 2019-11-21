@@ -19,10 +19,10 @@ class Solution(object):
         :rtype: bool
         """
         if p and q:
-            return p.val == q.val and self.isSameTree(p.left, q.left) \
-            and self.isSameTree(p.right, q.right)
-        # return p is q  # check if all None
-        return True if p is None and q is None else False
+            return p.val == q.val and \
+                self.isSameTree(p.left, q.left) and \
+                    self.isSameTree(p.right, q.right)
+        return not p and not q  # 不支持异或
 
 if __name__ == '__main__':
     """

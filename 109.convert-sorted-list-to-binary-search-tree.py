@@ -83,30 +83,35 @@ class Solution(object):
         """
         :type head: ListNode
         :rtype: TreeNode
-        """
-        def dfs(n):
-            if n <= 0:  # 忘记了..
-                return None  
-            left = dfs(n / 2)
-            tree = TreeNode(self.node.val)
-            tree.left = left
-            self.node = self.node.next
-            tree.right = dfs(n - n / 2 - 1)
-            return tree
-        self.node = head  # 貌似只有builtin的[]和{}才能够在内部修改外部变量. node是不能直接修改的.
-        count = 0
-        cur = ListNode(None)
-        cur.next = head
-        while cur.next:
-            count += 1
+        """        
+        def dfs(cnt):
+            if cnt == 0:  # 忘记了...
+                return None 
+            left = dfs(cnt // 2)
+            cur = TreeNode(self.node.val)
+            cur.left = left
+            self.node = self.node.next  # 外层变量是不能直接赋值的
+            cur.right = dfs(cnt - cnt // 2 - 1)
+            return cur
+        
+        cur = head
+        N = 0  # N 是数量.
+        while cur:
+            N += 1
             cur = cur.next
-        return dfs(count)
+        self.node = head
+        return dfs(N)
+
 
 if __name__ == '__main__':
     """
-    有一个做法是每次都用slow fast确定中点位置, 速度太慢了. nlog(n)
-    答案的做法还是很高明的. 直接通过个数判断在数上的位置. (和108一样?)
-    还有就是要把node写成self.node: 这是python作用域的问题了. 
+    思路:
+        重要的思路是inorder traversal!!! 因为inorder也是一个序列!!
+    解法1:
+        答案直接通过个数判断在树上的位置. (和108一样?)
+        还有就是要把node写成self.node: 这是python作用域的问题了. 
+    解法2:
+        转成数组也可以....
     """
     s = Solution()
 

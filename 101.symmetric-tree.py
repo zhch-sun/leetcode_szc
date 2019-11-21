@@ -10,41 +10,6 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
-class Solution(object):
-    # def isSymmetric(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: bool
-    #     """
-    #     def sym_helper(left, right):
-    #         if left and right:
-    #             return left.val == right.val and \
-    #                 sym_helper(left.left, right.right) and \
-    #                 sym_helper(left.right, right.left)
-    #         else: # can be deleted
-    #             return left is right
-    #     if not root:
-    #         return True  # None input return true
-    #     # return not root or sym_helper(root.left, root.right)
-    #     return sym_helper(root.left, root.right)
-
-    def isSymmetric(self, root):
-        if not root:
-            return True
-        stack = [root.left, root.right]
-        while len(stack) > 0:
-            left = stack.pop()
-            right = stack.pop()
-            if left is None and right is None:
-                continue
-            elif left is None or right is None or left.val != right.val: # Note this!
-                return False
-            stack.append(left.left)  # python do not have push
-            stack.append(right.right)
-            stack.append(left.right)
-            stack.append(right.left)
-        return True
-        
 def listToTree(input):
     if not input:
         return None
@@ -94,12 +59,53 @@ def treeToList(input):
     while res[-1] is None:  # 符合定义?
         res.pop()
     return res
-    
+
+class Solution(object):
+    # def isSymmetric(self, root):
+    #     """
+    #     :type root: TreeNode
+    #     :rtype: bool
+    #     """
+    #     def helper(left, right):  # 必须要两个输入, 比较左右
+    #         if left and right:
+    #             return left.val == right.val and \
+    #                 helper(left.left, right.right) and \
+    #                 helper(left.right, right.left)
+    #         else:
+    #             return left is right  # 两个只有都是None才可以
+    #     if not root:
+    #         return True
+    #     return helper(root.left, root.right)
+
+    def isSymmetric(self, root):
+        if not root:
+            return True
+        sta = [root.left, root.right]
+        while sta:
+            right = sta.pop()
+            left = sta.pop()
+            if not left and not right:
+                continue
+            elif (not left or not right) or left.val != right.val:
+                return False
+            sta.append(left.left)
+            sta.append(right.right)
+            sta.append(left.right)
+            sta.append(right.left)
+        return True
 
 if __name__ == '__main__':
     """
     注意理解题意. 还有 root=None的时候return True也是厉害. 
     要注意iterative时候的条件判断. 
+    解法1: 递归
+        根节点值相等, 左边左子树和右边右子树对称. 左边又子树, 右边左子树. 
+        我一开始进行各种判断: 两个不存在True, 两个亦或False.
+        答案的逻辑真巧妙... left is right厉害了...
+    解法2: 迭代:
+        实际上是level order! 层序遍历.
+    解法3: 迭代, 未写
+        可以按照中序遍历的考虑方式. 左边是左中右, 右边是右中左.
     """
     def T2L(n):
         # tree to list

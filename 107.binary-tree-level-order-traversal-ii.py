@@ -12,52 +12,6 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
-class Solution(object):
-    # def levelOrderBottom(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: List[List[int]]
-    #     """
-    #     if not root:
-    #         return []
-    #     res = deque()
-    #     queue = deque([root])
-    #     while queue:
-    #         size = len(queue)
-    #         level = []
-    #         for _ in range(len(queue)):
-    #             cur = queue.popleft()
-    #             level.append(cur.val)
-    #             if cur.left is not None:
-    #                 queue.append(cur.left)
-    #             if cur.right is not None:
-    #                 queue.append(cur.right)
-    #         res.appendleft(level)
-    #     return list(res)
-    def treeDepth(self, root):
-        return 1 + max(self.treeDepth(root.left), self.treeDepth(root.right)) if root else 0
-
-    def levelOrderBottom(self, root):
-        # 依旧是bfs. 预先求出depth, 这样就可以直接根据height放元素了.
-        if not root:
-            return []
-        # res = [[]] * self.treeDepth(root)  # Note same pointers!!!!
-        res = [[] for _ in range(self.treeDepth(root))]
-        queue = deque([root])
-        height = 0
-        while queue:
-            size = len(queue)
-            for _ in range(len(queue)):
-                cur = queue.popleft()
-                res[-(height + 1)].append(cur.val)
-                if cur.left is not None:
-                    queue.append(cur.left)
-                if cur.right is not None:
-                    queue.append(cur.right)
-            height += 1
-        return res
-        
-        
 def listToTree(input):
     if not input:
         return None
@@ -108,13 +62,59 @@ def treeToList(input):
         res.pop()
     return res
 
+class Solution(object):
+    def levelOrderBottom(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """        
+        if not root:
+            return root
+        dq = deque([root])
+        ans = []
+        while dq:
+            ans.append([x.val for x in dq])
+            for _ in xrange(len(dq)):
+                cur = dq.popleft()
+                if cur.left:
+                    dq.append(cur.left)
+                if cur.right:
+                    dq.append(cur.right)
+        ans.reverse()
+        return ans
+
+    # def levelOrderBottom(self, root):
+    #     # bfs先求depth
+    #     def treeDepth(root):
+    #         return 1 + max(treeDepth(root.left), \
+    #             treeDepth(root.right)) if root else 0
+    #     if not root:
+    #         return []
+    #     res = [[] for _ in xrange(treeDepth(root))]
+    #     queue = deque([root])
+    #     height = 0
+    #     while queue:
+    #         for _ in xrange(len(queue)):
+    #             cur = queue.popleft()
+    #             res[~height].append(cur.val)  # 用~代替-(height + 1)!
+    #             if cur.left:
+    #                 queue.append(cur.left)
+    #             if cur.right:
+    #                 queue.append(cur.right)
+    #         height += 1
+    #     return res
+
 if __name__ == '__main__':
     """
-    解法0(推荐):这个题最合理的解法应该就是102 + 最后list.reverse()了...
+    解法1(推荐):
+        这个题最合理的解法应该就是102 + 最后list.reverse()了...
+        复杂度是O(H)+O(N)
     不用reverse:
-    解法1(没写): 在list最前面插入, 这个操作o(n)
-    解法2(我的第一种): res修改成一个deque, 最后还是要转成list, 这还是要O(n) 
-    解法3: 先求出tree的最大高度, 这种解法不推荐.
+    解法2: 
+        res修改成一个deque, 最后还是要转成list, 还是要O(H)+O(N)
+    解法3: 
+        先求出tree的最大高度, 这种解法不推荐.
+        O(N) + O(N)
     dfs似乎没有什么做法啊. 
     """
     s = Solution()

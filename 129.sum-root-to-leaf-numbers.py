@@ -62,52 +62,63 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-    # def sumNumbers(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: int
-    #     """
-    #     def dfs(root, path_sum, total):
-    #         path_sum = path_sum * 10 + root.val
-    #         if (not root.left) and (not root.right):  # left
-    #             return total + path_sum
-    #         if root.left:
-    #             total = dfs(root.left, path_sum, total)
-    #         if root.right:
-    #             total = dfs(root.right, path_sum, total)
-    #         return total
-    #     if not root:
-    #         return 0            
-    #     return dfs(root, 0, 0)
-    
-    # def sumNumbers(self, root):
-    #     def dfs(root, path_sum):
-    #         if not root:
-    #             return 0     
-    #         path_sum = path_sum * 10 + root.val
-    #         if (not root.left) and (not root.right):  # left
-    #             return path_sum
-    #         return dfs(root.left, path_sum) + dfs(root.right, path_sum)
-    #     return dfs(root, 0)   
-
     def sumNumbers(self, root):
-        stack = [(root, 0)]
-        res = 0
-        while stack:
-            root, path_sum = stack.pop()
-            if root:
-                path_sum = path_sum * 10 + root.val
-                if (not root.left) and (not root.right):
-                    res += path_sum
-                stack.append((root.right, path_sum))
-                stack.append((root.left, path_sum))      
-        return res         
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        def dfs(root, path_sum):
+            if not root:
+                return 0     
+            path_sum = path_sum * 10 + root.val
+            if (not root.left) and (not root.right):  # left
+                return path_sum
+            return dfs(root.left, path_sum) + dfs(root.right, path_sum)
+        return dfs(root, 0)   
 
+    # def sumNumbers(self, root):
+    #     # 回溯写法, 不如标准写法好.
+    #     def dfs(root, tmp):
+    #         if not root:
+    #             return
+    #         tmp = tmp * 10 + root.val
+    #         if not root.left and not root.right:
+    #             self.total += tmp
+    #             tmp = tmp // 10
+    #             return
+    #         dfs(root.left, tmp)
+    #         dfs(root.right, tmp)
+    #         tmp = tmp // 10
+    #         return
+            
+    #     self.total = 0  # 必须self, 否则dfs内要global!!
+    #     dfs(root, 0)
+    #     return self.total
+
+    # def sumNumbers(self, root):
+    #     stack = [(root, 0)]
+    #     res = 0
+    #     while stack:
+    #         root, path_sum = stack.pop()
+    #         if root:
+    #             path_sum = path_sum * 10 + root.val
+    #             if (not root.left) and (not root.right):
+    #                 res += path_sum
+    #             stack.append((root.right, path_sum))
+    #             stack.append((root.left, path_sum))      
+    #     return res         
 
 if __name__ == '__main__':
     """
-    有关root = None的判断: 还是允许None为root, 在函数执行的前面处理比较好. 在递归调用时
-        做判断感觉还是不方便.
+    题设: 1->2->3代表数字123, 求所有值sum.
+    解法1:
+        标准写法. 输入path_sum, 返回total.
+        注意输入是数字, 返回的是值. 
+    解法2: 
+        回溯写法: 麻烦得多. 且需要全局变量
+    解法3:
+        迭代. 就是一个pre-order traversal.
+
     解法1: 两个输入: path_sum 和total
     解法2: 更好的解法. 
         一个输入path_sum, return的是以当前root为开始的total.

@@ -47,7 +47,7 @@ class Solution(object):
         # 中心扩散法
         def expand(i, j):
             while i >= 0 and j < N and s[i] == s[j]:
-                i -= 1
+                i -=  1
                 j += 1
             return j - i - 1  # 跳出时比实际大小+2
        

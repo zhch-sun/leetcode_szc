@@ -40,14 +40,13 @@ class Solution(object):
                 c1.next = head
                 head = head.next
                 c1 = c1.next
-                # head.next = None
         c1.next = None  # Note 易忘!!! 只能在这里加, 防止死循环..
         c0.next = d1.next  # 注意cd
         return d0.next
         
 if __name__ == '__main__':
     """
-    题设: 坐标小于, 右边大于等于
+    题设: 左边小于, 右边大于等于
     解法:
         标准partition的前后找值交换是不可能了. 
         只能分成两组链表.

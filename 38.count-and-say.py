@@ -47,10 +47,12 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    easist: itertools.groupby solution.
+    解法1:
+        for loop solution (无论是for和while都免不了最后两个append)
+        双指针? while loop.
+    解法2:
+        itertools.groupby solution.
     fatest: TODO regular expression results...
-    common: for loop solution (无论是for和while都免不了最后两个append)
-    Note: python's + for string is very slow, should use ''.join after loop
     """
     # import itertools
     s = Solution()

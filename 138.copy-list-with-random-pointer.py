@@ -46,11 +46,11 @@ class Solution(object):
     #         cur = cur.next
     #     cur = head
     #     while cur:
-    #         if cur.next:  # 需要判断..
+    #         if cur.next:  # Note 需要判断..
     #             tmp[cur].next = tmp[cur.next]
     #         if cur.random:
     #             tmp[cur].random = tmp[cur.random]
-    #         cur = cur.next  # 忘记了!!!
+    #         cur = cur.next  # Note 忘记了!!!
     #     return tmp[head]
 
     # def copyRandomList(self, head):

@@ -68,45 +68,42 @@ class Solution(object):
     #     """
     #     :type root: TreeNode
     #     :rtype: List[int]
-    #     """
-    #     def dfs(root, height):
-    #         if root:
-    #             if height >= len(res):
-    #                 res.append(root.val)
-    #             dfs(root.right, height + 1)
-    #             dfs(root.left, height + 1)
-    #     res = []
-    #     dfs(root, 0)
-    #     return res
-
-    def rightSideView(self, root):
-        if not root:
-            return []
-        res = []
-        queue = deque([root])
-        while queue:
-            size = len(queue)
-            level = []
-            for _ in range(size):
-                root = queue.popleft()
-                level.append(root.val)
-                if root.left:
-                    queue.append(root.left)
-                if root.right:
-                    queue.append(root.right)
-            res.append(level[-1])
-        return res
-
+    #     """        
+    #     if not root:
+    #         return []
+    #     dq = deque([root])
+    #     ans = []
+    #     while dq:
+    #         ans.append(dq[-1].val)
+    #         for _ in xrange(len(dq)):
+    #             cur = dq.popleft()
+    #             if cur.left:
+    #                 dq.append(cur.left)
+    #             if cur.right:
+    #                 dq.append(cur.right)
+    #     return ans    
         
+    def rightSideView(self, root):
+        def dfs(root, height):
+            if root:
+                if height >= len(ans):
+                    ans.append(root.val)
+                dfs(root.right, height + 1)
+                dfs(root.left, height + 1)
+        ans = []
+        dfs(root, 0)
+        return ans
+
 if __name__ == '__main__':
     """
-    直接写iterative还是不行. 需要dfs. 
-    答案1: 
+    解法1:
+        迭代. level order traversal. 
+        而且已经是最优, 因为必须traverse整个树才知道左边有没有更深的位置.
+        既然遍历, 层序已经最优
+    答案2: 
+        递归. 需要当前的height
         preorder traversal: 顺序是root right left
         然而确实需要整个遍历一遍才能知道最终的答案. 
-        递归中需要当前的height
-    答案2: 
-        直接level order traversal就可以啦! 而且正常的level就可以, 不需要倒序.
     """
     s = Solution()
     print(s.rightSideView(listToTree([1,2,3,None,5,None,4])))

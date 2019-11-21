@@ -62,50 +62,43 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-    # pre = None  # Note这里赋值会导致测试失败. 因为有状态了! 需要重新创建Instance
     # def isValidBST(self, root):
     #     """
     #     :type root: TreeNode
     #     :rtype: bool
-    #     """
-    #     if not root:
-    #         return True
-    #     if not self.isValidBST(root.left):
+    #     """        
+    #     def helper(root, lo, hi):  # 从上到下, 逐渐缩小合理范围. 
+    #         if not root:
+    #             return True
+    #         if lo < root.val < hi:
+    #             return helper(root.left, lo, root.val) and \
+    #                 helper(root.right, root.val, hi)
     #         return False
-    #     if self.pre and self.pre.val >= root.val:  # note >=
-    #         return False
-    #     self.pre = root
-    #     if not self.isValidBST(root.right):
-    #         return False
-    #     return True
+    #     return helper(root, float('-inf'), float('inf'))
 
     def isValidBST(self, root):
-        stack = []
-        pre = None
-        cur = root
-        while cur or stack:
-            while cur is not None:
-                stack.append(cur)
-                cur = cur.left
-            cur = stack.pop()
-            if pre is not None and pre >= cur.val:  # Note 这里不能if last!!!
+        sta = []
+        pre = float('-inf')
+        while root or sta:
+            while root:
+                sta.append(root)
+                root = root.left
+            cur = sta.pop()
+            if cur.val <= pre:  # 注意=号
                 return False
             pre = cur.val
-            cur = cur.right
+            root = cur.right  # 不是root.right...
         return True
-
 
 if __name__ == '__main__':
     """
-    我的思路:
-    我一开始写得是preoder的错解, 思路是root的left right的值满足要求, 并且左右子树validate即可.
-    但是这不能保证右子树所有的值都大于root. 要想preoder, 必须再传入当前的min和max...
-    这道题必须要inorder!!! 所有与BST大小顺序相关的都要inorder. 
-    答案思路: 
-    解法1, preorder-recursion中记录之前的root(需要一个全局变量), 进行比较. 
-    解法2, inorder iterative traversal: 
-    TODO duplicate时怎么搞? 
-    解法3, 当然也可以直接先traverse得到所有的值, 再循环一遍list...
+    题设: 判断是否为二叉搜索树. 
+        每个节点大于所有左子树节点, 小于所有右子树节点. 算法书也是这么定义.
+    解法1: 递归
+        从下到上, 应该需要记录左子树的min和右子树的max? 
+        从上到下, 逐步减小可行范围, 确保每个node都满足范围. 
+    解法2: 
+        迭代 中序遍历 inorder traversal
     """
     s = Solution()
     print(s.isValidBST(listToTree([2,1,3])))
