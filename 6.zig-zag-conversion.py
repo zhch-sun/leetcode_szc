@@ -9,47 +9,29 @@ class Solution(object):
         :type s: str
         :type numRows: int
         :rtype: str
-        """
-        # 那个zigzag的斜线实际上没有意义, 可以看成先竖直向上, 再竖直向下
-        # 所以只要记录两个位置调换顺序即可
-        # 99.72% 386us a little faster....
-        if numRows == 1 or numRows >= len(s):
-            return s
-        L = [''] * numRows
-        # have to initialize -1 for step
-        index, step = 0, -1  # step: direction for index
-        for x in s:
-            L[index] += x
-            if index == 0 or index == numRows - 1:
-               step = -1 * step
-            index += step
-                        
-        return ''.join(L)
-
-
-    # def convert(self, s, numRows):
-    #     # 99.07?  405 us
-    #     # join version
-    #     if numRows == 1 or numRows >= len(s):
-    #         return s
-    #     L = [[] for _ in range(numRows)] 
-    #     index, step = 0, -1
-    #     for x in s:
-    #         L[index].append(x)
-    #         if index == 0 or index == numRows - 1:
-    #            step = -1 * step
-    #         index += step
-                        
-    #     return ''.join([''.join(item) for item in L])
-
+        """        
+        ans = [''] * numRows
+        pos = 0
+        step = 1
+        for char in s:
+            ans[pos] += char
+            if pos + step < 0 or pos + step >= numRows:
+                step *= -1
+            pos += step
+        return ''.join(ans)
 
 if __name__ == '__main__':
     """
-    找规律的题目
-    上下是等差数列.
-    中间是等差数列交错的形态. 利用等差数列直接生成. 
+    解法1:
+        模拟. 找到上升下降的位置, 逐个填充字符.
+        那个zigzag的斜线实际上没有意义, 可以看成先竖直向上, 再竖直向下
+        所以只要记录两个位置调换顺序即可
+    解法2: 
+        找规律
+        上下是等差数列.
+        中间是等差数列交错的形态. 利用等差数列直接生成. 
     """
     s = Solution()
-    s.convert('PAYPALISHIRING', 3)
+    print(s.convert('PAYPALISHIRING', 3))
 
 

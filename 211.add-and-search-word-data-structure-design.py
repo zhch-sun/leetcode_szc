@@ -18,7 +18,7 @@ class WordDictionary(object):
         Initialize your data structure here.
         """
         self.root = TrieNode()
-        self.root.isEnd = True        
+        # self.root.isEnd = True        
 
     def addWord(self, word):
         """
@@ -46,12 +46,12 @@ class WordDictionary(object):
                 if root is None:
                     return False
             else:
-                new_word = word[idx+1:]
+                new_word = word[idx+1:]  # Note 这里不需要check最后一位为'.'的情况?
                 for node in root.nodes.values():  # for node in root.nodes:  # 这是错解...
                     if self.match(new_word, node):
                         return True
                 return False
-        return root.isEnd
+        return root.isEnd  # 假如输入是'', 直接返回当前是否是end!
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
@@ -60,18 +60,21 @@ class WordDictionary(object):
 
 if __name__ == '__main__':
     """
-    解法1: 遇到'.' 就for循环递归. 把剩下的word和node传进去
-    所以需要额外一个函数, 其输入需要有node. 
-    Note: 插入时  cur.isEnd = True很容易忘记...
-    解法2: iterative: 用stack..
-    解法3: python短答案. 其实是用list存着所有可能的值, 用了更多的memory. 
+    题设: 支持正则表达式中的'.'
+    解法1: 
+        遇到'.' 就for循环递归. 把剩下的word和node传进去
+        所以需要额外一个函数, 其输入需要有node. 
+        Note: 插入时  cur.isEnd = True很容易忘记...
+    解法2:
+        stack来搞iterative
     """
     s = WordDictionary()
     s.addWord("mad")
     s.addWord("dad")
     s.addWord("bad")
-    print(s.search("pad"))
-    print(s.search("bad"))
-    print(s.search(".ad"))
-    print(s.search("b.."))
+    # print(s.search("pad"))
+    # print(s.search("bad"))
+    # print(s.search(".ad"))
+    s.addWord("m")
+    print(s.search("."))
 

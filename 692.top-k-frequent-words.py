@@ -71,6 +71,8 @@ if __name__ == '__main__':
         quick select实现: 就是在sort第二个递归加一条判断
         复杂度计算: KlogK + log(N-K) ? 
         实际要慢一点. 
+    解法3:
+        前缀树. 字符串的排序要想到前缀树! 
     其他解法: 
         2 quick selection复杂不写
         3 bucket sort: 不行, 还有个str的排序...

@@ -12,38 +12,37 @@ class Solution(object):
     #     return ' '.join(s.split()[::-1])
         
     def reverseWords(self, s):
-        def reverse(s, lo, hi):
-            while lo < hi:  # 居然还能忘记这里...
-                s[lo], s[hi] = s[hi], s[lo]
-                lo += 1  # 忘记了.. 
-                hi -= 1
+        # 居然一遍ac...
+        def reverse(nums, i, j):  # [i, j]
+            while i < j:
+                nums[i], nums[j] = nums[j], nums[i]
+                i += 1  # Note 别忘.
+                j -= 1
 
-        if not s:
-            return s
-        s = list(s)  # Note 容易忘
         N = len(s)
-        reverse(s, 0, N - 1)  # Note 特别容易忘...
+        nums = list(s)  # Note 别忘
+        reverse(nums, 0, N - 1)  # Note 别忘
         
-        insert = 0 # 新序列的插入指针
-        lo = 0  # lo, hi是原序列上word的起止位置
+        k = 0  # 下一个要插入的位置
+        lo = 0
         while lo < N:
-            if s[lo] == ' ':  # 先判断lo更简单
+            while lo < N and nums[lo] == ' ':
                 lo += 1
-            else:
-                # 如果换到在后面加空格, 首先<N, 其次条件判断很复杂, 
-                # 最后, 有的时候s[:insert-1], 有的时候s[:insert]
-                if insert != 0:
-                    # 必须这里加空格，只有找到一个word才能在前面加。
-                    s[insert] = ' '  
-                    insert += 1
-                hi = lo
-                while hi < N and s[hi] != ' ': # Note! 先平移过去
-                    s[insert] = s[hi]  
-                    hi += 1  # hi == ' '
-                    insert += 1
-                reverse(s, insert - (hi - lo), insert - 1)  #再调换 
-                lo = hi + 1  # 可以+1, 也可以不加.
-        return ''.join(s[:insert])  # Note :insert
+            if lo == N:  # 必须要这里, 考虑下面k的正确位置.
+                break
+            if k != 0:  # 必须在word前面加空格, 不知道后面有没有新word
+                nums[k] = ' '
+                k += 1
+            hi = lo
+            while hi < N and nums[hi] != ' ':
+                hi += 1
+            hi -= 1  # 上面跳出时, hi已经越界.
+            reverse(nums, lo, hi)  # 交换
+            for i in xrange(lo, hi + 1):  # 平移
+                nums[k] = nums[i]
+                k += 1
+            lo = hi + 1
+        return ''.join(nums[:k])
 
     # def reverseWords(self, s):
     #     def reverse(s, lo, hi):
@@ -105,36 +104,33 @@ class Solution(object):
     #     lo = clean2(s)
     #     return ''.join(s[:lo])
 
+    
+
+
 if __name__ == '__main__':
     """
     题设: 翻转字符串中的单词, 去除多余空格. 76th简单版
     分析: python inplace的reverse是不接受参数的. 
     解法1: 库函数. 
-    解法2：最优
+    解法2：标准写法. 
         先整个reverse，再维护三个指针，
-        插入位置insert，当前单词的开始结尾lo hi;
+        插入位置k，当前单词的开始结尾lo hi;
+        顺序:
+            1. 去除word前空格
+            2. 判断到最后并跳出. 
+            3. 否则在一个word开端, 加上word前空格.
+            4. 找到word结尾, 翻转
+            5. copy到k开始的位置..
         注意: 
             先转list 并reverse..
             插入空格的方法: 必须再新开始一个word的前面插入, 
                 在word后插入需要很多条件判断
-            移动hi指针 同时copy array: 这样可以重用 reverse
-            内环reverse的指针位置
     解法3: 
-        reverse whole string, and reverse each word, clean space
-        注意clean space还需要去除中间的多余空格.. 不仅是两头的. 写起来并不简单。。
+        分开写. 
+        先clean前后的空格, 再调转. 最后再clean word中间多出的空格
         四个while循环
         clean1的解法最稳定.. 不容易出bug..
         clean2注意加空格除了lo==0还要保证hi<len(s)
-    解法4:
-        最简单, 用这个写法. 
-        先clean前后的空格, 再调转. 最后再clean word中间多出的空格
-    解法5:
-        大雪菜还有个解法...
-        1. 去除空格
-        2. 判断是否为空
-        3. 翻转
-        4. 如果k不等于0, 赋值' '
-        5. copy到k开始的位置..
     """
     s = Solution()
     print(s.reverseWords("a good   example"))

@@ -43,30 +43,51 @@ class Solution(object):
     #                 ans = s[i:j+1]
     #     return ans
 
+    # def longestPalindrome(self, s):
+    #     # 中心扩散法
+    #     def expand(i, j):
+    #         while i >= 0 and j < N and s[i] == s[j]:
+    #             i -=  1
+    #             j += 1
+    #         return j - i - 1  # 跳出时比实际大小+2
+       
+    #     N = len(s)
+    #     ans = ''
+    #     for i in xrange(N):
+    #         sz = expand(i, i)  # Note: 奇偶两种情况!
+    #         if sz > len(ans):
+    #             rd = (sz - 1) // 2
+    #             ans = s[i - rd: i + rd + 1] 
+    #         sz = expand(i, i + 1)  # expand函数处理越界问题
+    #         if sz > len(ans):
+    #             rd = sz // 2 - 1
+    #             ans = s[i - rd: i + rd + 2]
+    #     return ans
+
     def longestPalindrome(self, s):
         # 中心扩散法
         def expand(i, j):
+            # 一定会进入循环.
             while i >= 0 and j < N and s[i] == s[j]:
-                i -=  1
+                i -= 1
                 j += 1
-            return j - i - 1  # 跳出时比实际大小+2
-       
+            return i + 1, j - 1  # [i, j]  # 跳出时两边都大了1
+        
+        ansl, ansr = 0, 0  # [ansl, ansr]
         N = len(s)
-        ans = ''
-        for i in xrange(N):
-            sz = expand(i, i)  # Note: 奇偶两种情况!
-            if sz > len(ans):
-                rd = (sz - 1) // 2
-                ans = s[i - rd: i + rd + 1] 
-            sz = expand(i, i + 1)  # expand函数处理越界问题
-            if sz > len(ans):
-                rd = sz // 2 - 1
-                ans = s[i - rd: i + rd + 2]
-        return ans
+        for i in xrange(N - 1):
+            l, r = expand(i, i)
+            if r - l > ansr - ansl:  # 用全局变量的话可以放到expand里.
+                ansr, ansl = r, l
+            l, r = expand(i, i + 1)
+            if r - l > ansr - ansl:
+                ansr, ansl = r, l            
+        return s[ansl: ansr + 1]
 
 if __name__ == '__main__':
     """
-    解法1: DP 外层循环sz
+    解法1: 
+        DP 外层循环sz(不推荐, 还是循环i,j好)
         f[i][j]表示 区间i,j是否为回文子串. 
         f[i][j] = f[i + 1][j - 1] & (s[i] == s[j])
         因为问题的对称性质, 这题必须循环length, 而不能i,j
@@ -74,15 +95,17 @@ if __name__ == '__main__':
         结果输出: 
             不是最后搞个for循环输出, 直接在主循环中判断赋值. 
             也可以存ij 避免copy str
-    解法2: DP 循环 i, j
-    解法3: 优化空间
+    解法2: 
+        DP 循环 i, j
+    解法3: 
+        优化空间
         1 1 1 0
         0 1 1 0
         0 0 1 0
         下面的矩阵, 每次是写右边一列. 只依赖于j-1列
         但还是因为这题特殊, 内环也可以正序, 所以才能优化到O(N)
     解法4:
-        中心扩展法.
+        标准解法: 中心扩展法. 
         注意处理奇偶两种情况. 
     解法5: 
         马拉车manacher算法. 
@@ -92,8 +115,6 @@ if __name__ == '__main__':
         https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/
         Manacher algorithm https://www.hackerearth.com/zh/practice/algorithms/string-algorithm/manachars-algorithm/tutorial/
         https://leetcode.com/problems/longest-palindromic-substring/discuss/3337/Manacher-algorithm-in-Python-O(n)
-    解法6: 
-        python还有些pruning的解法更快. 不管了. 
     """
     s = Solution()
     print(s.longestPalindrome('a'))
