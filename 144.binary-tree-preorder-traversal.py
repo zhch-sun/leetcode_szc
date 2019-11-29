@@ -77,15 +77,30 @@ class Solution(object):
     #     helper(root, ans)
     #     return ans
 
+    # def preorderTraversal(self, root):
+    #     # 这样判断条件更少. 而且速度更快. 
+    #     sta = [root]  # 不需判断root非空
+    #     ans = []
+    #     while sta:
+    #         cur = sta.pop()
+    #         if cur:  # 还是直接把None都push进去
+    #             ans.append(cur.val)
+    #             sta.append(cur.right)  # 注意顺序! 先right在left
+    #             sta.append(cur.left)
+    #     return ans
+
     def preorderTraversal(self, root):
-        # 这样判断条件更少. 而且速度更快. 
+        # 这种是标准写法. 
+        if not root:
+            return []
         sta = [root]  # 不需判断root非空
         ans = []
         while sta:
             cur = sta.pop()
-            if cur:  # 还是直接把None都push进去
-                ans.append(cur.val)
-                sta.append(cur.right)  # 注意顺序! 先right在left
+            ans.append(cur.val)
+            if cur.right:
+                sta.append(cur.right)
+            if cur.left:
                 sta.append(cur.left)
         return ans
 
@@ -93,8 +108,13 @@ if __name__ == '__main__':
     """
     解法1: 递归简单
     解法2: 迭代
-        还是把None也push进去. 这样代码更简单. 速度更快
+        None也push进去. 这样代码更简单. 速度更快
+    解法3:
+        标准迭代写法. stack中一定是有意义的元素. 
+        写这种.
     """
     s = Solution()
-    print(s.preorderTraversal(listToTree([1,None,2,3])))
+    # print(s.preorderTraversal(listToTree([1,None,2,3])))
+    print(s.preorderTraversal(listToTree([1,2,3,None,5,6,7])))
+    print(s.preorderTraversal(listToTree([1,2,3,5,None,6,7])))
     

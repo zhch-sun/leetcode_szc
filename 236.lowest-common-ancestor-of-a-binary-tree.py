@@ -29,7 +29,9 @@ class Solution(object):
 if __name__ == '__main__':
     """
     题设: 允许返回p或者q本身, p q一定存在 
-    分析: 难点在于定义返回值. 
+    分析: 
+        难点在于定义返回值. 
+        也是一个post order, 先递归再判断
     解法1: 
         返回值是一个node或者None. 
         关键点在于, p和q都只出现了一次. 

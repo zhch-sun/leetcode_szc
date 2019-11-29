@@ -3,12 +3,62 @@
 #
 # [145] Binary Tree Postorder Traversal
 #
+def listToTree(input):
+    if not input:
+        return None
+    root = TreeNode(int(input[0]))
+    nodeQueue = [root]  # 最后这个包含所有node
+    front = 0  # to index queue
+    index = 1  # to index list
+    while index < len(input):
+        node = nodeQueue[front]
+        front += 1
+
+        left_num = input[index]
+        if left_num is not None:
+            # 这意味着前面的None会使后面的位置直接跳过
+            node.left = TreeNode(left_num)
+            nodeQueue.append(node.left)
+
+        index += 1
+        if index >= len(input):
+            break
+
+        right_num = input[index]
+        if right_num is not None:
+            node.right = TreeNode(right_num)
+            nodeQueue.append(node.right)
+        index += 1
+    return root
+
+def treeToList(input):
+    if not input:
+        return None
+    cur = input
+    nodeQueue = [cur]
+    res = []
+    front = 0
+    while True:
+        val = cur.val if cur is not None else None
+        res.append(val)
+        if cur is not None:  #及时该位置是空的，也要None?
+            nodeQueue.append(cur.left)
+            nodeQueue.append(cur.right)
+        front += 1
+        if front < len(nodeQueue):
+            cur = nodeQueue[front]
+        else:
+            break
+    while res[-1] is None:  # 符合定义?
+        res.pop()
+    return res
+
 # Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 class Solution(object):
     # def postorderTraversal(self, root):
@@ -35,7 +85,8 @@ class Solution(object):
             helper(root.left, ans)
         ans = []
         helper(root, ans)
-        return reversed(ans)
+        # return reversed(ans)
+        return ans[::-1]
 
 if __name__ == '__main__':
     """
@@ -52,3 +103,5 @@ if __name__ == '__main__':
         https://techgeekyan.blogspot.com/2017/08/leetcode-145-binary-tree-postorder.html 
     """
     s = Solution()
+    print(s.postorderTraversal(listToTree([1,2,3,None,5,6,7])))
+    print(s.postorderTraversal(listToTree([1,2,3,5,None,6,7])))

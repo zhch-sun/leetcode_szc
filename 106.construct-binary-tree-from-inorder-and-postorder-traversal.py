@@ -67,15 +67,16 @@ class Solution(object):
     #     :type inorder: List[int]
     #     :type postorder: List[int]
     #     :rtype: TreeNode
-    #     """
-    #     if inorder:
-    #         item = postorder.pop()
-    #         ind = inorder.index(item)
-    #         node = TreeNode(item)
-    #         node.right = self.buildTree(inorder[ind+1:], postorder)
-    #         node.left = self.buildTree(inorder[0:ind], postorder)
-    #         return node
-        
+    #     """        
+    #     if not inorder:  # 不能postorder
+    #         return None 
+    #     val = postorder.pop()
+    #     root = TreeNode(val)
+    #     idx = inorder.index(val)
+    #     root.right = self.buildTree(inorder[idx + 1:], postorder)
+    #     root.left = self.buildTree(inorder[:idx], postorder)
+    #     return root
+
     def buildTree(self, inorder, postorder):
         def helper(lo, hi):  # [lo,hi)
             if lo < hi:
@@ -91,7 +92,13 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
-    不需deque, 直接pop即可. 
+    解法1:
+        中序遍历为：
+            (中序遍历左分支) (根结点) (中序遍历右分支) 
+        后序遍历为：
+            (后序遍历左分支) (后序遍历右分支) (根结点)    
+        通过中序遍历确定左右子树的分支. 
+        post不需deque, 直接pop即可. 
     """
     s = Solution()
     print(treeToList(s.buildTree([9,3,15,20,7], [9,15,7,20,3])))

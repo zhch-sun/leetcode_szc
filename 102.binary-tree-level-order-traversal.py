@@ -31,33 +31,17 @@ class Solution(object):
     def levelOrder(self, root):
         if not root:
             return []
-        res = []
-        level = deque([root])
-        while level:
-            res.append([node.val for node in level])
-            size = len(level)
-            for _ in range(size):
-                cur = level.popleft()
-                if cur.left is not None:
-                    level.append(cur.left)
-                if cur.right is not None:
-                    level.append(cur.right)
-        return res
-
-    # def levelOrder(self, root):
-    #     if not root:
-    #         return []
-    #     dq = deque([root])  # 循环中dq里面不是None
-    #     ans = []
-    #     while dq:
-    #         ans.append([x.val for x in dq])  # 先赋值...
-    #         for _ in xrange(len(dq)):
-    #             cur = dq.popleft()  # 是popleft... 不是pop右边!
-    #             if cur.left:
-    #                 dq.append(cur.left)
-    #             if cur.right:
-    #                 dq.append(cur.right)
-    #     return ans
+        dq = deque([root])  # 循环中dq里面不是None
+        ans = []
+        while dq:
+            ans.append([x.val for x in dq])  # Note 先赋值...
+            for _ in xrange(len(dq)):
+                cur = dq.popleft()  # 是popleft... 不是pop右边!
+                if cur.left:
+                    dq.append(cur.left)
+                if cur.right:
+                    dq.append(cur.right)
+        return ans
 
     # def levelOrder(self, root):
     #     # DFS也是正确的, 需要记录level数. 

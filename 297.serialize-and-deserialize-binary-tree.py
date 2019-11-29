@@ -70,19 +70,19 @@ class Codec:
     #     return root
     
     def serialize(self, root):
-        def helper(root):
+        def dfs(root):
             if root:
                 ans.append(str(root.val))
-                helper(root.left)
-                helper(root.right)
+                dfs(root.left)
+                dfs(root.right)
             else:
                 ans.append('#')
         ans = []  # 不能过滤最后的'#', 考虑到空输入...
-        helper(root)  # 不需要讨论空root
+        dfs(root)  # 不需要讨论空root
         return ','.join(ans)
 
     def deserialize(self, data):
-        def helper():  # 空输入
+        def dfs():  # 空输入
             if not nums:
                 return None
             val = nums.popleft()  # 用iter也可, 但是要保证有足够的'#'在最后
@@ -90,12 +90,12 @@ class Codec:
                 return None
             else:
                 node = TreeNode(int(val))
-                node.left = helper()
-                node.right = helper()
+                node.left = dfs()
+                node.right = dfs()
             return node
 
         nums = deque(data.split(','))  # 不是','.split(data)...
-        return helper()
+        return dfs()
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
@@ -104,7 +104,9 @@ class Codec:
 
 if __name__ == '__main__':
     """
-    分析: 单纯遍历是不能还原, 但是多了None或者'#', 就可以. 
+    分析: 
+        单纯遍历是不能还原, 但是多了None或者'#', 就可以. 
+        我的方案就是一个前序遍历, 在需要的地方赋值'#'
     解法1:
         和leetcode的格式是一样的. level order traversal.
         就是一个deque

@@ -90,9 +90,11 @@ class Solution(object):
 
 if __name__ == '__main__':
     """
+    题设: 生成所有BST. 
     解法1: 
         记忆化搜索. 注意必须在 l和r的循环内部建立新root. 
         否则root的指向就不对了.
+        尽管cache内重用, 但是每次的root都不一样. 
     解法2: LRU cache. 假设函数保证给定输入的情况下输出相同. 
         那么可以给函数加wrapper
         记录最近n个输入的函数的输出值. 如果再遇到相同输入直接从cache中读取. 
@@ -103,4 +105,3 @@ if __name__ == '__main__':
     for t in trees:
         print(treeToList(t))
         
-

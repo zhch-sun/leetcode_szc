@@ -62,8 +62,8 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """        
-        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right)) \
-            if root else 0
+        return (1 + max(self.maxDepth(root.left), \
+            self.maxDepth(root.right))) if root else 0
 
 if __name__ == '__main__':
     """

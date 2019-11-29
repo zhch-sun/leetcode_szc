@@ -63,56 +63,62 @@ class TreeNode(object):
 
 from collections import deque
 class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """        
+        if not inorder:  # Note 不能是preorder!
+            return None
+        val = preorder.pop(0)  # 直接
+        root = TreeNode(val)
+        idx = inorder.index(val)
+        root.left = self.buildTree(preorder, inorder[:idx])
+        root.right = self.buildTree(preorder, inorder[idx+1:])
+        return root
+    
     # def buildTree(self, preorder, inorder):
-    #     """
-    #     :type preorder: List[int]
-    #     :type inorder: List[int]
-    #     :rtype: TreeNode
-    #     """        
-    #     def helper(lo, hi):  # [lo, hi)
+    #     # 错解: 仍然copy inorder但是用hash
+    #     # .
+
+    # def buildTree(self, preorder, inorder):
+    #     def dfs(lo, hi):  # [lo, hi)
     #         if lo < hi:
     #             val = preorder.popleft()
     #             root = TreeNode(val)
     #             idx = inorder_dict[val]
-    #             root.left = helper(lo, idx)
-    #             root.right = helper(idx + 1, hi)
+    #             root.left = dfs(lo, idx)
+    #             root.right = dfs(idx + 1, hi)
     #             return root
-    #     preorder = deque(preorder)
+    #     preorder = deque(preorder)  # 或者用iter()
     #     lo, hi = 0, len(inorder)
     #     inorder_dict = {n: i for i, n in enumerate(inorder)}
-    #     return helper(lo, hi)
-
-    def buildTree(self, preorder, inorder): 
-        # 用iter减去O(N)的复杂度.     
-        def helper(lo, hi):  # [lo, hi)
-            if lo < hi:
-                val = next(pre_iter)  # 不会stop iteration
-                root = TreeNode(val)
-                idx = inorder_dict[val]
-                root.left = helper(lo, idx)
-                root.right = helper(idx + 1, hi)
-                return root
-        pre_iter = iter(preorder)
-        lo, hi = 0, len(inorder)
-        inorder_dict = {n: i for i, n in enumerate(inorder)}
-        return helper(lo, hi)
+    #     return dfs(lo, hi)
 
 if __name__ == '__main__':
     """
     题设: 
-        不存在重复元素, 重复元素好难? 
+        不存在重复元素
     解法1: 
-        python答案里的图很棒
-        https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/discuss/34579/Python-short-recursive-solution.
-        python答案太过简单. 这个preorder实际上也应该向inorder一样切分成两块. 
-        但是因为传进去的是指针, 在第一个helper结束的时候preorder left的部分已经消失了, 
-        所以可以有上述写法.
-        加速:
-            preorder: 先转换成deque, 则可以用指针. 更快.
-            inorder: 用dict记录位置
-    解法2:
-        preorder用指针, 理论更快
+        前序遍历为：
+            (根结点) (前序遍历左分支) (前序遍历右分支)
+        中序遍历为：
+            (中序遍历左分支) (根结点) (中序遍历右分支) 
+        通过inorder判断左右子树, 而且不能确定preorder的范围. 
+        只能一个一个pop preorder里的元素. 
+    解法2: 
+        错解: 
+            仍然copy array, 但是用dict. 
+            此时inorder传进去的位置已经变了, hash内指向错误的位置..
+        正解:
+            preorder: 先转换成deque, 或用iter(). 更快.
+            inorder: 用dict记录位置, 必须同时传进去(lo, hi)
     解法3:
+        https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/discuss/34543/Simple-O(n)-without-map
+        把两个输入都reverse, 不需要deque和dict. 
+        不写. 
+    解法4:
         iterative的方案不写.
     """
     s = Solution()

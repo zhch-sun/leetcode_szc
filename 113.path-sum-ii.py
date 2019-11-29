@@ -113,7 +113,6 @@ if __name__ == '__main__':
         注意所有return都要pop...
     解法2:
         不用全局变量, 输入ans.
-        TODO backtrack模板? 
     """
     s = Solution()
     print(s.pathSum(listToTree([5,4,8,11,None,13,4,7,2,None,None,5,1]), 22))

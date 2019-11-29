@@ -41,13 +41,13 @@ class Solution(object):
             d[w[::-1]] = i  # Note 不能用reversed...
         for i, w in enumerate(words):
             N = len(w)
-            for j in xrange(N + 1):
+            for j in xrange(N + 1):  # Note N + 1
                 if isPal(w, 0, j):  # 如果前面是回文, 检查suffix是否有对称
                     suffix = w[j:]
                     if suffix in d and d[suffix] != i:
                         ans.add((d[suffix], i))
                 if isPal(w, j, N):
-                    prefix = w[:j]
+                    prefix = w[:j]  # 这里要求上门N+1
                     if prefix in d and d[prefix] != i:
                         ans.add((i, d[prefix]))
         return list(ans)

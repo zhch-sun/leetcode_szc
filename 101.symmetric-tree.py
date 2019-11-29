@@ -61,38 +61,38 @@ def treeToList(input):
     return res
 
 class Solution(object):
-    # def isSymmetric(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: bool
-    #     """
-    #     def helper(left, right):  # 必须要两个输入, 比较左右
-    #         if left and right:
-    #             return left.val == right.val and \
-    #                 helper(left.left, right.right) and \
-    #                 helper(left.right, right.left)
-    #         else:
-    #             return left is right  # 两个只有都是None才可以
-    #     if not root:
-    #         return True
-    #     return helper(root.left, root.right)
-
     def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def helper(left, right):  # 必须要两个输入, 比较左右
+            if left and right:
+                return left.val == right.val and \
+                    helper(left.left, right.right) and \
+                    helper(left.right, right.left)
+            else:
+                return not left and not right  # 两个只有都是None才可以
         if not root:
             return True
-        sta = [root.left, root.right]
-        while sta:
-            right = sta.pop()
-            left = sta.pop()
-            if not left and not right:
-                continue
-            elif (not left or not right) or left.val != right.val:
-                return False
-            sta.append(left.left)
-            sta.append(right.right)
-            sta.append(left.right)
-            sta.append(right.left)
-        return True
+        return helper(root.left, root.right)
+
+    # def isSymmetric(self, root):
+    #     if not root:
+    #         return True
+    #     sta = [root.left, root.right]
+    #     while sta:
+    #         right = sta.pop()
+    #         left = sta.pop()
+    #         if not left and not right:
+    #             continue
+    #         elif (not left or not right) or left.val != right.val:
+    #             return False
+    #         sta.append(left.left)
+    #         sta.append(right.right)
+    #         sta.append(left.right)
+    #         sta.append(right.left)
+    #     return True
 
 if __name__ == '__main__':
     """

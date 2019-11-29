@@ -41,16 +41,21 @@ def listToTree(input):
     return root
 
 class Solution(object):
-    # def minDepth(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: int
-    #     """        
-    #     if not root:
-    #         return 0
-    #     if not root.left and not root.right:
-    #         return 1
-    #     return 1 + min(minDepth(root.left, root.right))
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """        
+        if not root:
+            return 0
+        # if not root.left and not root.right:  # 可以注掉
+        #     return 1
+        if not root.left:
+            return self.minDepth(root.right) + 1
+        if not root.right:
+            return self.minDepth(root.left) + 1
+        return 1 + min(self.minDepth(root.left), \
+            self.minDepth(root.right))
     
     # def minDepth(self, root):
     #     if not root:
@@ -70,22 +75,22 @@ class Solution(object):
     #                 queue.append(node.right)
     #         level += 1
 
-    def minDepth(self, root):
-        if not root:
-            return 0
-        dq = deque([root])
-        level = 0
-        while dq:
-            level += 1
-            for _ in xrange(len(dq)):
-                cur = dq.popleft()  # pop的是left
-                if not cur.left and not cur.right:
-                    return level
-                if cur.left:
-                    dq.append(cur.left)
-                if cur.right:
-                    dq.append(cur.right)
-        return level
+    # def minDepth(self, root):
+    #     if not root:
+    #         return 0
+    #     dq = deque([root])
+    #     level = 0
+    #     while dq:
+    #         level += 1
+    #         for _ in xrange(len(dq)):
+    #             cur = dq.popleft()  # pop的是left
+    #             if not cur.left and not cur.right:
+    #                 return level
+    #             if cur.left:
+    #                 dq.append(cur.left)
+    #             if cur.right:
+    #                 dq.append(cur.right)
+    #     return level
 
 if __name__ == '__main__':
     """
