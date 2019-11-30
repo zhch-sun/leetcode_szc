@@ -9,18 +9,17 @@ class Solution(object):
         :type nums: List[int]
         :type target: int
         :rtype: List[int]
-        """
-        map = {}
-        for i in range(len(nums)):
-            if nums[i] not in map:
-                map[target - nums[i]] = i
-            else:
-                return map[nums[i]], i
+        """        
+        memo = {}
+        for i, n in enumerate(nums):
+            if target - n in memo:
+                return memo[target - n], i
+            memo[n] = i
         return -1, -1
-
 
 if __name__ == '__main__':
     """
+    题设: 元素各不相同
     是否排好序都是o（n），只不过没排序需要o（n）的额外空间
     solutions:
     1. for i for j and compare

@@ -37,7 +37,7 @@ class Solution(object):
     #         ans += seen[psum - k]
     #         seen[psum] += 1
     #     return ans
-            
+
 if __name__ == '__main__':
     """
     题设: 返回该数组中和为k的连续的子数组的个数。存在负数

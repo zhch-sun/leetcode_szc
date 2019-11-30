@@ -6,7 +6,6 @@
 from collections import OrderedDict
 
 # class LRUCache(object):
-
 #     def __init__(self, capacity):
 #         """
 #         :type capacity: int
@@ -21,10 +20,9 @@ from collections import OrderedDict
 #         """
 #         if key not in self.cache:
 #             return -1
-#         # move key value to the end by delete and insert
-#         # 直接修改的话顺序不变
+#         # Note 直接修改的话顺序不变, 需要先删除
 #         value = self.cache[key]
-#         del(self.cache[key])
+#         self.cache.pop(key)
 #         self.cache[key] = value
 #         return self.cache[key]
 
@@ -35,80 +33,86 @@ from collections import OrderedDict
 #         :rtype: None
 #         """
 #         if key in self.cache:
-#             # self.cache[key] = value # Note 错了. 必须先删除, 再添加. 否则顺序不变
-#             del self.cache[key]
-#         if len(self.cache) + 1 > self.capacity:  # note this +1....
-#             self.cache.popitem(last=False)  # 注意接口. 只有两头可以pop. # 不会删除key. 
-#         self.cache[key] = value  
+#             self.cache.pop(key)   # Note 必须先删除!
+#         if len(self.cache) == self.capacity:
+#             # 注意接口. 只有两头可以pop, popitem函数     
+#             self.cache.popitem(last=False) 
+#         self.cache[key] = value
 
 class Node(object):
-    def __init__(self, key, val, prev=None, next=None):
+    def __init__(self, key, value):
         self.key = key
-        self.val = val
-        self.prev = prev
-        self.next = next
+        self.val = value
+        self.prev = None
+        self.next = None
 
 class LRUCache(object):
     def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
         self.capacity = capacity
-        self.cache = {}
-        self.head = Node(0, 0)
-        self.tail = Node(0, 0)
-        self.head.next = self.tail
-        self.tail.prev = self.head
+        self.top = Node(None, None)
+        self.bot = Node(None, None)
+        self.top.prev = self.bot  # top为最常用
+        self.bot.next = self.top
+        self.cache = {}  # {key: node}
 
-    def get(self, key):
-        if key in self.cache:
-            node = self.cache[key]
-            self._remove(node)
-            self._add(node)
-            return node.val
-        else:
-            return -1
+    def _add(self, node):  # 在链表头上插入..
+        p, n = self.top.prev, self.top
+        p.next = node
+        node.prev = p
+        node.next = n
+        n.prev = node
 
-    def put(self, key, value):
-        if key in self.cache:
-            node = self.cache[key]
-            self._remove(node)
-            del self.cache[key]
-
-        if len(self.cache) > self.capacity - 1:
-            node = self.head.next
-            self._remove(node)
-            del self.cache[node.key]
-
-        n = Node(key, value)
-        self._add(n)
-        self.cache[key] = n
-    
-    def _remove(self, node):
-        # 从链表中remove, 但是不删除元素, 也不处理dict对应的key value
-        p = node.prev
-        n = node.next  # 这个在只有一个元素的时候是None...
+    def _remove(self, node):  # 从链表中删除
+        p, n = node.prev, node.next
         p.next, n.prev = n, p
 
-    def _add(self, node):
-        # 在最后面add一个值.
-        cur_tail = self.tail.prev
-        cur_tail.next = node
-        node.prev = cur_tail
-        node.next = self.tail
-        self.tail.prev = node        
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]    
+        self._remove(node)  # dict是不变的.
+        self._add(node)   
+        return node.val       
 
+    def put(self, key, value):
+        if self.capacity == 0:  # Note 处理corner case!
+            return
+        if key not in self.cache:
+            if len(self.cache) == self.capacity:
+                node = self.bot.next
+                self._remove(node)
+                self.cache.pop(node.key, None)  # 这里也要删除.             
+            node = Node(key, value)
+            self.cache[key] = node
+            self._add(node)   
+            return
+        else:          
+            node = self.cache[key] 
+            node.val = value  # Note 必须重新赋值   
+            self.get(node.key)  # 这里get
+            return
 
 if __name__ == '__main__':
     """
-    解法1: 用ordereddict实现. python2里这个本身就是用dict+双向链表来做的. 
-    解法2: dict + 双向链表
-        dict里面存着双向链表的node
-        node里面必须同时存key和val,否则在pop的时候无法删除dict中对应的元素..
-        所以双向链表需要两个dummy...
-        而且还要注意remove和add不仅有node操作, 还有cache操作...
-        还是抽象成remove和add比较合理... popleft和move_to_end应该是更高层的抽象...
+    解法1: 
+        用ordereddict实现. 注意先删除再赋值和popitem.
+        python2里这个本身就是用dict+双向链表来做的. 
+        速度比手写更慢
+    解法2: 
+        dict + 双向链表(两个dummy)
+        dict里面存着双向链表的node, node里存key和value
+        双向链表一样需要赋值大法进行操作.
+        细节: 
+            put不能调用get, get返回的-1可能是value的值
+            put时即使key存在也要重新赋值
+            remove和add不仅有node操作, 还有cache操作
+        抽象:
+            还是抽象成remove和add比较合理... 且输入为node. 
+            popleft和move_to_end应该是更高层的抽象...
     """
-    # cache = LRUCache(2)
-    # cache.put(2, 2)
-    # print(cache.get(2)) 
     cache = LRUCache(2)
     cache.put(1, 1)
     cache.put(2, 2)
@@ -119,3 +123,4 @@ if __name__ == '__main__':
     print(cache.get(1))
     print(cache.get(3))
     print(cache.get(4))
+

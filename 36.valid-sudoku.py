@@ -4,39 +4,31 @@
 # [36] Valid Sudoku
 #
 class Solution(object):
-    # def isValidSudoku(self, board):
-    #     """
-    #     :type board: List[List[str]]
-    #     :rtype: bool
-    #     """
-    #     seen = []
-    #     for i, row in enumerate(board):
-    #         for j, item in enumerate(row):
-    #             if item != '.':
-    #                 # Note the tuple
-    #                 seen += [(i, item), (item, j), (i/3, j/3, item)]
-    #     return True if len(seen) == len(set(seen)) else False
-
     def isValidSudoku(self, board):
-        # 98% early stopping
-        seen = set()
-        for i, row in enumerate(board):
-            for j, item in enumerate(row):
-                if item != '.':
-                    for choice in [(i, item), (item, j), (i/3, j/3, item)]:
-                        if choice not in seen:
-                            seen.add(choice)
-                        else:
-                            return False
-        return True 
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """        
+        used = set()
+        for i in xrange(9):
+            for j in xrange(9):
+                if board[i][j] != '.':
+                    item = int(board[i][j])
+                    cur = {(i + 10, item), (j + 100, item), \
+                        (i // 3, j //3, item)}
+                    if cur & used:
+                        return False
+                    used |= cur  # used.update(cur)
+        return True
 
 if __name__ == '__main__':
     """
-    解决是否出现过的问题，应该用set。。。
-    python 的set. update实际就是list版的add. 
-    合理的答案确实用hashset来搞比较好. 甚至用一个hashset...
-    也可以用三个matrix来搞. 但是这样应该多占内存. 也可以用一个list来存所有, 然后转换成set. 看长度. 
-    Note: list不能被hash所以不能被set()!! 只有immutable才可以被hash!（需要tuple）
+    解法1:
+        解决是否出现过的问题，应该用set。。。
+        python set的|= 也可以update().
+        注意编码只能用加法, 不能用乘法. 
+    解法2:
+        也可以用四个array来搞. 但是还是set比较简单..
     """
     matrix = [
   ["5","3",".",".","7",".",".",".","."],

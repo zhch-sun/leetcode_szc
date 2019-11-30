@@ -8,38 +8,62 @@ class Solution(object):
         """
         :type n: int
         :rtype: List[str]
-        """
-        res = []
-        tmp = ''
-        self.dfs(res, tmp, n, n, n)
-        return res
+        """        
+        def dfs(tmp, nl, nr):
+            if not nl and not nr:
+                ans.append(tmp)
+                return  # Note 又忘记了..
+            # 左分支
+            if nl > 0:  # Note 忘记了...
+                nl -= 1
+                dfs(tmp + '(', nl, nr)
+                nl += 1
+            # 右分支
+            if nr > nl:
+                nr -= 1  # 这里不能tmp += ')', 因为删不掉...
+                dfs(tmp + ')', nl, nr)
 
-    def dfs(self, res, tmp, n, left, right):
-        if left == 0 and right == 0:
-            res.append(tmp[:])
-            return # forget that...
-        if left > 0:
-            # tmp += '('  # This is wrong!!
-            # left -= 1
-            self.dfs(res, tmp+'(', n, left-1, right)
-        if right > 0 and left < right:
-            # tmp += ')'
-            # right -= 1
-            self.dfs(res, tmp+')', n, left, right-1)
+        ans = []
+        dfs('', n, n)
+        return ans
+
+    # def generateParenthesis(self, n):
+    #     def dfs(n):
+    #         if n == 0:
+    #             return ans[0]
+    #         if ans[n]:
+    #             return ans[n]
+    #         for i in xrange(n):
+    #             left = dfs(i)
+    #             right = dfs(n - i - 1)  # 笛卡尔积
+    #             ans[n] += ['(' + l + ')' + r for l in left for r in right]
+    #         return ans[n]
+
+    #     ans = [[] for _ in xrange(n + 1)]
+    #     ans[0] = ['']
+    #     dfs(n)
+    #     return ans[n]
+
 
 if __name__ == '__main__':
     """
-    题目：给出所有可能的括号组合
-    答案总体来说两种，一种backtracking，一种dp。（python答案第三种不管）
-    实际上前一种是dfs，后一种是bfs。
-    dfs更简单，列出所有可能性的时候，按需剪枝。python答案里用了yield。
-    TODO 所以唯一错的情况就是右括号个数大于左括号？怎么证明呢？
-    TODO 但是yield能省内存是因为迭代器可以只以来之前的内容？这里仍然要维护之前的依赖路径？
-    bfs需要推导出一种递推公式：分成两部分，(first)+second. 但这样要记录之前所有的的n所有情况。
-    可以证明包含所有情况，可是是怎么说明没有冗余？
-    实际上就是binary tree的生长？
-    另外还需要想如果只需要output种类个数时，该怎么办。
-    TODO dp没写吗。。
+    题目：已知括号的对数, 给出所有可能的括号组合方案
+    解法1:
+        回溯. dfs. 按需剪枝. 即保证右边括号数大于左括号.
+        复杂度分析很困难.
+    解法2:
+        官方解法3. DP
+        https://leetcode-cn.com/problems/generate-parentheses/solution/gua-hao-sheng-cheng-by-leetcode/
+        第N中情况由第N-1种组合而来. 就是加括号的位置不同. 
+        (left)+right: 枚举left right的情况(笛卡尔积), 就可以得到解. 
+        证明包含所有情况: 枚举了新增()的所有位置. 
+        证明没有冗余: 
+            同样的分割: first内部互不相同, 加括号还是不一样. right不相同, 各不相同.
+            不同的分割(n=4):
+                左边0个右边三个 -> 左1右3
+                左边1个右边两个 -> 左2右2  # 且不存在最左边的()的括号, 不会和上面重复
+                左边两个右边1个 -> 左3右1
+                左边三个右边0个 -> 左4右0
     """
     s = Solution()
     print(s.generateParenthesis(3))

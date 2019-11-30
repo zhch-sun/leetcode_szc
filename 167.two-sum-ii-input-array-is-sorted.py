@@ -4,24 +4,23 @@
 # [167] Two Sum II - Input array is sorted
 #
 class Solution(object):
-    def twoSum(self, numbers, target):
+    def twoSum(self, nums, target):
         """
         :type numbers: List[int]
         :type target: int
         :rtype: List[int]
-        """
-        lo, hi = 0, len(numbers) - 1
-        while lo < hi:  # 这里也可以check item == target因为一定有解. 
-            # might overflow? no it's number not index
-            item = numbers[lo] + numbers[hi]  
-            if item == target:
+        """        
+        lo, hi = 0, len(nums) - 1
+        while lo < hi:
+            total = nums[lo] + nums[hi]
+            if total == target:
                 return lo + 1, hi + 1
-            elif item < target:
+            elif total < target:
                 lo += 1
             else:
                 hi -= 1
-        return False
-        
+        return -1, -1
+
 if __name__ == '__main__':
     """
     题设: 已经升序, 假设只有一个解. 不能重复使用相同元素. 

@@ -14,7 +14,7 @@ class Solution(object):
         """
         def dfs(i):  # [1, N]
             if i == 0:
-                return [[]]  # 注意这个初始化 
+                return [[]]  # szc 注意这个初始化 
             if i in f:
                 return f[i]
             ans = []
@@ -22,7 +22,8 @@ class Solution(object):
                 j = i - sz
                 word = s[j:i]
                 if j >= 0 and word in wordSet and dfs(j):
-                    ans += [n + [word] for n in dfs(j)]
+                    # 不能写f[j], i==0的情况...
+                    ans += [n + [word] for n in dfs(j)]  
             f[i] = ans
             return f[i]
             

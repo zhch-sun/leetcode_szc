@@ -4,31 +4,32 @@
 # [40] Combination Sum II
 #
 class Solution(object):
-    def combinationSum2(self, candidates, target):
+    def combinationSum2(self, nums, target):
         """
         :type candidates: List[int]
         :type target: int
         :rtype: List[List[int]]
-        """
-        def dfs(candidates, target, res, lo, tmp):
-            if target == 0:
-                res.append(tmp[:])
-            elif target > 0:
-                for i in range(lo, len(candidates)):
-                    item = candidates[i]
-                    if item > target:  # 加速显著
-                        break
-                    # 仍然需要过滤1123这种. 注意是i-left不是i!!!
-                    if i - lo > 0 and item == candidates[i-1]:
-                        continue
-                    tmp.append(item)
-                    dfs(candidates, target-item, res, i+1, tmp)
-                    tmp.pop()
-        res = []
-        tmp = []
-        candidates.sort()
-        dfs(candidates, target, res, 0, tmp)
-        return res
+        """        
+        def dfs(tmp, idx, target):
+            if target == 0:  # target == 0..
+                ans.append(tmp[:])
+                return 
+            for i in xrange(idx, N):
+                if nums[i] > target:
+                    break
+                # Note不是 i > 0
+                if i > idx and nums[i] == nums[i - 1]:
+                    continue
+                tmp.append(nums[i])
+                dfs(tmp, i + 1, target - nums[i])
+                tmp.pop()
+            return
+
+        ans = []
+        N = len(nums)
+        nums.sort()
+        dfs([], 0, target)
+        return ans
 
     # def combinationSum2(self, candidates, target):
     #     # 错解. 
@@ -47,18 +48,15 @@ if __name__ == '__main__':
         给定一个数组(可有重复)和一个目标数，每个数用一次.
         找出数组中所有可以使数字和为target的组合。 
     解法1: 
-        在同一层循环中, 过滤和前一个相同的数. 
-        过滤正确性: (111123,3) 
-        只考虑顶层循环, 第一个1已经可以包含了所有含1的情况. 
-        所以顶层循环中要过滤所有其余的1.
-        第二层循环时, 第二个1包含了所有和为3-1且含有1的情况. 
-        所以都过滤即可. 
+        简单理解: 111. 给每个1一个标号, 11, 12, 13, 
+        他们之间的相互顺序不能变, 而且如果有12则11必须存在.
+        所以在同一层循环中, 过滤和前一个相同的数. 
         复杂度: 
-            时间O(2^n) 空间O(n) why??? 
-            Time complexity is O(2^n). Space complexity O(n). 
+            时间O(2^n) 空间O(n) 
             在循环中, 每个数字都有两种可能, 选或者不选. 所以2^n.
             或者C(n,0) + c(n,1) + .. + c(n, n) = 2^n 
     解法2:
+        是多重背包...
         这题不是01背包. 对于[10,1,2,7,6,1,5], 8. 
         1, 7 和 7 1是需要被过滤的, 而01背包过滤不了. 
         所以这题是多重背包.. 需要优先队列优化..

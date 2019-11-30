@@ -4,16 +4,16 @@
 # [49] Group Anagrams
 #
 class Solution(object):
-    # def groupAnagrams(self, strs):
-    #     """
-    #     :type strs: List[str]
-    #     :rtype: List[List[str]]
-    #     """        
-    #     from collections import defaultdict
-    #     ans = defaultdict(list)
-    #     for s in strs:
-    #         ans[tuple(sorted(s))].append(s)  # str可以直接sort!
-    #     return ans.values()  # TODO 要不要list(ans.values())?
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """        
+        from collections import defaultdict
+        ans = defaultdict(list)
+        for s in strs:
+            ans[tuple(sorted(s))].append(s)  # str可以直接sort!
+        return list(ans.values())
 
     # def groupAnagrams(self, strs):
     #     res = {}
@@ -22,15 +22,15 @@ class Solution(object):
     #         res[key] = res.get(key, []) + [s]
     #     return res.values()  # values是个view,意味着res如果变了,values也跟着变
 
-    def groupAnagrams(self, strs):
-        from collections import defaultdict
-        ans = defaultdict(list)
-        for s in strs:
-            keys = [0] * 26
-            for char in s:
-                keys[ord(char) - ord('a')] += 1
-            ans[tuple(keys)].append(s)
-        return ans.values()
+    # def groupAnagrams(self, strs):
+    #     from collections import defaultdict
+    #     ans = defaultdict(list)
+    #     for s in strs:
+    #         keys = [0] * 26
+    #         for char in s:
+    #             keys[ord(char) - ord('a')] += 1
+    #         ans[tuple(keys)].append(s)
+    #     return ans.values()
 
 if __name__ == '__main__':
     """

@@ -9,19 +9,20 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        cur = len(nums) - 1
-        while cur >= 1 and nums[cur] <= nums[cur-1]:  # Note <=
-            cur -= 1
-        if cur == 0:
-            nums.reverse()  # in place reverse
-            return  # return nums
-        prev = cur - 1
-        next = cur
-        while next + 1 < len(nums) and nums[next+1] > nums[prev]:
-            next += 1
-        nums[prev], nums[next] = nums[next], nums[prev]
-        self.reverse(nums, prev+1, len(nums) - 1)
-        return  # return nums
+        N = len(nums)
+        lo = N - 1
+        while lo >= 1 and nums[lo] <= nums[lo - 1]:  # Note <=
+            lo -= 1
+        if lo == 0:
+            nums.reverse()
+            return
+        lo = lo - 1
+        hi = lo
+        while hi + 1 < N and nums[hi+1] > nums[lo]:
+            hi += 1
+        nums[lo], nums[hi] = nums[hi], nums[lo]
+        self.reverse(nums, lo + 1, N - 1)
+        return
 
     def reverse(self, nums, left, right):
         while left < right:
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     https://blog.csdn.net/nomasp/article/details/49913627
     这个题的解法也可以搞46题47题。
     这个题实际上是要输出DFS搜索时的下一个位置。见最高回答的cdai评论
-    可以通过理解56781234和56781243，理解下面的三步
+    可以通过理解1234和1243，理解下面的三步
     1. 第一步循环，从后向前，如果是1234立即停，如果是4321就走到0位置。
     因为第一个递增位置就是可以交换的位置。 34可以直接reverse就输出结果。
     2. 第二步循环，找到比当前上升节点大的最小值，交换一下：1243->1342
