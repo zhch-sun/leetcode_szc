@@ -4,33 +4,45 @@
 # [50] Pow(x, n)
 #
 class Solution(object):
+    # def myPow(self, x, n):
+    #     """
+    #     :type x: float
+    #     :type n: int
+    #     :rtype: float
+    #     """        
+    #     isNeg = n < 0
+    #     n = abs(n)
+    #     ans = 1  # Note 不能ans=x..
+    #     for _ in xrange(n):
+    #         ans *= x
+    #     return ans if not isNeg else 1. / ans  # float!
+
     def myPow(self, x, n):
-        """
-        :type x: float
-        :type n: int
-        :rtype: float
-        """
-        if n == 0:
-            return 1
-        if n < 0:
-            x = 1. / x
-            # n = -n  # this will cause overflow if n = INT_MIN
-            if n % 2 == 0:
-                return self.myPow(x * x, -(n / 2))
-            else:
-                # Note 注意这里必须n+1,负数的向下取整是另一个方向...
-                # Note 括号...
-                return x * self.myPow(x * x, -(n / 2 + 1))  
-        if n % 2 == 0:
-            return self.myPow(x * x, n / 2)
-        else:
-            return x * self.myPow(x * x, n / 2)
+        isNeg = n < 0
+        n = abs(n)
+        ans = 1
+        while n > 0:
+            if n & 1:
+                ans *= x
+            n >>= 1
+            x = x * x  # 只是算x,没有更新到n
+        return ans if not isNeg else 1. / ans
 
 if __name__ == '__main__':
     """
-    1. 巧妙的拆解方法
-    2. 需要处理overflow
-    TODO iterative
+    题设: 浮点x, 正数n, pow
+    解法1:
+        for循环. 注意ans初始化为1, 处理n=0的情况..
+        TLE了...
+    解法2:
+        bit迭代: https://leetcode.com/problems/powx-n/discuss/19563/Iterative-Log(N)-solution-with-Clear-Explanation
+        N = 9 = 2^3 + 2^0 = 1001
+        x^9 = x^(2^3) * x^(2^0)
+        循环中:
+            算出 x^1, x^2, x^3, x^2
+            遇到bit是1的位置, 就把当前的x^n乘到ans里.
+    解法3:
+        递归太丑了. 删掉. 
     """
     s = Solution()
     print(s.myPow(2, -3), 2 ** -3)

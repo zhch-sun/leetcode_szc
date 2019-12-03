@@ -8,14 +8,15 @@ class Solution(object):
         # 375 us
         values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
         romans = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
-        res = ''
-        idx = 0
-        while num:
-            while num >= values[idx]:
-                num -= values[idx]
-                res += romans[idx]
-            idx += 1
-        return res
+        i = 0
+        ans = ''
+        while num:  # 里面套for循环会慢.
+            if num >= values[i]:
+                ans += romans[i]
+                num -= values[i]
+            else:
+                i += 1
+        return ans
 
 if __name__ == '__main__':
     """
@@ -24,4 +25,5 @@ if __name__ == '__main__':
     """
     s = Solution()
     print(s.intToRoman(3999))
+    print(s.intToRoman(1994))
 

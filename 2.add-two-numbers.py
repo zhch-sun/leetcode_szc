@@ -4,19 +4,14 @@
 # [2] Add Two Numbers
 #
 # Definition for singly-linked list.
-# class ListNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
 class ListNode(object):
     def __init__(self, x):
         self.val = x
         self.next = None
     
     def __repr__(self):
-        next = self.next.__repr__() if self.next is not None else ""
-        return str(self.val) + ' , ' + next
+        return str(self.val) + (', ' + self.next.__repr__() \
+            if self.next else '')
 
 class Solution(object):
     def addTwoNumbers(self, l1, l2):
@@ -24,39 +19,32 @@ class Solution(object):
         :type l1: ListNode
         :type l2: ListNode
         :rtype: ListNode
-        """
+        """        
         carry = 0
-        root = cur = ListNode(0)
-        while l1 or l2 or carry:
-            v1 = l1.val if l1 else 0
-            v2 = l2.val if l2 else 0
-            carry, val = divmod(v1 + v2 + carry, 10)
+        cur = dummy = ListNode(None)
+        while l1 or l2 or carry:  # carry放在这里更方便
+            i = l1.val if l1 else 0
+            j = l2.val if l2 else 0
+            carry, val = divmod(i + j + carry, 10)
             cur.next = ListNode(val)
             cur = cur.next
-            l1 = l1.next if l1 else None
+            l1 = l1.next if l1 else None  # Note 忘记了!
             l2 = l2.next if l2 else None
-        return root.next
-
+        return dummy.next
+        
 if __name__ == '__main__':
     """
-    can also be a recursive
-    future problems: 
-    1. 链表倒过来, 怎么办. 1.先把两个链表都倒过来. 2. 算出链表长度差, 先相加再管进位
-    2. 任意多个数相加: 最好还是两个两个分别加起来
+    题设: 链表本身就逆序 445题链表是正序
+    坑: 
+        一个0, 0 + 0
     """
-    def list_init(l):
-        if len(l) > 0:
-            node = ListNode(l[0])
-            node.next = list_init(l[1:])
-            return node
-        else:
-            return None
+    def list2node(l):
+        cur = dummy = ListNode(0)
+        for item in l:
+            cur.next = ListNode(item)
+            cur = cur.next
+        return dummy.next
 
-    l1 = list_init([2,4,3])
-    l2 = list_init([5,6,4])
-    # print(l1.val, l1.next.val, l1.next.next.val)
     s = Solution()
-    out = s.addTwoNumbers(l1, l2)
-    print(out)
-        
+    print(s.addTwoNumbers(list2node([2,4,3]), list2node([5,6,4])))
 

@@ -8,26 +8,26 @@ class Solution(object):
         """
         :type path: str
         :rtype: str
-        """
-        p = path.split('/')
+        """        
+        # 剩余四种情况 '' '.' '..' 和字母
+        tmp = path.split('/') 
         stack = []
-        for item in p:
-            if item == '..':  #不能是if item=='..' and stack....　
+        for item in tmp:
+            if item == '..':
                 if stack:
-                    stack.pop()
-            # 注意如何收束逻辑!!!
-            # elif item == '.' or item == '':
-            #     continue
-            # else:
-            #     stack.append(item)
-            elif item != '.' and item != '':
+                    stack.pop()  # 不需要continue
+            elif item != '' and item != '.':
                 stack.append(item)
-            
         return '/' + '/'.join(stack)
 
 if __name__ == '__main__':
     """
-    注意最后的返回值, 是 '/' + ...
+    解法1:
+        split之后还有四种情况, '' '.' '..' 和字母
+        需要分类讨论. 前两种直接跳过. 
+        坑:
+            root的..还是root.
+            最后的返回值, 是 '/' + ...
     """
     s = Solution()
     print(s.simplifyPath("/a//b////c/d//././/.."))
