@@ -59,17 +59,21 @@ class Solution(object):
         
 if __name__ == '__main__':
     """
+    题设: 是127题word ladder的继续. 
     解法1:
         分段解决. 
-        1. 暴力法 N2 * w, w是word width
-        2. 当word较短, N较大时, 枚举一个单词所有可能的邻居, N * W3
-        N 最多可以有C(W, W) 8 * 7 * 6 * ... 1
-        阶乘的复杂度是超过2^N... 注意啊!!!
+        复杂度分析
+            1. 暴力法 N2 * w, w是word width
+            2. 枚举一个单词所有可能的邻居, N * W3
+            所以N > W^2时, 用第二种
+            N 最多可以有C(W, W) 8 * 7 * 6 * ... 1
+            阶乘的复杂度是超过2^N... 注意啊!!!
+        算法: 
+            bucket是一个二分图.
     """
     s = Solution()
     # print(s.numSimilarGroups(["tars","rats","arts","star"]))
     # print(s.numSimilarGroups(["blw","bwl","wlb"]))
-))
 
 # @lc code=end
 
