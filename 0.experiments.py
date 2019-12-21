@@ -60,3 +60,9 @@
 # ans = 0.
 # for i, j in zip(a, b):
 #     ans += i * j
+
+# ------------------xrange vs range---------------#
+# 实际一样的速度. 
+ans = 0
+for i in range(1000):
+    ans += i

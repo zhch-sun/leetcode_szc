@@ -61,35 +61,13 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-    # def pathSum(self, root, sum):
-    #     """
-    #     :type root: TreeNode
-    #     :type sum: int
-    #     :rtype: List[List[int]]
-    #     """      
-    #     def dfs(root, total, tmp):
-    #         if not root:
-    #             return
-    #         tmp.append(root.val)
-    #         total -= root.val
-    #         if not root.left and not root.right and total == 0:
-    #             ans.append(tmp[:])
-    #             tmp.pop()  # Note 所有return都要pop
-    #             return
-    #         dfs(root.left, total, tmp)
-    #         dfs(root.right, total, tmp)
-    #         tmp.pop()
-    #     ans = []
-    #     dfs(root, sum, [])
-    #     return ans  # 忘记return了...
-
     def pathSum(self, root, sum):
         """
         :type root: TreeNode
         :type sum: int
         :rtype: List[List[int]]
         """      
-        def dfs(root, total, tmp, ans):
+        def dfs(root, total, tmp):
             if not root:
                 return
             tmp.append(root.val)
@@ -98,12 +76,13 @@ class Solution(object):
                 ans.append(tmp[:])
                 tmp.pop()  # Note 所有return都要pop
                 return
-            dfs(root.left, total, tmp, ans)
-            dfs(root.right, total, tmp, ans)
+            dfs(root.left, total, tmp)
+            dfs(root.right, total, tmp)
             tmp.pop()
         ans = []
-        dfs(root, sum, [], ans)
+        dfs(root, sum, [])
         return ans  # 忘记return了...
+
 
 if __name__ == '__main__':
     """

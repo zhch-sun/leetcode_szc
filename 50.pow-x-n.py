@@ -32,7 +32,7 @@ if __name__ == '__main__':
     """
     题设: 浮点x, 正数n, pow
     解法1:
-        for循环. 注意ans初始化为1, 处理n=0的情况..
+        for循环. 乘n次. 注意ans初始化为1, 处理n=0的情况..
         TLE了...
     解法2:
         bit迭代: https://leetcode.com/problems/powx-n/discuss/19563/Iterative-Log(N)-solution-with-Clear-Explanation
@@ -46,4 +46,3 @@ if __name__ == '__main__':
     """
     s = Solution()
     print(s.myPow(2, -3), 2 ** -3)
-

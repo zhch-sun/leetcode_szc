@@ -34,6 +34,8 @@ if __name__ == '__main__':
         可以early stopping! 目前没有公开答案想到. 即剩下的数还不如count多, 可以stop!
         即 count > len(nums) - i; 把元素放到一边, 另一边为0时更快..
         enumerate也不快
+    解法3:
+        quick selection取中位数. 
     """
     s = Solution()
     print(s.majorityElement([2,1,1,1,2,2]))
