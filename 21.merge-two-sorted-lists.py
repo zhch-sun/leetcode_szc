@@ -49,7 +49,8 @@ class Solution(object):
             cur.next = l1
             l1 = l1.next 
             cur = cur.next
-        cur.next = l1 or l2
+        cur.next = l2
+        
         return dummy.next       
 
     # def mergeTwoLists(self, l1, l2):

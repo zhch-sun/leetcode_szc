@@ -87,7 +87,7 @@ class Solution(object):
         if not nums:
             return 0
         N = len(nums)
-        f = [n for n in nums[-1]]
+        f = list(nums[-1])  # [n for n in nums[-1]]
         for i in xrange(N - 2, -1, -1):
             for j in xrange(len(nums[i])):  # Note可以len(g[i])
                 f[j] = min(f[j], f[j+1]) + nums[i][j]

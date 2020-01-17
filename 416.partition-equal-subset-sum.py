@@ -26,17 +26,17 @@ class Solution(object):
     #             f[i][j] = f[i - 1][j] | f[i - 1][j - n]
     #     return f[-1][-1]
 
-    # def canPartition(self, nums):
-    #     total = sum(nums)
-    #     if total & 1:
-    #         return False
-    #     total /= 2
-    #     f = [False] * (total + 1)  
-    #     f[0] = True  # 初始化! 0个物体
-    #     for n in nums:
-    #         for j in xrange(total, n - 1, -1):  # Note 到n-1
-    #             f[j] = f[j] | f[j - n]
-    #     return f[-1]
+    def canPartition(self, nums):
+        total = sum(nums)
+        if total & 1:
+            return False
+        total /= 2
+        f = [False] * (total + 1)  
+        f[0] = True  # 初始化! 0个物体
+        for n in nums:
+            for j in xrange(total, n - 1, -1):  # Note 到n-1
+                f[j] = f[j] | f[j - n]
+        return f[-1]
 
     # def canPartition(self, nums):
     #     total = sum(nums)
@@ -54,20 +54,20 @@ class Solution(object):
     #             return True  # 224ms
     #     return False
 
-    def canPartition(self, nums):
-        # bits解法, 类似素数筛法
-        # 是DP的一种直观理解方式. 
-        total = sum(nums)
-        if total & 1:
-            return False
-        half = total >> 1  # 右移代替除2
-        bits = 1  # Note 初始化!!!
-        for n in nums:
-            bits |= bits << n
-            # if (bits >> half) & 1 == 1:  # 只能加上==1, bits前面若干位可能=1
-            if bits & (1 << half):  # 厉害了, 1<<half=00010000
-                return True  # early stopping
-        return False
+    # def canPartition(self, nums):
+    #     # bits解法, 类似素数筛法
+    #     # 是DP的一种直观理解方式. 
+    #     total = sum(nums)
+    #     if total & 1:
+    #         return False
+    #     half = total >> 1  # 右移代替除2
+    #     bits = 1  # Note 初始化!!!
+    #     for n in nums:
+    #         bits |= bits << n
+    #         # if (bits >> half) & 1 == 1:  # 只能加上==1, bits前面若干位可能=1
+    #         if bits & (1 << half):  # 厉害了, 1<<half=00010000
+    #             return True  # early stopping
+    #     return False
 
     # def canPartition(self, nums):
     #     def dfs(idx, targets):

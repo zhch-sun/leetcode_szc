@@ -9,20 +9,6 @@ class Solution(object):
     #     :type nums: List[int]
     #     :rtype: int
     #     """        
-    #     if not nums:
-    #         return 0
-    #     N = len(nums)
-    #     f = [0] * (N + 1)
-    #     f[0], f[1] = 0, nums[0]
-    #     for i in xrange(1, N):
-    #         f[i + 1] = max(f[i], f[i - 1] + nums[i])
-    #     return f[-1]
-
-    # def rob(self, nums):
-    #     """
-    #     :type nums: List[int]
-    #     :rtype: int
-    #     """        
     #     # 无需判断 nums
     #     N = len(nums)
     #     f = [0] * (N + 2)

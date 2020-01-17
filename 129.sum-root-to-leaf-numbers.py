@@ -88,7 +88,7 @@ class Solution(object):
     #             return
     #         dfs(root.left, tmp)
     #         dfs(root.right, tmp)
-    #         tmp = tmp // 10
+    #         tmp = tmp // 10  # 不需要
     #         return
             
     #     self.total = 0  # 必须self, 否则dfs内要global!!
@@ -114,6 +114,7 @@ if __name__ == '__main__':
     解法1:
         标准写法. 输入path_sum, 返回total.
         注意输入是数字, 返回的是值. 
+        (也可以用str + 回溯)
     解法2: 
         回溯写法: 麻烦得多. 且需要全局变量
     解法3:

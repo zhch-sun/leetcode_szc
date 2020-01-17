@@ -99,6 +99,8 @@ if __name__ == '__main__':
         从上到下, 逐步减小可行范围, 确保每个node都满足范围. 
     解法2: 
         迭代 中序遍历 inorder traversal
+    解法3：
+        直接层序的递归，记录之前的pre
     """
     s = Solution()
     print(s.isValidBST(listToTree([2,1,3])))

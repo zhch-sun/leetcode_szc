@@ -16,7 +16,7 @@ class Solution(object):
                 i += 1
                 j = 0  # 没有return
             if i == 9:  # 这个必须在下面.. 并且没有and j==9
-                return True                
+                return True
             if board[i][j] != '.':
                 return dfs(memo, i, j + 1)
             for n in xrange(1, 10):

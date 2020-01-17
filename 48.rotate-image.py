@@ -41,7 +41,7 @@ if __name__ == '__main__':
     另外我的i,j的range和python答案不一样. 
     python的~是补码, 即-(x+1)
     2. filp+transpose. 两个顺序决定是顺时针还是逆时针. python可以inplace reverse. 
-    3. 用zip竟然可以transpose....震惊了.  注意zip就是transpose. [::-1]的位置不同变成顺时针转还是逆时针转
+    3. 用zip竟然可以transpose....震惊了X.  注意zip就是transpose. [::-1]的位置不同变成顺时针转还是逆时针转
     4. 也可以numpy
     """
     s = Solution()

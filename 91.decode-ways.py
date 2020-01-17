@@ -4,37 +4,37 @@
 # [91] Decode Ways
 #
 class Solution(object):
-    # def numDecodings(self, s):
-    #     if not s:  #  or not s.isdigit()  # 不需要了. 循环里判断. 
-    #         return 0
-    #     N = len(s)
-    #     f = [0] * (N + 1)  # 初始化
-    #     f[0] = 1
-    #     for i in xrange(N):
-    #         if 0 < int(s[i]) <= 9:  # <=9 按照题意可以舍去
-    #             f[i + 1] = f[i]
-    #         # if i > 0 and 10 <= int(s[i-1:i+1]) <= 26:
-    #         if i > 0 and 10 <= int(s[i - 1]+s[i]) <= 26:  # slice很慢.
-    #             f[i + 1] +=+ f[i - 1]
-    #         # if f[i + 1] == 0:  # early stopping加速
-    #         #     return 0  
-    #     return f[-1]
-
     def numDecodings(self, s):
-        # f[i] = f[i - 1] + f[i - 2]
-        pre2, pre1 = 1, 1  # pre1相当于-1, pre2 -2的位置.
-        for i, char in enumerate(s):
-            cur = 0  # 初始化啊..
-            # Note 不能else return 0!!! 0可以用在构建10/20上..
-            if 0 < int(char) <= 9:  
-                cur = pre1
-            # 忘记i>0, slice很慢                
-            if i > 0 and 10 <= int(s[i-1]+s[i]) <= 26:  
-                cur += pre2
-            if cur == 0:  # 只有中间出现无法处理的0, 才会cur=0
-                return 0
-            pre2, pre1 = pre1, cur
-        return cur  # 如果字符串为空, 还是需要额外判断
+        if not s:  #  or not s.isdigit()  # 不需要了. 循环里判断. 
+            return 0
+        N = len(s)
+        f = [0] * (N + 1)  # 初始化
+        f[0] = 1
+        for i in xrange(N):
+            if 0 < int(s[i]) <= 9:  # <=9 按照题意可以舍去
+                f[i + 1] = f[i]
+            # if i > 0 and 10 <= int(s[i-1:i+1]) <= 26:
+            if i > 0 and 10 <= int(s[i - 1]+s[i]) <= 26:  # slice很慢.
+                f[i + 1] += f[i - 1]
+            # if f[i + 1] == 0:  # 可选early stopping加速
+            #     return 0  # 只有0才会出现处理不了的情况，加速是正确的
+        return f[-1]
+
+    # def numDecodings(self, s):
+    #     # f[i] = f[i - 1] + f[i - 2]
+    #     pre2, pre1 = 1, 1  # pre1相当于-1, pre2 -2的位置.
+    #     for i, char in enumerate(s):
+    #         cur = 0  # 初始化啊..
+    #         # Note 不能else return 0!!! 0可以用在构建10/20上..
+    #         if 0 < int(char) <= 9:  
+    #             cur = pre1
+    #         # 忘记i>0, slice很慢                
+    #         if i > 0 and 10 <= int(s[i-1]+s[i]) <= 26:  
+    #             cur += pre2
+    #         if cur == 0:  # 只有中间出现无法处理的0, 才会cur=0
+    #             return 0
+    #         pre2, pre1 = pre1, cur
+    #     return cur  # 如果字符串为空, 还是需要额外判断
 
 if __name__ == '__main__':
     """

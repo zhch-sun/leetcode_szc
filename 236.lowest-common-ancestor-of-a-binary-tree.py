@@ -33,7 +33,8 @@ if __name__ == '__main__':
         难点在于定义返回值. 
         也是一个post order, 先递归再判断
     解法1: 
-        返回值是一个node或者None. 
+        首先必须从下往上找，所以先递归再判断。
+        返回值四种可能：p q ans， None。
         关键点在于, p和q都只出现了一次. 
         递归时而且 left and right只会出现一次, 这一次赋值root. 
         root上层其他分支都返回None. 

@@ -39,6 +39,62 @@ from collections import OrderedDict
 #             self.cache.popitem(last=False) 
 #         self.cache[key] = value
 
+# class Node(object):
+#     def __init__(self, key, value):
+#         self.key = key
+#         self.val = value
+#         self.prev = None
+#         self.next = None
+
+# class LRUCache(object):
+#     def __init__(self, capacity):
+#         """
+#         :type capacity: int
+#         """
+#         self.capacity = capacity
+#         self.top = Node(None, None)
+#         self.bot = Node(None, None)
+#         self.top.prev = self.bot  # top为最常用
+#         self.bot.next = self.top
+#         self.cache = {}  # {key: node}
+
+#     def _add(self, node):  # 在链表头上插入..
+#         p, n = self.top.prev, self.top
+#         p.next = node
+#         node.prev = p
+#         node.next = n
+#         n.prev = node
+
+#     def _remove(self, node):  # 从链表中删除
+#         p, n = node.prev, node.next
+#         p.next, n.prev = n, p
+
+#     def get(self, key):
+#         if key not in self.cache:
+#             return -1
+#         node = self.cache[key]    
+#         self._remove(node)  # dict是不变的.
+#         self._add(node)   
+#         return node.val       
+
+#     def put(self, key, value):
+#         if self.capacity == 0:  # Note 处理corner case!
+#             return
+#         if key not in self.cache:
+#             if len(self.cache) == self.capacity:
+#                 node = self.bot.next
+#                 self._remove(node)
+#                 self.cache.pop(node.key, None)  # 这里也要删除.             
+#             node = Node(key, value)
+#             self.cache[key] = node
+#             self._add(node)   
+#             return
+#         else:          
+#             node = self.cache[key] 
+#             node.val = value  # Note 必须重新赋值   
+#             self.get(node.key)  # 这里get
+#             return
+
 class Node(object):
     def __init__(self, key, value):
         self.key = key
@@ -47,53 +103,44 @@ class Node(object):
         self.next = None
 
 class LRUCache(object):
+    # 没有 add remove抽象
     def __init__(self, capacity):
-        """
-        :type capacity: int
-        """
-        self.capacity = capacity
-        self.top = Node(None, None)
-        self.bot = Node(None, None)
-        self.top.prev = self.bot  # top为最常用
+        self.cache = {}
+        self.top, self.bot = Node(0, 0), Node(0, 0)
         self.bot.next = self.top
-        self.cache = {}  # {key: node}
-
-    def _add(self, node):  # 在链表头上插入..
-        p, n = self.top.prev, self.top
-        p.next = node
-        node.prev = p
-        node.next = n
-        n.prev = node
-
-    def _remove(self, node):  # 从链表中删除
-        p, n = node.prev, node.next
-        p.next, n.prev = n, p
+        self.top.prev = self.bot
+        self.capacity = capacity
 
     def get(self, key):
         if key not in self.cache:
             return -1
-        node = self.cache[key]    
-        self._remove(node)  # dict是不变的.
-        self._add(node)   
-        return node.val       
+        node = self.cache[key]
+        p, n = node.prev, node.next
+        p.next, n.prev = n, p
+        
+        p, n = self.top.prev, self.top
+        node.prev, node.next = p, n
+        p.next, n.prev = node, node
+        return node.val
 
     def put(self, key, value):
-        if self.capacity == 0:  # Note 处理corner case!
+        if self.capacity == 0:
             return
-        if key not in self.cache:
-            if len(self.cache) == self.capacity:
-                node = self.bot.next
-                self._remove(node)
-                self.cache.pop(node.key, None)  # 这里也要删除.             
-            node = Node(key, value)
-            self.cache[key] = node
-            self._add(node)   
+        if key in self.cache:
+            self.get(key)
+            self.top.prev.val = value
             return
-        else:          
-            node = self.cache[key] 
-            node.val = value  # Note 必须重新赋值   
-            self.get(node.key)  # 这里get
-            return
+        if len(self.cache) == self.capacity:
+            self.cache.pop(self.bot.next.key, None)
+            p, n = self.bot, self.bot.next.next
+            p.next = n
+            n.prev = p
+        node = Node(key, value)
+        p, n = self.top.prev, self.top
+        p.next = node
+        n.prev = node
+        node.next, node.prev = n, p
+        self.cache[key] = node
 
 if __name__ == '__main__':
     """
@@ -104,6 +151,7 @@ if __name__ == '__main__':
     解法2: 
         dict + 双向链表(两个dummy)
         dict里面存着双向链表的node, node里存key和value
+        节点里需要key的原因是超量删除cache的时候需要key。。
         双向链表一样需要赋值大法进行操作.
         细节: 
             put不能调用get, get返回的-1可能是value的值

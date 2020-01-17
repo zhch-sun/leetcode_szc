@@ -5,50 +5,21 @@
 #
 from itertools import chain
 class Solution(object):
-    def exist(self, board, word):
-        # 标准写法, 需要修改board
-        def dfs(i, j, k):
-            if board[i][j] != word[k]:
-                return False
-            if k == len(word) - 1:
-                return True
-            tmp, board[i][j] = board[i][j], ''               
-            for d in dirs:
-                ni = i + d[0]
-                nj = j + d[1]
-                if 0 <= ni < M and 0 <= nj < N:
-                    if dfs(ni, nj, k + 1):
-                        return True
-            board[i][j] = tmp
-            return False
-
-        if not word:
-            return True
-        if not board or not board[0]:
-            return False
-        M, N = len(board), len(board[0])
-        dirs = ((0, 1), (0, -1), (1, 0), (-1, 0))
-        for i in xrange(M):
-            for j in xrange(N):
-                if dfs(i, j, 0):
-                    return True
-        return False
-
     # def exist(self, board, word):
-    #     # set存储路径
-    #     def dfs(i, j, k, tmp):
+    #     # 标准写法, 需要修改board
+    #     def dfs(i, j, k):
     #         if board[i][j] != word[k]:
     #             return False
     #         if k == len(word) - 1:
     #             return True
-    #         tmp.add((i, j))
+    #         tmp, board[i][j] = board[i][j], ''               
     #         for d in dirs:
     #             ni = i + d[0]
     #             nj = j + d[1]
-    #             if 0 <= ni < M and 0 <= nj < N and (ni, nj) not in tmp:
-    #                 if dfs(ni, nj, k + 1, tmp):
+    #             if 0 <= ni < M and 0 <= nj < N:
+    #                 if dfs(ni, nj, k + 1):
     #                     return True
-    #         tmp.remove((i, j))
+    #         board[i][j] = tmp
     #         return False
 
     #     if not word:
@@ -59,9 +30,38 @@ class Solution(object):
     #     dirs = ((0, 1), (0, -1), (1, 0), (-1, 0))
     #     for i in xrange(M):
     #         for j in xrange(N):
-    #             if dfs(i, j, 0, set()):
+    #             if dfs(i, j, 0):
     #                 return True
     #     return False
+
+    def exist(self, board, word):
+        # set存储路径
+        def dfs(i, j, k, tmp):
+            if board[i][j] != word[k]:
+                return False
+            if k == len(word) - 1:
+                return True
+            tmp.add((i, j))
+            for d in dirs:
+                ni = i + d[0]
+                nj = j + d[1]
+                if 0 <= ni < M and 0 <= nj < N and (ni, nj) not in tmp:
+                    if dfs(ni, nj, k + 1, tmp):
+                        return True
+            tmp.remove((i, j))
+            return False
+
+        if not word:
+            return True
+        if not board or not board[0]:
+            return False
+        M, N = len(board), len(board[0])
+        dirs = ((0, 1), (0, -1), (1, 0), (-1, 0))
+        for i in xrange(M):
+            for j in xrange(N):
+                if dfs(i, j, 0, set()):
+                    return True
+        return False
 
 if __name__ == '__main__':
     """

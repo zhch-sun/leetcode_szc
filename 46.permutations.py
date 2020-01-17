@@ -6,29 +6,29 @@
 import itertools
 from collections import OrderedDict 
 class Solution(object):
-#     def permute(self, nums):
-#         """
-#         :type nums: List[int]
-#         :rtype: List[List[int]]
-#         """        
-#         def dfs(tmp):
-#             if len(tmp) == N:
-#                 ans.append(tmp[:])  # Note 又忘了..
-#                 return
-#             for i in xrange(N):
-#                 if not used[i]:
-#                     tmp.append(nums[i])
-#                     used[i] = True
-#                     dfs(tmp)
-#                     tmp.pop()
-#                     used[i] = False
-#             return
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """        
+        def dfs(tmp):
+            if len(tmp) == N:
+                ans.append(tmp[:])  # Note 又忘了..
+                return
+            for i in xrange(N):
+                if not used[i]:
+                    tmp.append(nums[i])
+                    used[i] = True
+                    dfs(tmp)
+                    tmp.pop()
+                    used[i] = False
+            return
 
-#         N = len(nums)  # 不需要判断空
-#         used = [False] * N  # state for used
-#         ans = []
-#         dfs([])  # 也可nums转换成set, 这样就没有顺序了.
-#         return ans
+        N = len(nums)  # 不需要判断空
+        used = [False] * N  # state for used
+        ans = []
+        dfs([])  # 也可nums转换成set, 这样就没有顺序了.
+        return ans
 
     # def permute(self, nums):
     #     def dfs(tmp):
@@ -74,27 +74,27 @@ class Solution(object):
     #         ans = new_res
     #     return ans if nums else []
 
-    def permute(self, nums):
-        def dfs(tmp, u):
-            if u == N:
-                ans.append(tmp[:])
-                return
-            for i in xrange(N):  # i是path的idx, u是nums的idx
-                if not used[i]:  # 这时used表示的是tmp的对应位置是否有数.
-                    used[i] = True
-                    tmp[i] = nums[u]
-                    dfs(tmp, u + 1)
-                    tmp[i] = None
-                    used[i] = False
-            return
+    # def permute(self, nums):
+    #     def dfs(tmp, u):
+    #         if u == N:
+    #             ans.append(tmp[:])
+    #             return
+    #         for i in xrange(N):  # i是path的idx, u是nums的idx
+    #             if not used[i]:  # 这时used表示的是tmp的对应位置是否有数.
+    #                 used[i] = True
+    #                 tmp[i] = nums[u]
+    #                 dfs(tmp, u + 1)
+    #                 tmp[i] = None
+    #                 used[i] = False
+    #         return
 
-        N = len(nums)
-        nums.sort()
-        tmp = [None] * N
-        used = [False] * N
-        ans = []
-        dfs(tmp, 0)
-        return ans
+    #     N = len(nums)
+    #     nums.sort()
+    #     tmp = [None] * N
+    #     used = [False] * N
+    #     ans = []
+    #     dfs(tmp, 0)
+    #     return ans
 
 if __name__ == '__main__':
     """

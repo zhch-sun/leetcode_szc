@@ -6,8 +6,8 @@
 from itertools import combinations
 
 class Solution(object):
-    def combine(self, n, k):
-        return list(combinations(range(1, n + 1), k))
+    # def combine(self, n, k):
+    #     return list(combinations(range(1, n + 1), k))
 
     # def combine(self, n, k):
     #     """
@@ -25,20 +25,20 @@ class Solution(object):
     #         ans = tmp
     #     return ans
 
-    # def combine(self, n, k):
-    #     def dfs(tmp, idx):
-    #         if len(tmp) == k:
-    #             ans.append(tmp[:])
-    #             return
-    #         for i in xrange(idx, n + 1):
-    #             tmp.append(i)
-    #             dfs(tmp, i + 1)  # Note i + 1 !!!
-    #             tmp.pop()
-    #         return
+    def combine(self, n, k):
+        def dfs(tmp, idx):
+            if len(tmp) == k:
+                ans.append(tmp[:])
+                return
+            for i in xrange(idx, n + 1):
+                tmp.append(i)
+                dfs(tmp, i + 1)  # Note i + 1 !!!
+                tmp.pop()
+            return
 
-    #     ans = []
-    #     dfs([], 1)
-    #     return ans
+        ans = []
+        dfs([], 1)
+        return ans
 
 if __name__ == '__main__':
     """

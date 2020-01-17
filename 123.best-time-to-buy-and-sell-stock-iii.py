@@ -85,7 +85,7 @@ if __name__ == '__main__':
         DP思路, 难点在于多了一个持有的状态位
         DP其实就是一个记录前I个状态历史的状态机!!!
         https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/solution/yi-ge-tong-yong-fang-fa-tuan-mie-6-dao-gu-piao-wen/
-        f[k][i][s]. 已经最多k笔(未卖出也算1笔), 第i天, 当天是否持有股票s
+        f[i][k][s]. 已经最多k笔(未卖出也算1笔), 第i天, 当天是否持有股票s
         状态转移: 有买卖空三种操作
             dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1] + prices[i])
             dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i])

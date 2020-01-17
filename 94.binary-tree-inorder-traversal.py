@@ -80,6 +80,7 @@ class Solution(object):
     def inorderTraversal(self, root):
         sta = []
         ans = []
+        # 可能出现sta为空但是root不空的情况，比如root的左边都结束
         while sta or root:  # sta里是左边的, root代表右边的root
             while root:  # 直到None的时候停下.  
                 sta.append(root)
@@ -95,6 +96,7 @@ if __name__ == '__main__':
     解法2:
         算法是对的, 没有证明? 没有完全理解. 
         先入栈所有左边的, 再逐个pop, 写值, 改root为right. 
+        root代表的是新一个可能有left的地方
     解法3: 
         TODO 大雪菜还有个通用递归转换方法
         https://www.acwing.com/solution/LeetCode/content/176/

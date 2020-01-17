@@ -46,7 +46,7 @@ class Solution(object):
             elif j > k:
                 hi = j - 1
             else:
-                lo = j + 1
+                lo = j + 1 
 
 if __name__ == '__main__':
     """

@@ -9,20 +9,19 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        major = nums[0]  # or count=0 major=None
-        count = 1
-        for i in range(1, len(nums)):  # 从1开始, 不能enumerate?
-            if count + i - len(nums) > 0:  # my condition for terminate
-                return major
-            item = nums[i]
-            if item == major:
-                count += 1
-            elif count > 0:
-                count -= 1
+        ans, cnt = None, 0
+        N = len(nums)
+        for i, n in enumerate(nums):
+            if cnt + i - N > 0:  # my condition for terminate
+                return ans
+            if cnt == 0:
+                ans = n
+                cnt += 1  # 忘记+1.。。
+            elif ans != n:
+                cnt -= 1
             else:
-                major = item  
-                count += 1  # 这里应该是要的, 不加1也可以过测试..
-        return major
+                cnt += 1
+        return ans 
 
 if __name__ == '__main__':
     """

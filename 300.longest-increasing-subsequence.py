@@ -13,18 +13,6 @@ class Solution(object):
     #     if not nums:
     #         return 0
     #     N = len(nums)
-    #     f = [0] * N
-    #     for i in xrange(N):
-    #         f[i] = 1
-    #         for j in xrange(i):  # 0 没有进入下面的循环
-    #             if nums[i] > nums[j]:
-    #                 f[i] = max(f[i], f[j] + 1)
-    #     return max(f)  # 忘记了..
-
-    # def lengthOfLIS(self, nums):
-    #     if not nums:
-    #         return 0
-    #     N = len(nums)
     #     f = [1] * N
     #     for i in xrange(N):
     #         for j in xrange(i):  # 0 没有进入下面的循环
@@ -35,38 +23,31 @@ class Solution(object):
     # def lengthOfLIS(self, nums):
     #     N = len(nums)
     #     f = [0] * N
-    #     ans = 0
+    #     ans = 0  # ans指向f的下一个待改写位置.
     #     for n in nums:
-    #         lo, hi = 0, ans   # hi是不被包含的!
+    #         lo, hi = 0, ans   # hi是可以被取到的!
     #         while lo < hi:  # [lo, hi]
     #             mid = lo + (hi - lo) // 2
     #             if f[mid] < n:  # Note 不是nums, 
     #                 lo = mid + 1
     #             else:
     #                 hi = mid  # 三种讨论的二分速度更快. 
-    #         f[lo] = n
+    #         f[lo] = n  # 这里lo一定小于N, 讨论[1,2]的情况
     #         if lo == ans:  # Note 也容易写错, ans是取不到的.
     #             ans += 1
     #     return ans
 
     def lengthOfLIS(self, nums):
-        N = len(nums)
-        f = [0] * N
-        ans = 0
-        for n in nums:
-            lo, hi = 0, ans   # hi是不被包含的!
-            while lo < hi:  # [lo, hi]
-                mid = lo + (hi - lo) // 2
-                if f[mid] < n:  # Note 不是nums, 
-                    lo = mid + 1
-                elif f[mid] > n:
-                    hi = mid
-                else: 
-                    lo = hi = mid  # 三种讨论的二分速度更快.
-            f[lo] = n
-            if lo == ans:  # Note 也容易写错, ans是取不到的.
-                ans += 1
-        return ans
+        import bisect
+        b = nums
+        q = []
+        for v in b:
+            pos = bisect.bisect_left(q, v)
+            if pos == len(q):
+                q.append(v)
+            else:
+                q[pos] = v      
+        return len(q)
 
 if __name__ == '__main__':
     """

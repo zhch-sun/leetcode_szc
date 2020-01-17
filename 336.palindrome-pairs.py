@@ -42,7 +42,8 @@ class Solution(object):
 if __name__ == '__main__':
     """
     题设: 
-        必须是两个word构成. 
+        有个字典里有words. 两个word加一起是回文.
+        找到所有这种组合. 
     解法1:
         1. 每一个word和index放到dict中
         2. 每一个word分成str1和str2, 

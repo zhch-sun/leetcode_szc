@@ -10,7 +10,7 @@ class Solution(object):
     # def frequencySort(self, s):
     #     """
     #     :type s: str
-    #     :rtype: str
+    #     :rtype: strk
     #     """
     #     cnt = list(Counter(s).items())  # Counter有个most_common是排好序的.
     #     cnt.sort(key=lambda x: x[1], reverse=True)

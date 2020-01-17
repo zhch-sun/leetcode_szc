@@ -25,6 +25,8 @@ class Solution(object):
                     tmp.append(j)
                     dfs(tmp, j + 1, target - j)
                     tmp.pop()
+                else:
+                    break  # 剪枝2
             return
         ans = []
         dfs([], 1, target)
