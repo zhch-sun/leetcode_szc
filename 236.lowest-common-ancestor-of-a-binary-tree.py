@@ -13,19 +13,41 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
+    # def lowestCommonAncestor(self, root, p, q):
+    #     """
+    #     :type root: TreeNode
+    #     :type p: TreeNode
+    #     :type q: TreeNode
+    #     :rtype: TreeNode
+    #     """
+    #     if root in (None, p, q): # 实际上是个early stopping.
+    #         return root  # 遇到pq直接返回
+    #     left = self.lowestCommonAncestor(root.left, p, q)
+    #     right = self.lowestCommonAncestor(root.right, p, q)
+    #     return root if left and right else left or right
+
+
     def lowestCommonAncestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
-        if root in (None, p, q): # 实际上是个early stopping.
-            return root  # 遇到pq直接返回
-        left = self.lowestCommonAncestor(root.left, p, q)
-        right = self.lowestCommonAncestor(root.right, p, q)
-        return root if left and right else left or right
-      
+        def dfs(node, anc):
+            if not node:
+                return None
+            if dfs(node.left, anc) or dfs(node.right, anc):
+                anc.append(node)
+                return True
+            return False
+
+        p_anc, q_anc = [], []
+        dfs(p, p_anc)
+        dfs(q, q_anc)
+        p_anc.reverse()
+        q_anc.reverse()
+        i = 0
+        cnt = max(len(p_anc), len(q_anc))
+        while i < cnt and p_anc[i] is q_anc[i]:
+            i += 1
+        return p_anc[i + 1]
+        
+  
 if __name__ == '__main__':
     """
     题设: 允许返回p或者q本身, p q一定存在 

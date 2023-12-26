@@ -14,7 +14,7 @@ def listToTree(input):
     if not input:
         return None
     root = TreeNode(int(input[0]))
-    nodeQueue = [root]  # 最后这个包含所有node
+    nodeQueue = [root]  # 最后这个包含所有node  
     front = 0  # to index queue
     index = 1  # to index list
     while index < len(input):

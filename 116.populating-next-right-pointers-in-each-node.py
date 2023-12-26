@@ -23,7 +23,7 @@ class Solution(object):
     #         return None
     #     dq = deque([root])
     #     while dq:
-    #         pre = None  # Note 每个循环开头更新
+    #         pre = Nxone  # Note 每个循环开头更新
     #         for _ in xrange(len(dq)):
     #             cur = dq.popleft()
     #             if cur.left:

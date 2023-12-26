@@ -13,7 +13,7 @@ class UF(object):
         while self.id[p] != p:
             p = self.id[p]
         return p
-
+                                                          
     def union(self, p, q):
         i = self.find(p)  # Note 这里写成self.id[p]了....
         j = self.find(q) 
@@ -21,7 +21,7 @@ class UF(object):
             return
         if self.sz[i] < self.sz[j]:
             self.id[i] = self.id[j]
-            self.sz[j] += self.sz[i]
+            self.sz[j] += self.sz[i]            
         else:
             self.id[j] = self.id[i]
             self.sz[i] += self.sz[j]
