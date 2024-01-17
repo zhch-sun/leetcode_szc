@@ -21,6 +21,18 @@ class Solution(object):
             else:
                 hi = mid - 1
         return lo
+    
+    def hIndex(self, citations: List[int]) -> int:
+        citations.reverse()
+        lo, hi = 0, len(citations)
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if citations[mid - 1] >= mid:  # 这里不会越界! 标准库bisect也有这样的问题, 也是如此处理. 
+                lo = mid
+            else:
+                hi = mid - 1
+        return lo
+
 
 if __name__ == '__main__':
     """

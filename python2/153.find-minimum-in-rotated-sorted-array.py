@@ -7,17 +7,34 @@ import bisect
 
 class Solution(object):
     def findMin(self, nums):
-        if not nums:
-            return
-        lo, hi = 0, len(nums) - 1
-        pivot = nums[-1]
-        while lo < hi:  # 循环不变量只能 [lo, hi], 结束时lo==hi
-            mid = lo + (hi - lo) // 2
-            if nums[mid] > pivot:  # 也可以是nums[mid] >= nums[lo]
-                lo = mid + 1  
+        """
+        分类讨论[lo, mid, hi]内部的上升下降情况. 
+        里面要么是两段, 要么是上升, 上升的话最左侧就是最小值. 
+        """
+        lo, hi = 0, len(nums) - 1 
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if nums[lo] > nums[hi]:
+                if nums[mid] >= nums[lo]:  # nums[mid]是可能等于nums[lo]的. 
+                    lo = mid + 1
+                else:
+                    hi = mid                
             else:
-                hi = mid  # -1 违背不变量
+                return nums[lo]
         return nums[lo]
+    
+    # def findMin(self, nums):
+    #     if not nums:
+    #         return
+    #     lo, hi = 0, len(nums) - 1
+    #     pivot = nums[-1]
+    #     while lo < hi:  # 循环不变量只能 [lo, hi], 结束时lo==hi
+    #         mid = lo + (hi - lo) // 2
+    #         if nums[mid] > pivot:  # 也可以是nums[mid] >= nums[lo]
+    #             lo = mid + 1  
+    #         else:
+    #             hi = mid  # -1 违背不变量
+    #     return nums[lo]
 
     # def findMax(self, nums):
     #     if not nums:

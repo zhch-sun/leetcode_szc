@@ -35,7 +35,7 @@ class Solution(object):
         while lo < hi:  # 不变量: [lo, hi]; 循环结束条件是lo = hi
             mid = lo + (hi - lo) // 2
             if nums[mid] < target:  # Note, 循环不会遇到nums[hi]的情况. 
-                lo = mid + 1
+                lo = mid + 1  # 必须加一是因为解一定在[lo + 1, hi]里面
             else:
                 hi = mid  # 不-1因为会违背不变量, 即包含>=的情况
         return lo

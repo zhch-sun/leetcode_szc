@@ -11,13 +11,13 @@ class Solution(object):
         :rtype: int
         """
         def count(nums, mid, N):
-            # 这个和378的模板一样
+            # 这个和378完全不一样, 矩阵性质不同, 统计方法不同
             j = 0  # 1亦可
             cnt = 0
             for i in xrange(N):  # 替换原先的while, 快了一些
                 while j < N and nums[j] - nums[i] <= mid:
                     j += 1  # j = 1的时候没有元素..
-                cnt += j - i - 1  # 实际是一个上三角矩阵
+                cnt += j - i - 1  # 注意j跳出循环的时候, 是不满足条件的, 所以还要-1.
             return cnt
             
         N = len(nums)

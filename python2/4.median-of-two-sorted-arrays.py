@@ -4,6 +4,44 @@
 # [4] Median of Two Sorted Arrays
 #
 class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """参考答案解法1 o(log(min(m, n))). 更通用但更慢. 
+        假设中位数是第k个. 
+        数列删除法. 两个数列比较2/k的位置, 
+        如果A<B则意味着A一定比第K个小, 删除A前面所有数, 
+        然后剩下2/K个数, 比较两个数列的各自的前4/k. 
+        """
+    def findMedianSortedArrays(self, nums1, nums2):
+        """参考答案解法2 o(log(m + n))"""
+        a, b = sorted((nums1, nums2), key=len)
+        m, n = len(a), len(b)
+        lo, hi = 0, m   # [lo, hi] 取到m的时候意味着中位数a里, 包括m==0的情况; 取0的时候不在a里
+        half = (m + n + 1) // 2  # 偶数的时候可能出现在左右, 奇数的时候只在左边
+        while lo <= hi:  # 一定进入循环
+            i = lo + (hi - lo) // 2  # i和j代表个数
+            j = half - i  # [0, i-1], [i, m-1]; [0, j-1] [j, n-1]
+            if i > 0 and a[i - 1] > b[j]:  # 因为i-1所以i>0; m=n=0或者m=0 n=1的时候, j能取到n
+                hi = i - 1
+            elif i < m and a[i] < b[j - 1]: # i==m时j才能取到0, 包括m=n=0的情况
+                lo = i + 1
+            else:  # i是正确的
+                if i == 0:
+                    maxL = b[j - 1]
+                elif j == 0:
+                    maxL = a[i - 1]
+                else:
+                    maxL = max(a[i - 1], b[j - 1])
+                if (m + n) % 2 == 1:
+                    return maxL
+                
+                if i == m:  # 右边是min!!!
+                    minR = b[j]
+                elif j == n:
+                    minR = a[i]
+                else:
+                    minR = min(a[i], b[j])
+                return (maxL + minR) / 2.0
+
     # def findMedianSortedArrays(self, nums1, nums2):
     #     """
     #     :type nums1: List[int]
@@ -30,56 +68,17 @@ class Solution(object):
     #     center = sorted(a[i:i+2] + b[j:j+2])  # len可能是1, 2, 3, 4...
     #     return (center[0] + center[1 - (m+n)%2]) / 2.0
 
-    # def findMedianSortedArrays(self, nums1, nums2):
-    #     a, b = sorted((nums1, nums2), key=len)
-    #     m, n = len(a), len(b)
-    #     lo, hi = 0, m   # [lo, hi] 取到m的时候意味着中位数a里, 包括m==0的情况; 取0的时候不在a里
-    #     half = (m + n + 1) // 2  # 偶数的时候可能出现在左右, 奇数的时候只在左边
-    #     while lo <= hi:  # 一定进入循环
-    #         i = lo + (hi - lo) // 2  # i和j代表个数
-    #         j = half - i  # [0, i-1], [i, m-1]; [0, j-1] [j, n-1]
-    #         if i > 0 and a[i - 1] > b[j]:  # 因为i-1所以i>0; m=n=0或者m=0 n=1的时候, j能取到n
-    #             hi = i - 1
-    #         elif i < m and a[i] < b[j - 1]: # i==m时j才能取到0, 包括m=n=0的情况
-    #             lo = i + 1
-    #         else:  # i是正确的
-    #             if i == 0:
-    #                 maxL = b[j - 1]
-    #             elif j == 0:
-    #                 maxL = a[i - 1]
-    #             else:
-    #                 maxL = max(a[i - 1], b[j - 1])
-    #             if (m + n) % 2 == 1:
-    #                 return maxL
-                
-    #             if i == m:  # 右边是min!!!
-    #                 minR = b[j]
-    #             elif j == n:
-    #                 minR = a[i]
-    #             else:
-    #                 minR = min(a[i], b[j])
-    #             return (maxL + minR) / 2.0
 
 if __name__ == '__main__':
     """    
-    背诵正常解法. 思路是在a上二分，由a的位置可以直接确定b的位置。
-        i和j都理解为个数
+    理解答案解法一, 实际使用答案解法二. 
+        在a上二分，由a的位置i可以直接确定b的位置j。a一定要是更短的那个数组. 
+        如果a[i-1]<b[j]且b[j-1]<a[i], 则中位数一定出现在边界上. 即maxL和minR是中位数.
         [0, i-1], [i, m-1]
         [0, j-1], [j, n-1]
-        判断时需要考虑i和j的取值范围, 但是通过证明可以不判断j
-        第一个条件i>0, 首先是a[i-1]要求的，其次当i==0时，自动满足a[i-1]<b[j]条件。
-        第二个条件同上
+        访问数组时需要考虑i和j的取值范围, 只需要判断i! j可以自动推导出来. 
 
-        找到正确的i的时候需要进行若干判断:
-        如果是奇数只需要左边最大的两个数字求max. 但是要注意左边的i j是否为0.
-        如果是偶数还需要minR. 注意右边i j是否为m或者n. 
-    
-    1. 处理奇偶数, 通过j = (m + n + 1) // 2，相当于补一个数，
-        即总共有五个数，左边有三个，则解只能出现在左边
-    2. 处理切分点只在b上面的情况, 处理a为空
-    3. 其他? 重复数字? 
-
-    并没有理解最简单的解法... 算了. 
+    并没有理解最简单的解法. 
         奇数的时候, i或者j是中位数index, 偶数的时候两个的均值是index.
         之所以两边都要+2, 左边: [1,2] [-1,3], 右边[], [2,3]
         核心思路是在短的数组上二分(根据中位数的性质自动求出长数组上的位置), 
